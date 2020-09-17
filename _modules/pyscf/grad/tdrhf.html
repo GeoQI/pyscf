@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -188,11 +188,18 @@
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">__config__</span>
 
 
-<span class="c1">#</span>
-<span class="c1"># Given Y = 0, TDHF gradients (XAX+XBY+YBX+YAY)^1 turn to TDA gradients (XAX)^1</span>
-<span class="c1">#</span>
-<span class="k">def</span> <span class="nf">grad_elec</span><span class="p">(</span><span class="n">td_grad</span><span class="p">,</span> <span class="n">x_y</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="grad_elec"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.tdrhf.grad_elec">[docs]</a><span class="k">def</span> <span class="nf">grad_elec</span><span class="p">(</span><span class="n">td_grad</span><span class="p">,</span> <span class="n">x_y</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
               <span class="n">max_memory</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">INFO</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Electronic part of TDA, TDHF nuclear gradients</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        td_grad : grad.tdrhf.Gradients or grad.tdrks.Gradients object.</span>
+
+<span class="sd">        x_y : a two-element list of numpy arrays</span>
+<span class="sd">            TDDFT X and Y amplitudes. If Y is set to 0, this function computes</span>
+<span class="sd">            TDA energy gradients.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">new_logger</span><span class="p">(</span><span class="n">td_grad</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
     <span class="n">time0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
@@ -212,12 +219,12 @@
 
     <span class="n">dvv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ai,bi-&gt;ab&#39;</span><span class="p">,</span> <span class="n">xpy</span><span class="p">,</span> <span class="n">xpy</span><span class="p">)</span> <span class="o">+</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ai,bi-&gt;ab&#39;</span><span class="p">,</span> <span class="n">xmy</span><span class="p">,</span> <span class="n">xmy</span><span class="p">)</span>
     <span class="n">doo</span> <span class="o">=-</span><span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ai,aj-&gt;ij&#39;</span><span class="p">,</span> <span class="n">xpy</span><span class="p">,</span> <span class="n">xpy</span><span class="p">)</span> <span class="o">-</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ai,aj-&gt;ij&#39;</span><span class="p">,</span> <span class="n">xmy</span><span class="p">,</span> <span class="n">xmy</span><span class="p">)</span>
-    <span class="n">dmzvop</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">xpy</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-    <span class="n">dmzvom</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">xmy</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+    <span class="n">dmxpy</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">xpy</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+    <span class="n">dmxmy</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">xmy</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
     <span class="n">dmzoo</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbo</span><span class="p">,</span> <span class="n">doo</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
     <span class="n">dmzoo</span><span class="o">+=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">dvv</span><span class="p">,</span> <span class="n">orbv</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
 
-    <span class="n">vj</span><span class="p">,</span> <span class="n">vk</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">get_jk</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="p">(</span><span class="n">dmzoo</span><span class="p">,</span> <span class="n">dmzvop</span><span class="o">+</span><span class="n">dmzvop</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dmzvom</span><span class="o">-</span><span class="n">dmzvom</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vj</span><span class="p">,</span> <span class="n">vk</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">get_jk</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="p">(</span><span class="n">dmzoo</span><span class="p">,</span> <span class="n">dmxpy</span><span class="o">+</span><span class="n">dmxpy</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dmxmy</span><span class="o">-</span><span class="n">dmxmy</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">veff0doo</span> <span class="o">=</span> <span class="n">vj</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">vk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">wvo</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">veff0doo</span><span class="p">,</span> <span class="n">orbo</span><span class="p">))</span> <span class="o">*</span> <span class="mi">2</span>
     <span class="k">if</span> <span class="n">singlet</span><span class="p">:</span>
@@ -231,10 +238,13 @@
     <span class="n">veff0mom</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">mo_coeff</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">veff</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">))</span>
     <span class="n">wvo</span> <span class="o">-=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ki,ai-&gt;ak&#39;</span><span class="p">,</span> <span class="n">veff0mom</span><span class="p">[:</span><span class="n">nocc</span><span class="p">,:</span><span class="n">nocc</span><span class="p">],</span> <span class="n">xmy</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
     <span class="n">wvo</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ac,ai-&gt;ci&#39;</span><span class="p">,</span> <span class="n">veff0mom</span><span class="p">[</span><span class="n">nocc</span><span class="p">:,</span><span class="n">nocc</span><span class="p">:],</span> <span class="n">xmy</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="c1"># set singlet=None, generate function for CPHF type response kernel</span>
+    <span class="n">vresp</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">gen_response</span><span class="p">(</span><span class="n">singlet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">fvind</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>  <span class="c1"># For singlet, closed shell ground state</span>
-        <span class="n">dm</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nvir</span><span class="p">,</span><span class="n">nocc</span><span class="p">),</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-        <span class="n">vj</span><span class="p">,</span> <span class="n">vk</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">get_jk</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="p">(</span><span class="n">dm</span><span class="o">+</span><span class="n">dm</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">vj</span><span class="o">*</span><span class="mi">2</span><span class="o">-</span><span class="n">vk</span><span class="p">,</span> <span class="n">orbo</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+        <span class="n">dm</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nvir</span><span class="p">,</span><span class="n">nocc</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+        <span class="n">v1ao</span> <span class="o">=</span> <span class="n">vresp</span><span class="p">(</span><span class="n">dm</span><span class="o">+</span><span class="n">dm</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">v1ao</span><span class="p">,</span> <span class="n">orbo</span><span class="p">))</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
     <span class="n">z1</span> <span class="o">=</span> <span class="n">cphf</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">fvind</span><span class="p">,</span> <span class="n">mo_energy</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">wvo</span><span class="p">,</span>
                     <span class="n">max_cycle</span><span class="o">=</span><span class="n">td_grad</span><span class="o">.</span><span class="n">cphf_max_cycle</span><span class="p">,</span>
                     <span class="n">tol</span><span class="o">=</span><span class="n">td_grad</span><span class="o">.</span><span class="n">cphf_conv_tol</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
@@ -242,8 +252,7 @@
     <span class="n">time1</span> <span class="o">=</span> <span class="n">log</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="s1">&#39;Z-vector using CPHF solver&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">time0</span><span class="p">)</span>
 
     <span class="n">z1ao</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbv</span><span class="p">,</span> <span class="n">z1</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-    <span class="n">vj</span><span class="p">,</span> <span class="n">vk</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">get_jk</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">z1ao</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">veff</span> <span class="o">=</span> <span class="n">vj</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">vk</span>
+    <span class="n">veff</span> <span class="o">=</span> <span class="n">vresp</span><span class="p">(</span><span class="n">z1ao</span><span class="o">+</span><span class="n">z1ao</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
 
     <span class="n">im0</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nmo</span><span class="p">,</span><span class="n">nmo</span><span class="p">))</span>
     <span class="n">im0</span><span class="p">[:</span><span class="n">nocc</span><span class="p">,:</span><span class="n">nocc</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">veff0doo</span><span class="o">+</span><span class="n">veff</span><span class="p">,</span> <span class="n">orbo</span><span class="p">))</span>
@@ -272,8 +281,8 @@
 
     <span class="n">dmz1doo</span> <span class="o">=</span> <span class="n">z1ao</span> <span class="o">+</span> <span class="n">dmzoo</span>
     <span class="n">oo0</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbo</span><span class="p">,</span> <span class="n">orbo</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-    <span class="n">vj</span><span class="p">,</span> <span class="n">vk</span> <span class="o">=</span> <span class="n">td_grad</span><span class="o">.</span><span class="n">get_jk</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="p">(</span><span class="n">oo0</span><span class="p">,</span> <span class="n">dmz1doo</span><span class="o">+</span><span class="n">dmz1doo</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dmzvop</span><span class="o">+</span><span class="n">dmzvop</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
-                                  <span class="n">dmzvom</span><span class="o">-</span><span class="n">dmzvom</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+    <span class="n">vj</span><span class="p">,</span> <span class="n">vk</span> <span class="o">=</span> <span class="n">td_grad</span><span class="o">.</span><span class="n">get_jk</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="p">(</span><span class="n">oo0</span><span class="p">,</span> <span class="n">dmz1doo</span><span class="o">+</span><span class="n">dmz1doo</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dmxpy</span><span class="o">+</span><span class="n">dmxpy</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+                                  <span class="n">dmxmy</span><span class="o">-</span><span class="n">dmxmy</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
     <span class="n">vj</span> <span class="o">=</span> <span class="n">vj</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">nao</span><span class="p">,</span><span class="n">nao</span><span class="p">)</span>
     <span class="n">vk</span> <span class="o">=</span> <span class="n">vk</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">nao</span><span class="p">,</span><span class="n">nao</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">singlet</span><span class="p">:</span>
@@ -301,16 +310,16 @@
         <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xqp,pq-&gt;x&#39;</span><span class="p">,</span> <span class="n">s1</span><span class="p">[:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">im0</span><span class="p">[:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">])</span>
 
         <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xij,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">1</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">oo0</span><span class="p">[</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">])</span>
-        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xij,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">2</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmzvop</span><span class="p">[</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">,:])</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xij,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">3</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmzvom</span><span class="p">[</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">,:])</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xji,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">2</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmzvop</span><span class="p">[:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span>
-        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xji,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">3</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmzvom</span><span class="p">[:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xij,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">2</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmxpy</span><span class="p">[</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">,:])</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xij,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">3</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmxmy</span><span class="p">[</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">,:])</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xji,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">2</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmxpy</span><span class="p">[:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="n">de</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">-=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xji,ij-&gt;x&#39;</span><span class="p">,</span> <span class="n">vhf1</span><span class="p">[</span><span class="mi">3</span><span class="p">,:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">],</span> <span class="n">dmxmy</span><span class="p">[:,</span><span class="n">p0</span><span class="p">:</span><span class="n">p1</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span>
 
     <span class="n">log</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="s1">&#39;TDHF nuclear gradients&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">time0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">de</span>
+    <span class="k">return</span> <span class="n">de</span></div>
 
 
-<div class="viewcode-block" id="as_scanner"><a class="viewcode-back" href="../../../grad.html#pyscf.grad.tdrhf.as_scanner">[docs]</a><span class="k">def</span> <span class="nf">as_scanner</span><span class="p">(</span><span class="n">td_grad</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<div class="viewcode-block" id="as_scanner"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.tdrhf.as_scanner">[docs]</a><span class="k">def</span> <span class="nf">as_scanner</span><span class="p">(</span><span class="n">td_grad</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generating a nuclear gradients scanner/solver (for geometry optimizer).</span>
 
 <span class="sd">    The returned solver is a function. This function requires one argument</span>
@@ -368,7 +377,7 @@
         <span class="k">return</span> <span class="n">TDSCF_GradScanner</span><span class="p">(</span><span class="n">td_grad</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">Gradients</span><span class="p">(</span><span class="n">rhf_grad</span><span class="o">.</span><span class="n">GradientsBasics</span><span class="p">):</span>
+<div class="viewcode-block" id="Gradients"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.tdrhf.Gradients">[docs]</a><span class="k">class</span> <span class="nc">Gradients</span><span class="p">(</span><span class="n">rhf_grad</span><span class="o">.</span><span class="n">GradientsBasics</span><span class="p">):</span>
 
     <span class="n">cphf_max_cycle</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;grad_tdrhf_Gradients_cphf_max_cycle&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
     <span class="n">cphf_conv_tol</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;grad_tdrhf_Gradients_cphf_conv_tol&#39;</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)</span>
@@ -378,7 +387,6 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">stdout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mol</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">mol</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">td</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_scf</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">_scf</span>  <span class="c1"># needed by hcore_generator</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">chkfile</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">chkfile</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">max_memory</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">max_memory</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># of which the gradients to be computed.</span>
@@ -401,11 +409,11 @@
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="nd">@lib</span><span class="o">.</span><span class="n">with_doc</span><span class="p">(</span><span class="n">grad_elec</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+<div class="viewcode-block" id="Gradients.grad_elec"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.tdrhf.Gradients.grad_elec">[docs]</a>    <span class="nd">@lib</span><span class="o">.</span><span class="n">with_doc</span><span class="p">(</span><span class="n">grad_elec</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">grad_elec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">singlet</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">grad_elec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">singlet</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_memory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">grad_elec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xy</span><span class="p">,</span> <span class="n">singlet</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_memory</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Gradients.kernel"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.tdrhf.Gradients.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Args:</span>
 <span class="sd">            state : int</span>
@@ -440,7 +448,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">de</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">symmetrize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">de</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_finalize</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span></div>
 
     <span class="c1"># Calling the underlying SCF nuclear gradients because it may be modified</span>
     <span class="c1"># by external modules (e.g. QM/MM, solvent)</span>
@@ -455,7 +463,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atmlst</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;----------------------------------------------&#39;</span><span class="p">)</span>
 
-    <span class="n">as_scanner</span> <span class="o">=</span> <span class="n">as_scanner</span>
+    <span class="n">as_scanner</span> <span class="o">=</span> <span class="n">as_scanner</span></div>
 
 <span class="n">Grad</span> <span class="o">=</span> <span class="n">Gradients</span>
 
@@ -466,7 +474,6 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">dft</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">tddft</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">()</span>
     <span class="n">mol</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span>
@@ -487,7 +494,7 @@
     <span class="c1">#tdg.verbose = 5</span>
     <span class="n">g1</span> <span class="o">=</span> <span class="n">tdg</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">finger</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.18686561181358813</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">fp</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.18686561181358813</span><span class="p">)</span>
 <span class="c1">#[[ 0  0  -2.67023832e-01]</span>
 <span class="c1"># [ 0  0   2.67023832e-01]]</span>
     <span class="n">td_solver</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">as_scanner</span><span class="p">()</span>
@@ -502,7 +509,7 @@
     <span class="n">tdg</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">Gradients</span><span class="p">()</span>
     <span class="n">g1</span> <span class="o">=</span> <span class="n">tdg</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">finger</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.18967687762609461</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">fp</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.18967687762609461</span><span class="p">)</span>
 <span class="c1"># [[ 0  0  -2.71041021e-01]</span>
 <span class="c1">#  [ 0  0   2.71041021e-01]]</span>
     <span class="n">td_solver</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">as_scanner</span><span class="p">()</span>
@@ -518,7 +525,7 @@
     <span class="n">tdg</span> <span class="o">=</span> <span class="n">Gradients</span><span class="p">(</span><span class="n">td</span><span class="p">)</span>
     <span class="n">g1</span> <span class="o">=</span> <span class="n">tdg</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">finger</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.19667995802487931</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">fp</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.19667995802487931</span><span class="p">)</span>
 <span class="c1"># [[ 0  0  -2.81048403e-01]</span>
 <span class="c1">#  [ 0  0   2.81048403e-01]]</span>
     <span class="n">td_solver</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">as_scanner</span><span class="p">()</span>
@@ -534,7 +541,7 @@
     <span class="n">tdg</span> <span class="o">=</span> <span class="n">Gradients</span><span class="p">(</span><span class="n">td</span><span class="p">)</span>
     <span class="n">g1</span> <span class="o">=</span> <span class="n">tdg</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">finger</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.20032088639558535</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">fp</span><span class="p">(</span><span class="n">g1</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.20032088639558535</span><span class="p">)</span>
 <span class="c1"># [[ 0  0  -2.86250870e-01]</span>
 <span class="c1">#  [ 0  0   2.86250870e-01]]</span>
     <span class="n">td_solver</span> <span class="o">=</span> <span class="n">td</span><span class="o">.</span><span class="n">as_scanner</span><span class="p">()</span>
@@ -545,9 +552,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -556,11 +561,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -573,37 +578,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

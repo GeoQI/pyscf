@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -200,7 +200,7 @@
     <span class="k">return</span> <span class="n">ccsd_grad</span><span class="o">.</span><span class="n">grad_elec</span><span class="p">(</span><span class="n">cigrad</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">eris</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="as_scanner"><a class="viewcode-back" href="../../../grad.html#pyscf.grad.cisd.as_scanner">[docs]</a><span class="k">def</span> <span class="nf">as_scanner</span><span class="p">(</span><span class="n">grad_ci</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="as_scanner"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.cisd.as_scanner">[docs]</a><span class="k">def</span> <span class="nf">as_scanner</span><span class="p">(</span><span class="n">grad_ci</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generating a nuclear gradients scanner/solver (for geometry optimizer).</span>
 
 <span class="sd">    The returned solver is a function. This function requires one argument</span>
@@ -232,13 +232,6 @@
         <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
             <span class="n">lib</span><span class="o">.</span><span class="n">GradScanner</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">)</span>
 
-            <span class="c1"># cache eris. It is used multiple times when calculating gradients</span>
-            <span class="n">g_ao2mo</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">ao2mo</span>
-            <span class="k">def</span> <span class="nf">_save_eris</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_eris</span> <span class="o">=</span> <span class="n">g_ao2mo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eris</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">ao2mo</span> <span class="o">=</span> <span class="n">_save_eris</span>
-
         <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mol_or_geom</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mol_or_geom</span><span class="p">,</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">):</span>
                 <span class="n">mol</span> <span class="o">=</span> <span class="n">mol_or_geom</span>
@@ -249,8 +242,17 @@
             <span class="k">if</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">nroots</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">state</span> <span class="o">&gt;=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">nroots</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;State ID greater than the number of CISD roots&#39;</span><span class="p">)</span>
 
+            <span class="n">mf_scanner</span> <span class="o">=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">_scf</span>
+            <span class="n">mf_scanner</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+            <span class="n">ci_scanner</span><span class="o">.</span><span class="n">mo_coeff</span> <span class="o">=</span> <span class="n">mf_scanner</span><span class="o">.</span><span class="n">mo_coeff</span>
+            <span class="n">ci_scanner</span><span class="o">.</span><span class="n">mo_occ</span> <span class="o">=</span> <span class="n">mf_scanner</span><span class="o">.</span><span class="n">mo_occ</span>
+
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ci_scanner</span><span class="o">.</span><span class="n">ci</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">vector_size</span><span class="p">():</span>
+                <span class="n">ci_scanner</span><span class="o">.</span><span class="n">ci</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">eris</span> <span class="o">=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">ao2mo</span><span class="p">(</span><span class="n">ci_scanner</span><span class="o">.</span><span class="n">mo_coeff</span><span class="p">)</span>
+            <span class="n">ci_scanner</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">ci0</span><span class="o">=</span><span class="n">ci_scanner</span><span class="o">.</span><span class="n">ci</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="n">eris</span><span class="p">)</span>
+
 <span class="c1"># TODO: Check root flip</span>
-            <span class="n">ci_scanner</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">nroots</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">e_tot</span> <span class="o">=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">e_tot</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
                 <span class="n">civec</span> <span class="o">=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">ci</span><span class="p">[</span><span class="n">state</span><span class="p">]</span>
@@ -259,8 +261,7 @@
                 <span class="n">civec</span> <span class="o">=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">ci</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">mol</span> <span class="o">=</span> <span class="n">mol</span>
-            <span class="n">de</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">civec</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="n">ci_scanner</span><span class="o">.</span><span class="n">_eris</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">ci_scanner</span><span class="o">.</span><span class="n">_eris</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># release the resources occupied by .eris</span>
+            <span class="n">de</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">civec</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="n">eris</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="k">return</span> <span class="n">e_tot</span><span class="p">,</span> <span class="n">de</span>
         <span class="nd">@property</span>
         <span class="k">def</span> <span class="nf">converged</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -270,9 +271,18 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">ci_conv</span> <span class="o">=</span> <span class="n">ci_scanner</span><span class="o">.</span><span class="n">converged</span>
             <span class="k">return</span> <span class="nb">all</span><span class="p">((</span><span class="n">ci_scanner</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">converged</span><span class="p">,</span> <span class="n">ci_conv</span><span class="p">))</span>
+
+    <span class="c1"># cache eris object in CCSD base class. eris object is used many times</span>
+    <span class="c1"># when calculating gradients</span>
+    <span class="n">g_ao2mo</span> <span class="o">=</span> <span class="n">grad_ci</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">ao2mo</span>
+    <span class="k">def</span> <span class="nf">_save_eris</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_eris</span> <span class="o">=</span> <span class="n">g_ao2mo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eris</span>
+    <span class="n">grad_ci</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="n">ao2mo</span> <span class="o">=</span> <span class="n">_save_eris</span>
+
     <span class="k">return</span> <span class="n">CISD_GradScanner</span><span class="p">(</span><span class="n">grad_ci</span><span class="p">)</span></div>
 
-<span class="k">class</span> <span class="nc">Gradients</span><span class="p">(</span><span class="n">rhf_grad</span><span class="o">.</span><span class="n">GradientsBasics</span><span class="p">):</span>
+<div class="viewcode-block" id="Gradients"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.cisd.Gradients">[docs]</a><span class="k">class</span> <span class="nc">Gradients</span><span class="p">(</span><span class="n">rhf_grad</span><span class="o">.</span><span class="n">GradientsBasics</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">myci</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># of which the gradients to be computed.</span>
         <span class="n">rhf_grad</span><span class="o">.</span><span class="n">GradientsBasics</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">myci</span><span class="p">)</span>
@@ -291,7 +301,7 @@
 
     <span class="n">grad_elec</span> <span class="o">=</span> <span class="n">grad_elec</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">civec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="Gradients.kernel"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.cisd.Gradients.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">civec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">new_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
         <span class="n">myci</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span>
@@ -323,7 +333,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">de</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">symmetrize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">de</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_finalize</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span></div>
 
     <span class="c1"># Calling the underlying SCF nuclear gradients because it may be modified</span>
     <span class="c1"># by external modules (e.g. QM/MM, solvent)</span>
@@ -338,7 +348,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">atmlst</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;----------------------------------------------&#39;</span><span class="p">)</span>
 
-    <span class="n">as_scanner</span> <span class="o">=</span> <span class="n">as_scanner</span>
+    <span class="n">as_scanner</span> <span class="o">=</span> <span class="n">as_scanner</span></div>
 
 <span class="n">Grad</span> <span class="o">=</span> <span class="n">Gradients</span>
 
@@ -348,8 +358,6 @@
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">ao2mo</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">grad</span>
 
     <span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">M</span><span class="p">(</span>
         <span class="n">atom</span> <span class="o">=</span> <span class="p">[</span>
@@ -430,9 +438,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -441,11 +447,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -458,37 +464,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

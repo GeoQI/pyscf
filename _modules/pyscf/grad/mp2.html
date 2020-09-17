@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -204,7 +204,9 @@
 <span class="c1"># nocc, nvir should be updated to include the frozen orbitals when proceeding</span>
 <span class="c1"># the 1-particle quantities later.</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">mp_grad</span><span class="o">.</span><span class="n">mol</span>
-    <span class="n">with_frozen</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">mp</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">with_frozen</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">((</span><span class="n">mp</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
+                       <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">frozen</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">))</span> <span class="ow">and</span> <span class="n">mp</span><span class="o">.</span><span class="n">frozen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+                       <span class="ow">or</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">frozen</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
     <span class="n">OA</span><span class="p">,</span> <span class="n">VA</span><span class="p">,</span> <span class="n">OF</span><span class="p">,</span> <span class="n">VF</span> <span class="o">=</span> <span class="n">_index_frozen_active</span><span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">get_frozen_mask</span><span class="p">(),</span> <span class="n">mp</span><span class="o">.</span><span class="n">mo_occ</span><span class="p">)</span>
     <span class="n">orbo</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">mo_coeff</span><span class="p">[:,</span><span class="n">OA</span><span class="p">]</span>
     <span class="n">orbv</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">mo_coeff</span><span class="p">[:,</span><span class="n">VA</span><span class="p">]</span>
@@ -234,8 +236,6 @@
 <span class="c1"># 2e AO integrals dot 2pdm</span>
     <span class="n">max_memory</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">mp</span><span class="o">.</span><span class="n">max_memory</span> <span class="o">-</span> <span class="n">lib</span><span class="o">.</span><span class="n">current_memory</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">blksize</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">max_memory</span><span class="o">*.</span><span class="mf">9e6</span><span class="o">/</span><span class="mi">8</span><span class="o">/</span><span class="p">(</span><span class="n">nao</span><span class="o">**</span><span class="mi">3</span><span class="o">*</span><span class="mf">2.5</span><span class="p">)))</span>
-    <span class="n">Imat1</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">Imat2</span> <span class="o">=</span> <span class="mi">0</span>
 
     <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">ia</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atmlst</span><span class="p">):</span>
         <span class="n">shl0</span><span class="p">,</span> <span class="n">shl1</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">offsetdic</span><span class="p">[</span><span class="n">ia</span><span class="p">]</span>
@@ -347,7 +347,7 @@
     <span class="k">return</span> <span class="n">de</span>
 
 
-<div class="viewcode-block" id="as_scanner"><a class="viewcode-back" href="../../../grad.html#pyscf.grad.mp2.as_scanner">[docs]</a><span class="k">def</span> <span class="nf">as_scanner</span><span class="p">(</span><span class="n">grad_mp</span><span class="p">):</span>
+<div class="viewcode-block" id="as_scanner"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.mp2.as_scanner">[docs]</a><span class="k">def</span> <span class="nf">as_scanner</span><span class="p">(</span><span class="n">grad_mp</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generating a nuclear gradients scanner/solver (for geometry optimizer).</span>
 
 <span class="sd">    The returned solver is a function. This function requires one argument</span>
@@ -409,7 +409,6 @@
 <span class="k">def</span> <span class="nf">_response_dm1</span><span class="p">(</span><span class="n">mp</span><span class="p">,</span> <span class="n">Xvo</span><span class="p">):</span>
     <span class="n">nvir</span><span class="p">,</span> <span class="n">nocc</span> <span class="o">=</span> <span class="n">Xvo</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">nmo</span> <span class="o">=</span> <span class="n">nocc</span> <span class="o">+</span> <span class="n">nvir</span>
-    <span class="n">with_frozen</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">mp</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">mp</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">mo_energy</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">mo_energy</span>
     <span class="n">mo_occ</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">mo_occ</span>
     <span class="n">mo_coeff</span> <span class="o">=</span> <span class="n">mp</span><span class="o">.</span><span class="n">mo_coeff</span>
@@ -432,11 +431,11 @@
     <span class="n">VF</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="o">~</span><span class="n">frozen_mask</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">mo_occ</span><span class="o">==</span><span class="mi">0</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># virtual frozen orbitals</span>
     <span class="k">return</span> <span class="n">OA</span><span class="p">,</span> <span class="n">VA</span><span class="p">,</span> <span class="n">OF</span><span class="p">,</span> <span class="n">VF</span>
 
-<span class="k">class</span> <span class="nc">Gradients</span><span class="p">(</span><span class="n">rhf_grad</span><span class="o">.</span><span class="n">GradientsBasics</span><span class="p">):</span>
+<div class="viewcode-block" id="Gradients"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.mp2.Gradients">[docs]</a><span class="k">class</span> <span class="nc">Gradients</span><span class="p">(</span><span class="n">rhf_grad</span><span class="o">.</span><span class="n">GradientsBasics</span><span class="p">):</span>
 
     <span class="n">grad_elec</span> <span class="o">=</span> <span class="n">grad_elec</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Gradients.kernel"><a class="viewcode-back" href="../../../modules/grad.html#pyscf.grad.mp2.Gradients.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">atmlst</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">new_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">t2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">t2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">t2</span>
         <span class="k">if</span> <span class="n">t2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">t2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
@@ -450,7 +449,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">de</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">symmetrize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">de</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_finalize</span><span class="p">()</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">de</span></div>
 
     <span class="c1"># Calling the underlying SCF nuclear gradients because it may be modified</span>
     <span class="c1"># by external modules (e.g. QM/MM, solvent)</span>
@@ -458,7 +457,7 @@
         <span class="n">mf_grad</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">nuc_grad_method</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">mf_grad</span><span class="o">.</span><span class="n">grad_nuc</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">)</span>
 
-    <span class="n">as_scanner</span> <span class="o">=</span> <span class="n">as_scanner</span>
+    <span class="n">as_scanner</span> <span class="o">=</span> <span class="n">as_scanner</span></div>
 
 <span class="n">Grad</span> <span class="o">=</span> <span class="n">Gradients</span>
 
@@ -544,9 +543,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -555,11 +552,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -572,37 +569,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
-
-  
-  <script src="../../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -175,8 +175,8 @@
 <span class="c1"># Author: Qiming Sun &lt;osirpt.sun@gmail.com&gt;</span>
 <span class="c1">#</span>
 
-<span class="c1"># JCP, 112, 3493</span>
-<span class="c1"># JCC, 20, 1262</span>
+<span class="c1"># JCP 112, 3493 (2000); DOI:10.1063/1.480504</span>
+<span class="c1"># JCC 20, 1262 (1999); DOI:10.1002/(SICI)1096-987X(199909)20:12&lt;1262::AID-JCC6&gt;3.0.CO;2-H</span>
 
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">4-component Dirac-Hartree-Fock spin-spin coupling (SSC) constants</span>
@@ -198,7 +198,7 @@
 
 <span class="n">NUMINT_GRIDS</span> <span class="o">=</span> <span class="mi">30</span>
 
-<div class="viewcode-block" id="make_dia"><a class="viewcode-back" href="../../../../prop/ssc.html#pyscf.prop.ssc.dhf.make_dia">[docs]</a><span class="k">def</span> <span class="nf">make_dia</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">dm0</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mb</span><span class="o">=</span><span class="s1">&#39;RMB&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="make_dia"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.dhf.make_dia">[docs]</a><span class="k">def</span> <span class="nf">make_dia</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">dm0</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mb</span><span class="o">=</span><span class="s1">&#39;RMB&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;orbital diamagnetic term&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">nuc_pair</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">nuc_pair</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">nuc_pair</span>
@@ -222,7 +222,7 @@
 
     <span class="k">return</span> <span class="n">ssc_dia</span> <span class="o">*</span> <span class="n">nist</span><span class="o">.</span><span class="n">ALPHA</span><span class="o">**</span><span class="mi">4</span></div>
 
-<div class="viewcode-block" id="sa01sa01_integral"><a class="viewcode-back" href="../../../../prop/ssc.html#pyscf.prop.ssc.dhf.sa01sa01_integral">[docs]</a><span class="k">def</span> <span class="nf">sa01sa01_integral</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orig1</span><span class="p">,</span> <span class="n">orig2</span><span class="p">):</span>
+<div class="viewcode-block" id="sa01sa01_integral"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.dhf.sa01sa01_integral">[docs]</a><span class="k">def</span> <span class="nf">sa01sa01_integral</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orig1</span><span class="p">,</span> <span class="n">orig2</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;vec{r}_A/r_A^3 times sigma vec{r}_B/r_B^3 times sigma&#39;&#39;&#39;</span>
     <span class="k">with</span> <span class="n">lib</span><span class="o">.</span><span class="n">temporary_env</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">cart</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">s</span> <span class="o">=</span> <span class="n">rhf_ssc</span><span class="o">.</span><span class="n">dso_integral</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orig1</span><span class="p">,</span> <span class="n">orig2</span><span class="p">)</span>
@@ -407,7 +407,7 @@
     <span class="k">return</span> <span class="n">vind</span>
 
 
-<span class="k">class</span> <span class="nc">SpinSpinCoupling</span><span class="p">(</span><span class="n">rhf_ssc</span><span class="o">.</span><span class="n">SpinSpinCoupling</span><span class="p">):</span>
+<div class="viewcode-block" id="SpinSpinCoupling"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.dhf.SpinSpinCoupling">[docs]</a><span class="k">class</span> <span class="nc">SpinSpinCoupling</span><span class="p">(</span><span class="n">rhf_ssc</span><span class="o">.</span><span class="n">SpinSpinCoupling</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scf_method</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mb</span> <span class="o">=</span> <span class="s1">&#39;sternheim&#39;</span> <span class="c1"># or RMB, RKB</span>
         <span class="n">rhf_ssc</span><span class="o">.</span><span class="n">SpinSpinCoupling</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scf_method</span><span class="p">)</span>
@@ -417,7 +417,7 @@
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;mb = </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mb</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SpinSpinCoupling.kernel"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.dhf.SpinSpinCoupling.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">cput0</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dump_flags</span><span class="p">()</span>
@@ -460,11 +460,11 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Nuclear g factor </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">gyro</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Spin-spin coupling constant J (Hz)&#39;</span><span class="p">)</span>
             <span class="n">tools</span><span class="o">.</span><span class="n">dump_mat</span><span class="o">.</span><span class="n">dump_tri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">jtensor</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">e11</span>
+        <span class="k">return</span> <span class="n">e11</span></div>
 
     <span class="n">make_dia</span> <span class="o">=</span> <span class="n">make_dia</span>
     <span class="n">make_para</span> <span class="o">=</span> <span class="n">make_para</span>
-    <span class="n">solve_mo1</span> <span class="o">=</span> <span class="n">solve_mo1</span>
+    <span class="n">solve_mo1</span> <span class="o">=</span> <span class="n">solve_mo1</span></div>
 
 <span class="n">SSC</span> <span class="o">=</span> <span class="n">SpinSpinCoupling</span>
 
@@ -473,8 +473,6 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">()</span>
     <span class="n">mol</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">mol</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="kc">None</span>
@@ -497,9 +495,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -508,11 +504,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -525,37 +521,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

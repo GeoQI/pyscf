@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
-
-  
-  <script src="../../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -187,11 +187,11 @@
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
 <span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">_vhf</span>
 <span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">cphf</span>
-<span class="kn">from</span> <span class="nn">pyscf.soscf.newton_ah</span> <span class="k">import</span> <span class="n">_gen_rhf_response</span>
+<span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">_response_functions</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">pyscf.data</span> <span class="k">import</span> <span class="n">nist</span>
 
 
-<div class="viewcode-block" id="dia"><a class="viewcode-back" href="../../../../prop/nmr.html#pyscf.prop.nmr.rhf.dia">[docs]</a><span class="k">def</span> <span class="nf">dia</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shielding_nuc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dm0</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="dia"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.dia">[docs]</a><span class="k">def</span> <span class="nf">dia</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shielding_nuc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dm0</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Diamagnetic part of NMR shielding tensors.</span>
 
 <span class="sd">    See also J. Olsen et al., Theor. Chem. Acc., 90, 421 (1995)</span>
@@ -232,7 +232,7 @@
     <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msc_dia</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="para"><a class="viewcode-back" href="../../../../prop/nmr.html#pyscf.prop.nmr.rhf.para">[docs]</a><span class="k">def</span> <span class="nf">para</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">mo10</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shielding_nuc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="para"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.para">[docs]</a><span class="k">def</span> <span class="nf">para</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">mo10</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shielding_nuc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Paramagnetic part of NMR shielding tensors.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">mo_coeff</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>      <span class="n">mo_coeff</span> <span class="o">=</span> <span class="n">nmrobj</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">mo_coeff</span>
@@ -261,7 +261,7 @@
     <span class="n">msc_para</span> <span class="o">=</span> <span class="n">para_occ</span> <span class="o">+</span> <span class="n">para_vir</span>
     <span class="k">return</span> <span class="n">msc_para</span><span class="p">,</span> <span class="n">para_vir</span><span class="p">,</span> <span class="n">para_occ</span></div>
 
-<div class="viewcode-block" id="make_h10"><a class="viewcode-back" href="../../../../prop/nmr.html#pyscf.prop.nmr.rhf.make_h10">[docs]</a><span class="k">def</span> <span class="nf">make_h10</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">dm0</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">WARN</span><span class="p">):</span>
+<div class="viewcode-block" id="make_h10"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.make_h10">[docs]</a><span class="k">def</span> <span class="nf">make_h10</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">dm0</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">WARN</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Imaginary part of first order Fock operator</span>
 
 <span class="sd">    Note the side effects of set_common_origin</span>
@@ -300,7 +300,7 @@
     <span class="n">h1</span> <span class="o">-=</span> <span class="n">mol</span><span class="o">.</span><span class="n">intor</span><span class="p">(</span><span class="s1">&#39;int1e_igkin&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">h1</span>
 
-<div class="viewcode-block" id="make_s10"><a class="viewcode-back" href="../../../../prop/nmr.html#pyscf.prop.nmr.rhf.make_s10">[docs]</a><span class="k">def</span> <span class="nf">make_s10</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="make_s10"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.make_s10">[docs]</a><span class="k">def</span> <span class="nf">make_s10</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;First order overlap matrix wrt external magnetic field.&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">gauge_orig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 <span class="c1"># Im[&lt;g\mu |g\nu&gt;]</span>
@@ -329,7 +329,7 @@
     <span class="k">return</span> <span class="n">mo10</span><span class="p">,</span> <span class="n">mo_e10</span>
 
 <span class="c1">#TODO: merge to hessian.rhf.solve_mo1 function</span>
-<div class="viewcode-block" id="solve_mo1"><a class="viewcode-back" href="../../../../prop/nmr.html#pyscf.prop.nmr.rhf.solve_mo1">[docs]</a><span class="k">def</span> <span class="nf">solve_mo1</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">mo_energy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="solve_mo1"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.solve_mo1">[docs]</a><span class="k">def</span> <span class="nf">solve_mo1</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">mo_energy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
               <span class="n">h1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">with_cphf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Solve the first order equation</span>
 
@@ -375,7 +375,7 @@
     <span class="k">return</span> <span class="n">mo10</span><span class="p">,</span> <span class="n">mo_e10</span></div>
 
 
-<div class="viewcode-block" id="get_fock"><a class="viewcode-back" href="../../../../prop/nmr.html#pyscf.prop.nmr.rhf.get_fock">[docs]</a><span class="k">def</span> <span class="nf">get_fock</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">dm0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_fock"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.get_fock">[docs]</a><span class="k">def</span> <span class="nf">get_fock</span><span class="p">(</span><span class="n">nmrobj</span><span class="p">,</span> <span class="n">dm0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;First order partial derivatives of Fock matrix wrt external magnetic</span>
 <span class="sd">    field.  \frac{\partial F}{\partial B}</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -388,9 +388,9 @@
         <span class="n">lib</span><span class="o">.</span><span class="n">chkfile</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">nmrobj</span><span class="o">.</span><span class="n">chkfile</span><span class="p">,</span> <span class="s1">&#39;nmr/h1&#39;</span><span class="p">,</span> <span class="n">h1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">h1</span></div>
 
-<div class="viewcode-block" id="gen_vind"><a class="viewcode-back" href="../../../../prop/nmr.html#pyscf.prop.nmr.rhf.gen_vind">[docs]</a><span class="k">def</span> <span class="nf">gen_vind</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_vind"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.gen_vind">[docs]</a><span class="k">def</span> <span class="nf">gen_vind</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Induced potential&#39;&#39;&#39;</span>
-    <span class="n">vresp</span> <span class="o">=</span> <span class="n">_gen_rhf_response</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">vresp</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">gen_response</span><span class="p">(</span><span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     <span class="n">occidx</span> <span class="o">=</span> <span class="n">mo_occ</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="n">orbo</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[:,</span><span class="n">occidx</span><span class="p">]</span>
     <span class="n">nocc</span> <span class="o">=</span> <span class="n">orbo</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -404,7 +404,7 @@
     <span class="k">return</span> <span class="n">vind</span></div>
 
 
-<span class="k">class</span> <span class="nc">NMR</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">StreamObject</span><span class="p">):</span>
+<div class="viewcode-block" id="NMR"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.NMR">[docs]</a><span class="k">class</span> <span class="nc">NMR</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">StreamObject</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scf_method</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mol</span> <span class="o">=</span> <span class="n">scf_method</span><span class="o">.</span><span class="n">mol</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">scf_method</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">verbose</span>
@@ -442,8 +442,8 @@
         <span class="k">return</span> <span class="bp">self</span>
 
     <span class="c1"># Note mo10 is the imaginary part of MO^1</span>
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shielding</span><span class="p">(</span><span class="n">mo1</span><span class="p">)</span>
+<div class="viewcode-block" id="NMR.kernel"><a class="viewcode-back" href="../../../../modules/prop/nmr.html#pyscf.prop.magnetizability.rhf.NMR.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">shielding</span><span class="p">(</span><span class="n">mo1</span><span class="p">)</span></div>
     <span class="k">def</span> <span class="nf">shielding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">cput0</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
@@ -484,7 +484,7 @@
     <span class="k">def</span> <span class="nf">get_ovlp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">mol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span>
         <span class="k">if</span> <span class="n">gauge_orig</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">gauge_orig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gauge_orig</span>
-        <span class="k">return</span> <span class="n">get_ovlp</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">get_ovlp</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">gauge_orig</span><span class="p">)</span></div>
 
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
 <span class="n">scf</span><span class="o">.</span><span class="n">hf</span><span class="o">.</span><span class="n">RHF</span><span class="o">.</span><span class="n">NMR</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">class_as_method</span><span class="p">(</span><span class="n">NMR</span><span class="p">)</span>
@@ -553,9 +553,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -564,11 +562,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -581,37 +579,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

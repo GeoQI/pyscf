@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -144,8 +146,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -158,7 +158,7 @@
             
   <h1>Source code for pyscf.tdscf.uhf</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># Copyright 2014-2019 The PySCF Developers. All Rights Reserved.</span>
+<span class="c1"># Copyright 2014-2020 The PySCF Developers. All Rights Reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -176,17 +176,15 @@
 <span class="c1">#</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">lib</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">symm</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">ao2mo</span>
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
-<span class="kn">from</span> <span class="nn">pyscf.ao2mo</span> <span class="k">import</span> <span class="n">_ao2mo</span>
 <span class="kn">from</span> <span class="nn">pyscf.tdscf</span> <span class="k">import</span> <span class="n">rhf</span>
 <span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">uhf_symm</span>
+<span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">_response_functions</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">pyscf.data</span> <span class="k">import</span> <span class="n">nist</span>
-<span class="kn">from</span> <span class="nn">pyscf.soscf.newton_ah</span> <span class="k">import</span> <span class="n">_gen_uhf_response</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">__config__</span>
 
 <span class="n">OUTPUT_THRESHOLD</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;tdscf_uhf_get_nto_threshold&#39;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
@@ -197,7 +195,7 @@
 <span class="n">POSTIVE_EIG_THRESHOLD</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;tdscf_uhf_TDDFT_positive_eig_threshold&#39;</span><span class="p">,</span> <span class="mf">1e-3</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="gen_tda_operation"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.uhf.gen_tda_operation">[docs]</a><span class="k">def</span> <span class="nf">gen_tda_operation</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">fock_ao</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_tda_operation"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.gen_tda_operation">[docs]</a><span class="k">def</span> <span class="nf">gen_tda_operation</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">fock_ao</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;(A+B)x</span>
 
 <span class="sd">    Kwargs:</span>
@@ -228,10 +226,10 @@
             <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">symm</span><span class="o">.</span><span class="n">irrep_name2id</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">groupname</span><span class="p">,</span> <span class="n">wfnsym</span><span class="p">)</span>
         <span class="n">orbsyma</span><span class="p">,</span> <span class="n">orbsymb</span> <span class="o">=</span> <span class="n">uhf_symm</span><span class="o">.</span><span class="n">get_orbsym</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">)</span>
         <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">wfnsym</span> <span class="o">%</span> <span class="mi">10</span>  <span class="c1"># convert to D2h subgroup</span>
-        <span class="n">orbsyma</span> <span class="o">=</span> <span class="n">orbsyma</span> <span class="o">%</span> <span class="mi">10</span>
-        <span class="n">orbsymb</span> <span class="o">=</span> <span class="n">orbsymb</span> <span class="o">%</span> <span class="mi">10</span>
-        <span class="n">sym_forbida</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsyma</span><span class="p">[</span><span class="n">occidxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsyma</span><span class="p">[</span><span class="n">viridxa</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
-        <span class="n">sym_forbidb</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsymb</span><span class="p">[</span><span class="n">occidxb</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsymb</span><span class="p">[</span><span class="n">viridxb</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
+        <span class="n">orbsyma_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsyma</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+        <span class="n">orbsymb_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsymb</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+        <span class="n">sym_forbida</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsyma_in_d2h</span><span class="p">[</span><span class="n">occidxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsyma_in_d2h</span><span class="p">[</span><span class="n">viridxa</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
+        <span class="n">sym_forbidb</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsymb_in_d2h</span><span class="p">[</span><span class="n">occidxb</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsymb_in_d2h</span><span class="p">[</span><span class="n">viridxb</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
         <span class="n">sym_forbid</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">sym_forbida</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">sym_forbidb</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span>
 
     <span class="n">e_ia_a</span> <span class="o">=</span> <span class="p">(</span><span class="n">mo_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">viridxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">mo_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">occidxa</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
@@ -239,33 +237,30 @@
     <span class="n">e_ia</span> <span class="o">=</span> <span class="n">hdiag</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">e_ia_a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">e_ia_b</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
     <span class="k">if</span> <span class="n">wfnsym</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
         <span class="n">hdiag</span><span class="p">[</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">mo_a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">orboa</span><span class="p">,</span><span class="n">orbva</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
-    <span class="n">mo_b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">orbob</span><span class="p">,</span><span class="n">orbvb</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
 
     <span class="n">mem_now</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">current_memory</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">max_memory</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">mf</span><span class="o">.</span><span class="n">max_memory</span><span class="o">*.</span><span class="mi">8</span><span class="o">-</span><span class="n">mem_now</span><span class="p">)</span>
-    <span class="n">vresp</span> <span class="o">=</span> <span class="n">_gen_uhf_response</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_memory</span><span class="o">=</span><span class="n">max_memory</span><span class="p">)</span>
+    <span class="n">vresp</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">gen_response</span><span class="p">(</span><span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_memory</span><span class="o">=</span><span class="n">max_memory</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">vind</span><span class="p">(</span><span class="n">zs</span><span class="p">):</span>
-        <span class="n">nz</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">zs</span><span class="p">)</span>
+        <span class="n">zs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">zs</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">wfnsym</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
             <span class="n">zs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">zs</span><span class="p">)</span>
             <span class="n">zs</span><span class="p">[:,</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">dmov</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="p">,</span><span class="n">nao</span><span class="p">,</span><span class="n">nao</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">zs</span><span class="p">):</span>
-            <span class="n">za</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
-            <span class="n">zb</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
-            <span class="n">dmov</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orboa</span><span class="p">,</span> <span class="n">za</span><span class="p">,</span> <span class="n">orbva</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-            <span class="n">dmov</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbob</span><span class="p">,</span> <span class="n">zb</span><span class="p">,</span> <span class="n">orbvb</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
 
-        <span class="n">v1ao</span> <span class="o">=</span> <span class="n">vresp</span><span class="p">(</span><span class="n">dmov</span><span class="p">)</span>
-        <span class="n">v1a</span> <span class="o">=</span> <span class="n">_ao2mo</span><span class="o">.</span><span class="n">nr_e2</span><span class="p">(</span><span class="n">v1ao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mo_a</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nmo</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
-        <span class="n">v1b</span> <span class="o">=</span> <span class="n">_ao2mo</span><span class="o">.</span><span class="n">nr_e2</span><span class="p">(</span><span class="n">v1ao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mo_b</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">nmo</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">zs</span><span class="p">):</span>
-            <span class="n">za</span> <span class="o">=</span> <span class="n">z</span><span class="p">[:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
-            <span class="n">zb</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
-            <span class="n">v1a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ia,ia-&gt;ia&#39;</span><span class="p">,</span> <span class="n">e_ia_a</span><span class="p">,</span> <span class="n">za</span><span class="p">)</span>
-            <span class="n">v1b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ia,ia-&gt;ia&#39;</span><span class="p">,</span> <span class="n">e_ia_b</span><span class="p">,</span> <span class="n">zb</span><span class="p">)</span>
+        <span class="n">za</span> <span class="o">=</span> <span class="n">zs</span><span class="p">[:,:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
+        <span class="n">zb</span> <span class="o">=</span> <span class="n">zs</span><span class="p">[:,</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
+        <span class="n">dmova</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xov,po,qv-&gt;xpq&#39;</span><span class="p">,</span> <span class="n">za</span><span class="p">,</span> <span class="n">orboa</span><span class="p">,</span> <span class="n">orbva</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
+        <span class="n">dmovb</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xov,po,qv-&gt;xpq&#39;</span><span class="p">,</span> <span class="n">zb</span><span class="p">,</span> <span class="n">orbob</span><span class="p">,</span> <span class="n">orbvb</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
+
+        <span class="n">v1ao</span> <span class="o">=</span> <span class="n">vresp</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">((</span><span class="n">dmova</span><span class="p">,</span><span class="n">dmovb</span><span class="p">)))</span>
+
+        <span class="n">v1a</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xpq,po,qv-&gt;xov&#39;</span><span class="p">,</span> <span class="n">v1ao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">orboa</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orbva</span><span class="p">)</span>
+        <span class="n">v1b</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xpq,po,qv-&gt;xov&#39;</span><span class="p">,</span> <span class="n">v1ao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">orbob</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orbvb</span><span class="p">)</span>
+        <span class="n">v1a</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xia,ia-&gt;xia&#39;</span><span class="p">,</span> <span class="n">za</span><span class="p">,</span> <span class="n">e_ia_a</span><span class="p">)</span>
+        <span class="n">v1b</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xia,ia-&gt;xia&#39;</span><span class="p">,</span> <span class="n">zb</span><span class="p">,</span> <span class="n">e_ia_b</span><span class="p">)</span>
+
+        <span class="n">nz</span> <span class="o">=</span> <span class="n">zs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">hx</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">v1a</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">v1b</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
         <span class="k">if</span> <span class="n">wfnsym</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
             <span class="n">hx</span><span class="p">[:,</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
@@ -274,7 +269,7 @@
     <span class="k">return</span> <span class="n">vind</span><span class="p">,</span> <span class="n">hdiag</span></div>
 <span class="n">gen_tda_hop</span> <span class="o">=</span> <span class="n">gen_tda_operation</span>
 
-<div class="viewcode-block" id="get_ab"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.uhf.get_ab">[docs]</a><span class="k">def</span> <span class="nf">get_ab</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">mo_energy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_ab"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.get_ab">[docs]</a><span class="k">def</span> <span class="nf">get_ab</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">mo_energy</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;A and B matrices for TDDFT response function.</span>
 
 <span class="sd">    A[i,a,j,b] = \delta_{ab}\delta_{ij}(E_a - E_i) + (ia||bj)</span>
@@ -343,8 +338,6 @@
         <span class="n">b_ab</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;iajb-&gt;iajb&#39;</span><span class="p">,</span> <span class="n">eri_ab</span><span class="p">[:</span><span class="n">nocc_a</span><span class="p">,</span><span class="n">nocc_a</span><span class="p">:,:</span><span class="n">nocc_b</span><span class="p">,</span><span class="n">nocc_b</span><span class="p">:])</span>
 
     <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="s1">&#39;xc&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="s1">&#39;_numint&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
-        <span class="kn">from</span> <span class="nn">pyscf.dft</span> <span class="k">import</span> <span class="n">rks</span>
-        <span class="kn">from</span> <span class="nn">pyscf.dft</span> <span class="k">import</span> <span class="n">numint</span>
         <span class="n">ni</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">_numint</span>
         <span class="n">ni</span><span class="o">.</span><span class="n">libxc</span><span class="o">.</span><span class="n">test_deriv_order</span><span class="p">(</span><span class="n">mf</span><span class="o">.</span><span class="n">xc</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">raise_error</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="s1">&#39;nlc&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
@@ -482,7 +475,7 @@
 
     <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span></div>
 
-<div class="viewcode-block" id="get_nto"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.uhf.get_nto">[docs]</a><span class="k">def</span> <span class="nf">get_nto</span><span class="p">(</span><span class="n">tdobj</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">OUTPUT_THRESHOLD</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="get_nto"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.get_nto">[docs]</a><span class="k">def</span> <span class="nf">get_nto</span><span class="p">(</span><span class="n">tdobj</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">OUTPUT_THRESHOLD</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Natural transition orbital analysis.</span>
 
@@ -732,10 +725,6 @@
     <span class="n">orbv_a</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">orbo_b</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">][:,</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">orbv_b</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">][:,</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">nocc_a</span> <span class="o">=</span> <span class="n">orbo_a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">nvir_a</span> <span class="o">=</span> <span class="n">orbv_a</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">nocc_b</span> <span class="o">=</span> <span class="n">orbo_b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">nvir_b</span> <span class="o">=</span> <span class="n">orbv_b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">ints_a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...pq,pi,qj-&gt;...ij&#39;</span><span class="p">,</span> <span class="n">ints</span><span class="p">,</span> <span class="n">orbo_a</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orbv_a</span><span class="p">)</span>
     <span class="n">ints_b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;...pq,pi,qj-&gt;...ij&#39;</span><span class="p">,</span> <span class="n">ints</span><span class="p">,</span> <span class="n">orbo_b</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orbv_b</span><span class="p">)</span>
@@ -753,7 +742,7 @@
     <span class="k">return</span> <span class="n">pol</span>
 
 
-<span class="k">class</span> <span class="nc">TDA</span><span class="p">(</span><span class="n">rhf</span><span class="o">.</span><span class="n">TDA</span><span class="p">):</span>
+<div class="viewcode-block" id="TDA"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.TDA">[docs]</a><span class="k">class</span> <span class="nc">TDA</span><span class="p">(</span><span class="n">rhf</span><span class="o">.</span><span class="n">TDA</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">dump_flags</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">new_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
@@ -774,14 +763,14 @@
             <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Ground state SCF is not converged&#39;</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">gen_vind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">):</span>
+<div class="viewcode-block" id="TDA.gen_vind"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.TDA.gen_vind">[docs]</a>    <span class="k">def</span> <span class="nf">gen_vind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Compute Ax&#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">gen_tda_hop</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wfnsym</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gen_tda_hop</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wfnsym</span><span class="p">)</span></div>
 
-    <span class="nd">@lib</span><span class="o">.</span><span class="n">with_doc</span><span class="p">(</span><span class="n">get_ab</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+<div class="viewcode-block" id="TDA.get_ab"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.TDA.get_ab">[docs]</a>    <span class="nd">@lib</span><span class="o">.</span><span class="n">with_doc</span><span class="p">(</span><span class="n">get_ab</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">get_ab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">mf</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">mf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scf</span>
-        <span class="k">return</span> <span class="n">get_ab</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">get_ab</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">init_guess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">,</span> <span class="n">nstates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">nstates</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">nstates</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nstates</span>
@@ -802,10 +791,10 @@
                 <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">symm</span><span class="o">.</span><span class="n">irrep_name2id</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">groupname</span><span class="p">,</span> <span class="n">wfnsym</span><span class="p">)</span>
             <span class="n">orbsyma</span><span class="p">,</span> <span class="n">orbsymb</span> <span class="o">=</span> <span class="n">uhf_symm</span><span class="o">.</span><span class="n">get_orbsym</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mf</span><span class="o">.</span><span class="n">mo_coeff</span><span class="p">)</span>
             <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">wfnsym</span> <span class="o">%</span> <span class="mi">10</span>  <span class="c1"># convert to D2h subgroup</span>
-            <span class="n">orbsyma</span> <span class="o">=</span> <span class="n">orbsyma</span> <span class="o">%</span> <span class="mi">10</span>
-            <span class="n">orbsymb</span> <span class="o">=</span> <span class="n">orbsymb</span> <span class="o">%</span> <span class="mi">10</span>
-            <span class="n">e_ia_a</span><span class="p">[(</span><span class="n">orbsyma</span><span class="p">[</span><span class="n">occidxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsyma</span><span class="p">[</span><span class="n">viridxa</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e99</span>
-            <span class="n">e_ia_b</span><span class="p">[(</span><span class="n">orbsymb</span><span class="p">[</span><span class="n">occidxb</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsymb</span><span class="p">[</span><span class="n">viridxb</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e99</span>
+            <span class="n">orbsyma_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsyma</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+            <span class="n">orbsymb_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsymb</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+            <span class="n">e_ia_a</span><span class="p">[(</span><span class="n">orbsyma_in_d2h</span><span class="p">[</span><span class="n">occidxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsyma_in_d2h</span><span class="p">[</span><span class="n">viridxa</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e99</span>
+            <span class="n">e_ia_b</span><span class="p">[(</span><span class="n">orbsymb_in_d2h</span><span class="p">[</span><span class="n">occidxb</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsymb_in_d2h</span><span class="p">[</span><span class="n">viridxb</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e99</span>
 
         <span class="n">e_ia</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">e_ia_a</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">e_ia_b</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span>
         <span class="n">nov</span> <span class="o">=</span> <span class="n">e_ia</span><span class="o">.</span><span class="n">size</span>
@@ -816,7 +805,7 @@
             <span class="n">x0</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">idx</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># lowest excitations</span>
         <span class="k">return</span> <span class="n">x0</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nstates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TDA.kernel"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.TDA.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nstates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;TDA diagonalization solver</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">cpu0</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
@@ -860,7 +849,7 @@
 
         <span class="n">log</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="s1">&#39;TDA&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">cpu0</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="s1">&#39;Excited State energies (eV)</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">*</span> <span class="n">nist</span><span class="o">.</span><span class="n">HARTREE2EV</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xy</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xy</span></div>
 
     <span class="n">analyze</span> <span class="o">=</span> <span class="n">analyze</span>
     <span class="n">get_nto</span> <span class="o">=</span> <span class="n">get_nto</span>
@@ -868,12 +857,12 @@
 
     <span class="k">def</span> <span class="nf">nuc_grad_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">pyscf.grad</span> <span class="k">import</span> <span class="n">tduhf</span>
-        <span class="k">return</span> <span class="n">tduhf</span><span class="o">.</span><span class="n">Gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tduhf</span><span class="o">.</span><span class="n">Gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <span class="n">CIS</span> <span class="o">=</span> <span class="n">TDA</span>
 
 
-<div class="viewcode-block" id="gen_tdhf_operation"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.uhf.gen_tdhf_operation">[docs]</a><span class="k">def</span> <span class="nf">gen_tdhf_operation</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">fock_ao</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_tdhf_operation"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.gen_tdhf_operation">[docs]</a><span class="k">def</span> <span class="nf">gen_tdhf_operation</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">fock_ao</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generate function to compute</span>
 
 <span class="sd">    [ A  B][X]</span>
@@ -903,10 +892,10 @@
             <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">symm</span><span class="o">.</span><span class="n">irrep_name2id</span><span class="p">(</span><span class="n">mol</span><span class="o">.</span><span class="n">groupname</span><span class="p">,</span> <span class="n">wfnsym</span><span class="p">)</span>
         <span class="n">orbsyma</span><span class="p">,</span> <span class="n">orbsymb</span> <span class="o">=</span> <span class="n">uhf_symm</span><span class="o">.</span><span class="n">get_orbsym</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">)</span>
         <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">wfnsym</span> <span class="o">%</span> <span class="mi">10</span>  <span class="c1"># convert to D2h subgroup</span>
-        <span class="n">orbsyma</span> <span class="o">=</span> <span class="n">orbsyma</span> <span class="o">%</span> <span class="mi">10</span>
-        <span class="n">orbsymb</span> <span class="o">=</span> <span class="n">orbsymb</span> <span class="o">%</span> <span class="mi">10</span>
-        <span class="n">sym_forbida</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsyma</span><span class="p">[</span><span class="n">occidxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsyma</span><span class="p">[</span><span class="n">viridxa</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
-        <span class="n">sym_forbidb</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsymb</span><span class="p">[</span><span class="n">occidxb</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsymb</span><span class="p">[</span><span class="n">viridxb</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
+        <span class="n">orbsyma_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsyma</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+        <span class="n">orbsymb_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsymb</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+        <span class="n">sym_forbida</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsyma_in_d2h</span><span class="p">[</span><span class="n">occidxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsyma_in_d2h</span><span class="p">[</span><span class="n">viridxa</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
+        <span class="n">sym_forbidb</span> <span class="o">=</span> <span class="p">(</span><span class="n">orbsymb_in_d2h</span><span class="p">[</span><span class="n">occidxb</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">^</span> <span class="n">orbsymb_in_d2h</span><span class="p">[</span><span class="n">viridxb</span><span class="p">])</span> <span class="o">!=</span> <span class="n">wfnsym</span>
         <span class="n">sym_forbid</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">sym_forbida</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">sym_forbidb</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span>
 
     <span class="n">e_ia_a</span> <span class="o">=</span> <span class="p">(</span><span class="n">mo_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">viridxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">mo_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">occidxa</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
@@ -915,65 +904,63 @@
     <span class="k">if</span> <span class="n">wfnsym</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
         <span class="n">hdiag</span><span class="p">[</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">hdiag</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">hdiag</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">hdiag</span><span class="o">.</span><span class="n">ravel</span><span class="p">()))</span>
-    <span class="n">mo_a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">orboa</span><span class="p">,</span><span class="n">orbva</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
-    <span class="n">mo_b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">orbob</span><span class="p">,</span><span class="n">orbvb</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
 
     <span class="n">mem_now</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">current_memory</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">max_memory</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="n">mf</span><span class="o">.</span><span class="n">max_memory</span><span class="o">*.</span><span class="mi">8</span><span class="o">-</span><span class="n">mem_now</span><span class="p">)</span>
-    <span class="n">vresp</span> <span class="o">=</span> <span class="n">_gen_uhf_response</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_memory</span><span class="o">=</span><span class="n">max_memory</span><span class="p">)</span>
+    <span class="n">vresp</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">gen_response</span><span class="p">(</span><span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_memory</span><span class="o">=</span><span class="n">max_memory</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">vind</span><span class="p">(</span><span class="n">xys</span><span class="p">):</span>
         <span class="n">nz</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">xys</span><span class="p">)</span>
+        <span class="n">xys</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">xys</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">wfnsym</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
             <span class="c1"># shape(nz,2,-1): 2 ~ X,Y</span>
-            <span class="n">xys</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">xys</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xys</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">xys</span><span class="p">)</span>
             <span class="n">xys</span><span class="p">[:,:,</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">dms</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="n">nz</span><span class="p">,</span><span class="n">nao</span><span class="p">,</span><span class="n">nao</span><span class="p">))</span> <span class="c1"># 2 ~ alpha,beta</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nz</span><span class="p">):</span>
-            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">xa</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
-            <span class="n">xb</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
-            <span class="n">ya</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
-            <span class="n">yb</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
-            <span class="n">dmx</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orboa</span><span class="p">,</span> <span class="n">xa</span><span class="p">,</span> <span class="n">orbva</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-            <span class="n">dmy</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbva</span><span class="p">,</span> <span class="n">ya</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">orboa</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-            <span class="n">dms</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmx</span> <span class="o">+</span> <span class="n">dmy</span>  <span class="c1"># AX + BY</span>
-            <span class="n">dmx</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbob</span><span class="p">,</span> <span class="n">xb</span><span class="p">,</span> <span class="n">orbvb</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-            <span class="n">dmy</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbvb</span><span class="p">,</span> <span class="n">yb</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">orbob</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
-            <span class="n">dms</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dmx</span> <span class="o">+</span> <span class="n">dmy</span>  <span class="c1"># AX + BY</span>
 
-        <span class="n">v1ao</span>  <span class="o">=</span> <span class="n">vresp</span><span class="p">(</span><span class="n">dms</span><span class="p">)</span>
-        <span class="n">v1avo</span> <span class="o">=</span> <span class="n">_ao2mo</span><span class="o">.</span><span class="n">nr_e2</span><span class="p">(</span><span class="n">v1ao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mo_a</span><span class="p">,</span> <span class="p">(</span><span class="n">nocca</span><span class="p">,</span><span class="n">nmo</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nocca</span><span class="p">))</span>
-        <span class="n">v1bvo</span> <span class="o">=</span> <span class="n">_ao2mo</span><span class="o">.</span><span class="n">nr_e2</span><span class="p">(</span><span class="n">v1ao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mo_b</span><span class="p">,</span> <span class="p">(</span><span class="n">noccb</span><span class="p">,</span><span class="n">nmo</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">noccb</span><span class="p">))</span>
-        <span class="n">v1aov</span> <span class="o">=</span> <span class="n">_ao2mo</span><span class="o">.</span><span class="n">nr_e2</span><span class="p">(</span><span class="n">v1ao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mo_a</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nmo</span><span class="p">))</span>
-        <span class="n">v1bov</span> <span class="o">=</span> <span class="n">_ao2mo</span><span class="o">.</span><span class="n">nr_e2</span><span class="p">(</span><span class="n">v1ao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mo_b</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">nmo</span><span class="p">))</span>
-        <span class="n">hx</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">nz</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">nvira</span><span class="o">*</span><span class="n">nocca</span><span class="o">+</span><span class="n">nvirb</span><span class="o">*</span><span class="n">noccb</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">v1avo</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nz</span><span class="p">):</span>
-            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">xys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-            <span class="n">hx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">,:</span><span class="n">nvira</span><span class="o">*</span><span class="n">nocca</span><span class="p">]</span> <span class="o">=</span> <span class="n">v1aov</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="n">hx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">nvira</span><span class="o">*</span><span class="n">nocca</span><span class="p">:]</span> <span class="o">=</span> <span class="n">v1bov</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="n">hx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+=</span> <span class="n">e_ia</span> <span class="o">*</span> <span class="n">x</span>  <span class="c1"># AX</span>
-            <span class="n">hx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,:</span><span class="n">nvira</span><span class="o">*</span><span class="n">nocca</span><span class="p">]</span> <span class="o">=-</span><span class="n">v1avo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nvira</span><span class="p">,</span><span class="n">nocca</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="n">hx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">nvira</span><span class="o">*</span><span class="n">nocca</span><span class="p">:]</span> <span class="o">=-</span><span class="n">v1bvo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nvirb</span><span class="p">,</span><span class="n">noccb</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
-            <span class="n">hx</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-=</span> <span class="n">e_ia</span> <span class="o">*</span> <span class="n">y</span>  <span class="c1">#-AY</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">xys</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">xa</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[:,:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
+        <span class="n">xb</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[:,</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
+        <span class="n">ya</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[:,:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)</span>
+        <span class="n">yb</span> <span class="o">=</span> <span class="n">ys</span><span class="p">[:,</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)</span>
+        <span class="c1"># dms = AX + BY</span>
+        <span class="n">dmsa</span>  <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xov,po,qv-&gt;xpq&#39;</span><span class="p">,</span> <span class="n">xa</span><span class="p">,</span> <span class="n">orboa</span><span class="p">,</span> <span class="n">orbva</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
+        <span class="n">dmsa</span> <span class="o">+=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xov,pv,qo-&gt;xpq&#39;</span><span class="p">,</span> <span class="n">ya</span><span class="p">,</span> <span class="n">orbva</span><span class="p">,</span> <span class="n">orboa</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
+        <span class="n">dmsb</span>  <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xov,po,qv-&gt;xpq&#39;</span><span class="p">,</span> <span class="n">xb</span><span class="p">,</span> <span class="n">orbob</span><span class="p">,</span> <span class="n">orbvb</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
+        <span class="n">dmsb</span> <span class="o">+=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xov,pv,qo-&gt;xpq&#39;</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">orbvb</span><span class="p">,</span> <span class="n">orbob</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
 
+        <span class="n">v1ao</span> <span class="o">=</span> <span class="n">vresp</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">((</span><span class="n">dmsa</span><span class="p">,</span><span class="n">dmsb</span><span class="p">)))</span>
+
+        <span class="n">v1aov</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xpq,po,qv-&gt;xov&#39;</span><span class="p">,</span> <span class="n">v1ao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">orboa</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orbva</span><span class="p">)</span>
+        <span class="n">v1bov</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xpq,po,qv-&gt;xov&#39;</span><span class="p">,</span> <span class="n">v1ao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">orbob</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orbvb</span><span class="p">)</span>
+        <span class="n">v1avo</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xpq,pv,qo-&gt;xov&#39;</span><span class="p">,</span> <span class="n">v1ao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">orbva</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orboa</span><span class="p">)</span>
+        <span class="n">v1bvo</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;xpq,pv,qo-&gt;xov&#39;</span><span class="p">,</span> <span class="n">v1ao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">orbvb</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">orbob</span><span class="p">)</span>
+
+        <span class="n">v1ov</span> <span class="o">=</span> <span class="n">xs</span> <span class="o">*</span> <span class="n">e_ia</span>  <span class="c1"># AX</span>
+        <span class="n">v1vo</span> <span class="o">=</span> <span class="n">ys</span> <span class="o">*</span> <span class="n">e_ia</span>  <span class="c1"># AY</span>
+        <span class="n">v1ov</span><span class="p">[:,:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v1aov</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">v1vo</span><span class="p">[:,:</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">]</span> <span class="o">+=</span> <span class="n">v1avo</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">v1ov</span><span class="p">[:,</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span> <span class="o">+=</span> <span class="n">v1bov</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">v1vo</span><span class="p">[:,</span><span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span><span class="p">:]</span> <span class="o">+=</span> <span class="n">v1bvo</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">wfnsym</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">mol</span><span class="o">.</span><span class="n">symmetry</span><span class="p">:</span>
-            <span class="n">hx</span><span class="p">[:,:,</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="n">hx</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nz</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">v1ov</span><span class="p">[:,</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">v1vo</span><span class="p">[:,</span><span class="n">sym_forbid</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">hx</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">v1ov</span><span class="p">,</span> <span class="o">-</span><span class="n">v1vo</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">hx</span>
 
     <span class="k">return</span> <span class="n">vind</span><span class="p">,</span> <span class="n">hdiag</span></div>
 
-<span class="k">class</span> <span class="nc">TDHF</span><span class="p">(</span><span class="n">TDA</span><span class="p">):</span>
-    <span class="nd">@lib</span><span class="o">.</span><span class="n">with_doc</span><span class="p">(</span><span class="n">gen_tdhf_operation</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TDHF"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.TDHF">[docs]</a><span class="k">class</span> <span class="nc">TDHF</span><span class="p">(</span><span class="n">TDA</span><span class="p">):</span>
+<div class="viewcode-block" id="TDHF.gen_vind"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.TDHF.gen_vind">[docs]</a>    <span class="nd">@lib</span><span class="o">.</span><span class="n">with_doc</span><span class="p">(</span><span class="n">gen_tdhf_operation</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">gen_vind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">gen_tdhf_operation</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">singlet</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wfnsym</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gen_tdhf_operation</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">singlet</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wfnsym</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">init_guess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">,</span> <span class="n">nstates</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">x0</span> <span class="o">=</span> <span class="n">TDA</span><span class="o">.</span><span class="n">init_guess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">,</span> <span class="n">nstates</span><span class="p">,</span> <span class="n">wfnsym</span><span class="p">)</span>
         <span class="n">y0</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nstates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TDHF.kernel"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.uhf.TDHF.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x0</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nstates</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;TDHF diagonalization with non-Hermitian eigenvalue solver</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">cpu0</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
@@ -1031,11 +1018,11 @@
 
         <span class="n">log</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="s1">&#39;TDDFT&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">cpu0</span><span class="p">)</span>
         <span class="n">log</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="s1">&#39;Excited State energies (eV)</span><span class="se">\n</span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">*</span> <span class="n">nist</span><span class="o">.</span><span class="n">HARTREE2EV</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xy</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xy</span></div>
 
     <span class="k">def</span> <span class="nf">nuc_grad_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">pyscf.grad</span> <span class="k">import</span> <span class="n">tduhf</span>
-        <span class="k">return</span> <span class="n">tduhf</span><span class="o">.</span><span class="n">Gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tduhf</span><span class="o">.</span><span class="n">Gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <span class="n">RPA</span> <span class="o">=</span> <span class="n">TDUHF</span> <span class="o">=</span> <span class="n">TDHF</span>
 
@@ -1090,9 +1077,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1101,11 +1086,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1118,37 +1103,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

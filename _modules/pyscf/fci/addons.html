@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -144,8 +146,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -158,7 +158,7 @@
             
   <h1>Source code for pyscf.fci.addons</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># Copyright 2014-2018 The PySCF Developers. All Rights Reserved.</span>
+<span class="c1"># Copyright 2014-2020 The PySCF Developers. All Rights Reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -174,6 +174,7 @@
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">lib</span>
 <span class="kn">from</span> <span class="nn">pyscf.fci</span> <span class="k">import</span> <span class="n">cistring</span>
@@ -185,7 +186,7 @@
 <span class="n">PENALTY</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;fci_addons_fix_spin_shift&#39;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="large_ci"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.large_ci">[docs]</a><span class="k">def</span> <span class="nf">large_ci</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">LARGE_CI_TOL</span><span class="p">,</span> <span class="n">return_strs</span><span class="o">=</span><span class="n">RETURN_STRS</span><span class="p">):</span>
+<div class="viewcode-block" id="large_ci"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.large_ci">[docs]</a><span class="k">def</span> <span class="nf">large_ci</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="n">LARGE_CI_TOL</span><span class="p">,</span> <span class="n">return_strs</span><span class="o">=</span><span class="n">RETURN_STRS</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Search for the largest CI coefficients</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">neleca</span><span class="p">,</span> <span class="n">nelecb</span> <span class="o">=</span> <span class="n">_unpack_nelec</span><span class="p">(</span><span class="n">nelec</span><span class="p">)</span>
@@ -209,7 +210,7 @@
         <span class="n">occslstb</span> <span class="o">=</span> <span class="n">cistring</span><span class="o">.</span><span class="n">_strs2occslst</span><span class="p">(</span><span class="n">strsb</span><span class="p">,</span> <span class="n">norb</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="n">addra</span><span class="p">,</span><span class="n">addrb</span><span class="p">],</span> <span class="n">occslsta</span><span class="p">,</span> <span class="n">occslstb</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="initguess_triplet"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.initguess_triplet">[docs]</a><span class="k">def</span> <span class="nf">initguess_triplet</span><span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">binstring</span><span class="p">):</span>
+<div class="viewcode-block" id="initguess_triplet"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.initguess_triplet">[docs]</a><span class="k">def</span> <span class="nf">initguess_triplet</span><span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">binstring</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generate a triplet initial guess for FCI solver</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">neleca</span><span class="p">,</span> <span class="n">nelecb</span> <span class="o">=</span> <span class="n">_unpack_nelec</span><span class="p">(</span><span class="n">nelec</span><span class="p">)</span>
@@ -221,7 +222,7 @@
     <span class="n">ci0</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">addr</span><span class="p">]</span> <span class="o">=-</span><span class="n">numpy</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ci0</span></div>
 
-<div class="viewcode-block" id="symm_initguess"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.symm_initguess">[docs]</a><span class="k">def</span> <span class="nf">symm_initguess</span><span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">irrep_nelec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="symm_initguess"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.symm_initguess">[docs]</a><span class="k">def</span> <span class="nf">symm_initguess</span><span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">irrep_nelec</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Generate CI wavefunction initial guess which has the given symmetry.</span>
 
 <span class="sd">    Args:</span>
@@ -361,7 +362,7 @@
     <span class="k">return</span> <span class="n">ci1</span></div>
 
 
-<div class="viewcode-block" id="cylindrical_init_guess"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.cylindrical_init_guess">[docs]</a><span class="k">def</span> <span class="nf">cylindrical_init_guess</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="viewcode-block" id="cylindrical_init_guess"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.cylindrical_init_guess">[docs]</a><span class="k">def</span> <span class="nf">cylindrical_init_guess</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">singlet</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                            <span class="n">nroots</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    FCI initial guess for system of cylindrical symmetry.</span>
@@ -510,15 +511,17 @@
     <span class="n">ci</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">strsa</span><span class="o">.</span><span class="n">size</span><span class="p">,</span><span class="n">strsb</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
     <span class="n">airreps</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">strsa</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
     <span class="n">birreps</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">strsb</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ir</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">orbsym</span><span class="p">):</span>
+    <span class="n">orbsym_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsym</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="n">wfnsym_in_d2h</span> <span class="o">=</span> <span class="n">wfnsym</span> <span class="o">%</span> <span class="mi">10</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ir</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">orbsym_in_d2h</span><span class="p">):</span>
         <span class="n">airreps</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">strsa</span><span class="p">,</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">^=</span> <span class="n">ir</span>
         <span class="n">birreps</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">bitwise_and</span><span class="p">(</span><span class="n">strsb</span><span class="p">,</span> <span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">^=</span> <span class="n">ir</span>
-    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">airreps</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="n">birreps</span><span class="p">)</span> <span class="o">==</span> <span class="n">wfnsym</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">airreps</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="n">birreps</span><span class="p">)</span> <span class="o">==</span> <span class="n">wfnsym_in_d2h</span>
     <span class="n">ci1</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span>
     <span class="n">ci1</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">ci</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
     <span class="n">ci1</span> <span class="o">*=</span> <span class="mi">1</span><span class="o">/</span><span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">ci1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ci1</span>
-<div class="viewcode-block" id="symmetrize_wfn"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.symmetrize_wfn">[docs]</a><span class="k">def</span> <span class="nf">symmetrize_wfn</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="symmetrize_wfn"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.symmetrize_wfn">[docs]</a><span class="k">def</span> <span class="nf">symmetrize_wfn</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">,</span> <span class="n">wfnsym</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Symmetrize the CI wavefunction by zeroing out the determinants which</span>
 <span class="sd">    do not have the right symmetry.</span>
 
@@ -547,25 +550,20 @@
 <span class="k">def</span> <span class="nf">_guess_wfnsym</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">strsa</span><span class="p">,</span> <span class="n">strsb</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">):</span>
     <span class="n">na</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strsa</span><span class="p">)</span>
     <span class="n">nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strsb</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ci</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">assert</span><span class="p">(</span><span class="n">ci</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">na</span><span class="o">*</span><span class="n">nb</span><span class="p">)</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">ci</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">assert</span><span class="p">(</span><span class="n">ci</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="n">na</span><span class="o">*</span><span class="n">nb</span><span class="p">)</span>
-        <span class="n">idx</span> <span class="o">=</span> <span class="n">ci</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">ci</span><span class="p">)</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
     <span class="n">stra</span> <span class="o">=</span> <span class="n">strsa</span><span class="p">[</span><span class="n">idx</span> <span class="o">//</span> <span class="n">nb</span><span class="p">]</span>
     <span class="n">strb</span> <span class="o">=</span> <span class="n">strsb</span><span class="p">[</span><span class="n">idx</span> <span class="o">%</span> <span class="n">nb</span> <span class="p">]</span>
 
-    <span class="n">orbsym</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsym</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>  <span class="c1"># convert to D2h irreps</span>
+    <span class="n">orbsym_in_d2h</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">orbsym</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10</span>  <span class="c1"># convert to D2h irreps</span>
     <span class="n">airrep</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">birrep</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ir</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">orbsym</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ir</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">orbsym_in_d2h</span><span class="p">):</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">stra</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">)):</span>
             <span class="n">airrep</span> <span class="o">^=</span> <span class="n">ir</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">strb</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span><span class="p">)):</span>
             <span class="n">birrep</span> <span class="o">^=</span> <span class="n">ir</span>
     <span class="k">return</span> <span class="n">airrep</span> <span class="o">^</span> <span class="n">birrep</span>
-<div class="viewcode-block" id="guess_wfnsym"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.guess_wfnsym">[docs]</a><span class="k">def</span> <span class="nf">guess_wfnsym</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">):</span>
+<div class="viewcode-block" id="guess_wfnsym"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.guess_wfnsym">[docs]</a><span class="k">def</span> <span class="nf">guess_wfnsym</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Guess the wavefunction symmetry based on the non-zero elements in the</span>
 <span class="sd">    given CI coefficients.</span>
 
@@ -585,10 +583,17 @@
     <span class="n">neleca</span><span class="p">,</span> <span class="n">nelecb</span> <span class="o">=</span> <span class="n">_unpack_nelec</span><span class="p">(</span><span class="n">nelec</span><span class="p">)</span>
     <span class="n">strsa</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">),</span> <span class="n">neleca</span><span class="p">))</span>
     <span class="n">strsb</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">),</span> <span class="n">nelecb</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">_guess_wfnsym</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">strsa</span><span class="p">,</span> <span class="n">strsb</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">)</span></div>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">ci</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">_guess_wfnsym</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">strsa</span><span class="p">,</span> <span class="n">strsb</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">wfnsym</span> <span class="o">=</span> <span class="p">[</span><span class="n">_guess_wfnsym</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">strsa</span><span class="p">,</span> <span class="n">strsb</span><span class="p">,</span> <span class="n">orbsym</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">wfnsym</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">wfnsym</span><span class="p">):</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Different wfnsym </span><span class="si">%s</span><span class="s1"> found in different CI vecotrs&#39;</span> <span class="o">%</span> <span class="n">wfnsym</span><span class="p">)</span>
+        <span class="n">wfnsym</span> <span class="o">=</span> <span class="n">wfnsym</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">wfnsym</span></div>
 
 
-<div class="viewcode-block" id="des_a"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.des_a">[docs]</a><span class="k">def</span> <span class="nf">des_a</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
+<div class="viewcode-block" id="des_a"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.des_a">[docs]</a><span class="k">def</span> <span class="nf">des_a</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;Construct (N-1)-electron wavefunction by removing an alpha electron from</span>
 <span class="sd">    the N-electron wavefunction.</span>
 
@@ -629,7 +634,7 @@
     <span class="n">ci1</span><span class="p">[</span><span class="n">addr_ci1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sign</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">ci0</span><span class="p">[</span><span class="n">addr_ci0</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">ci1</span></div>
 
-<div class="viewcode-block" id="des_b"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.des_b">[docs]</a><span class="k">def</span> <span class="nf">des_b</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
+<div class="viewcode-block" id="des_b"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.des_b">[docs]</a><span class="k">def</span> <span class="nf">des_b</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;Construct (N-1)-electron wavefunction by removing a beta electron from</span>
 <span class="sd">    N-electron wavefunction.</span>
 
@@ -667,7 +672,7 @@
     <span class="n">ci1</span><span class="p">[:,</span><span class="n">addr_ci1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ci0</span><span class="p">[:,</span><span class="n">addr_ci0</span><span class="p">]</span> <span class="o">*</span> <span class="n">sign</span>
     <span class="k">return</span> <span class="n">ci1</span></div>
 
-<div class="viewcode-block" id="cre_a"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.cre_a">[docs]</a><span class="k">def</span> <span class="nf">cre_a</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
+<div class="viewcode-block" id="cre_a"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.cre_a">[docs]</a><span class="k">def</span> <span class="nf">cre_a</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;Construct (N+1)-electron wavefunction by adding an alpha electron in</span>
 <span class="sd">    the N-electron wavefunction.</span>
 
@@ -708,7 +713,7 @@
 
 <span class="c1"># construct (N+1)-electron wavefunction by adding a beta electron to</span>
 <span class="c1"># N-electron wavefunction:</span>
-<div class="viewcode-block" id="cre_b"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.cre_b">[docs]</a><span class="k">def</span> <span class="nf">cre_b</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
+<div class="viewcode-block" id="cre_b"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.cre_b">[docs]</a><span class="k">def</span> <span class="nf">cre_b</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">neleca_nelecb</span><span class="p">,</span> <span class="n">ap_id</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;Construct (N+1)-electron wavefunction by adding a beta electron in</span>
 <span class="sd">    the N-electron wavefunction.</span>
 
@@ -746,7 +751,7 @@
     <span class="n">ci1</span><span class="p">[:,</span><span class="n">addr_ci1</span><span class="p">]</span> <span class="o">=</span> <span class="n">ci0</span><span class="p">[:,</span><span class="n">addr_ci0</span><span class="p">]</span> <span class="o">*</span> <span class="n">sign</span>
     <span class="k">return</span> <span class="n">ci1</span></div>
 
-<div class="viewcode-block" id="det_overlap"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.det_overlap">[docs]</a><span class="k">def</span> <span class="nf">det_overlap</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="det_overlap"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.det_overlap">[docs]</a><span class="k">def</span> <span class="nf">det_overlap</span><span class="p">(</span><span class="n">string1</span><span class="p">,</span> <span class="n">string2</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Determinants overlap on non-orthogonal one-particle basis&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># orthogonal basis with s_ij = delta_ij</span>
         <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">string1</span> <span class="o">==</span> <span class="n">string2</span><span class="p">)</span>
@@ -766,7 +771,7 @@
         <span class="n">s1</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">take_2d</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">idx1</span><span class="p">,</span> <span class="n">idx2</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="overlap"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.overlap">[docs]</a><span class="k">def</span> <span class="nf">overlap</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="overlap"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.overlap">[docs]</a><span class="k">def</span> <span class="nf">overlap</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span> <span class="n">ket</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Overlap between two CI wavefunctions</span>
 
 <span class="sd">    Args:</span>
@@ -777,7 +782,7 @@
         <span class="n">bra</span> <span class="o">=</span> <span class="n">transform_ci_for_orbital_rotation</span><span class="p">(</span><span class="n">bra</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">bra</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">ket</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="fix_spin_"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.fix_spin_">[docs]</a><span class="k">def</span> <span class="nf">fix_spin_</span><span class="p">(</span><span class="n">fciobj</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="n">PENALTY</span><span class="p">,</span> <span class="n">ss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="fix_spin_"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.fix_spin_">[docs]</a><span class="k">def</span> <span class="nf">fix_spin_</span><span class="p">(</span><span class="n">fciobj</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="n">PENALTY</span><span class="p">,</span> <span class="n">ss</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;If FCI solver cannot stay on spin eigenfunction, this function can</span>
 <span class="sd">    add a shift to the states which have wrong spin.</span>
 
@@ -798,8 +803,6 @@
 <span class="sd">            A modified FCI object based on fciobj.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="kn">import</span> <span class="nn">types</span>
-    <span class="kn">from</span> <span class="nn">pyscf.fci</span> <span class="k">import</span> <span class="n">spin_op</span>
-    <span class="kn">from</span> <span class="nn">pyscf.fci</span> <span class="k">import</span> <span class="n">direct_spin0</span>
     <span class="k">if</span> <span class="s1">&#39;ss_value&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;fix_spin_: kwarg &quot;ss_value&quot; will be removed in future release. &#39;</span>
                          <span class="s1">&#39;It was replaced by &quot;ss&quot;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -845,7 +848,28 @@
 <span class="k">def</span> <span class="nf">fix_spin</span><span class="p">(</span><span class="n">fciobj</span><span class="p">,</span> <span class="n">shift</span><span class="o">=.</span><span class="mi">1</span><span class="p">,</span> <span class="n">ss</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">fix_spin_</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">fciobj</span><span class="p">),</span> <span class="n">shift</span><span class="p">,</span> <span class="n">ss</span><span class="p">)</span>
 
-<div class="viewcode-block" id="transform_ci_for_orbital_rotation"><a class="viewcode-back" href="../../../fci.html#pyscf.fci.addons.transform_ci_for_orbital_rotation">[docs]</a><span class="k">def</span> <span class="nf">transform_ci_for_orbital_rotation</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+<div class="viewcode-block" id="transform_ci_for_orbital_rotation"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.transform_ci_for_orbital_rotation">[docs]</a><span class="k">def</span> <span class="nf">transform_ci_for_orbital_rotation</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Transform CI coefficients (dimension conserved) to the representation in</span>
+<span class="sd">    new one-particle basis.  Solving CI problem for Hamiltonian h1, h2 defined</span>
+<span class="sd">    in old basis,</span>
+<span class="sd">    CI_old = fci.kernel(h1, h2, ...)</span>
+<span class="sd">    Given orbital rotation u, the CI problem can be either solved by</span>
+<span class="sd">    transforming the Hamiltonian, or transforming the coefficients.</span>
+<span class="sd">    CI_new = fci.kernel(u^T*h1*u, ...) = transform_ci_for_orbital_rotation(CI_old, u)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        u : a squared 2D array or a list of 2D array</span>
+<span class="sd">            the orbital rotation to transform the old one-particle basis to new</span>
+<span class="sd">            one-particle basis</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">u</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">u</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">norb</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">norb</span><span class="p">)</span> <span class="ow">and</span> <span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">norb</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">transform_ci</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="transform_ci"><a class="viewcode-back" href="../../../modules/fci.html#pyscf.fci.addons.transform_ci">[docs]</a><span class="k">def</span> <span class="nf">transform_ci</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">u</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Transform CI coefficients to the representation in new one-particle basis.</span>
 <span class="sd">    Solving CI problem for Hamiltonian h1, h2 defined in old basis,</span>
 <span class="sd">    CI_old = fci.kernel(h1, h2, ...)</span>
@@ -856,59 +880,76 @@
 <span class="sd">    Args:</span>
 <span class="sd">        u : 2D array or a list of 2D array</span>
 <span class="sd">            the orbital rotation to transform the old one-particle basis to new</span>
-<span class="sd">            one-particle basis</span>
+<span class="sd">            one-particle basis. If u is not a squared matrix, the resultant CI</span>
+<span class="sd">            coefficients array may have different shape to the input CI</span>
+<span class="sd">            coefficients.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">neleca</span><span class="p">,</span> <span class="n">nelecb</span> <span class="o">=</span> <span class="n">_unpack_nelec</span><span class="p">(</span><span class="n">nelec</span><span class="p">)</span>
-    <span class="n">strsa</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">),</span> <span class="n">neleca</span><span class="p">))</span>
-    <span class="n">strsb</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">),</span> <span class="n">nelecb</span><span class="p">))</span>
-    <span class="n">one_particle_strs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">norb</span><span class="p">)])</span>
-    <span class="n">na</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strsa</span><span class="p">)</span>
-    <span class="n">nb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">strsb</span><span class="p">)</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">ci</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">na</span><span class="p">,</span> <span class="n">nb</span><span class="p">))</span>
-
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">u</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
         <span class="n">ua</span> <span class="o">=</span> <span class="n">ub</span> <span class="o">=</span> <span class="n">u</span>
+        <span class="k">assert</span> <span class="n">ua</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">ub</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">ua</span><span class="p">,</span> <span class="n">ub</span> <span class="o">=</span> <span class="n">u</span>
+    <span class="n">norb_old</span><span class="p">,</span> <span class="n">norb_new</span> <span class="o">=</span> <span class="n">ua</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">na_old</span> <span class="o">=</span> <span class="n">cistring</span><span class="o">.</span><span class="n">num_strings</span><span class="p">(</span><span class="n">norb_old</span><span class="p">,</span> <span class="n">neleca</span><span class="p">)</span>
+    <span class="n">nb_old</span> <span class="o">=</span> <span class="n">cistring</span><span class="o">.</span><span class="n">num_strings</span><span class="p">(</span><span class="n">norb_old</span><span class="p">,</span> <span class="n">nelecb</span><span class="p">)</span>
+    <span class="n">na_new</span> <span class="o">=</span> <span class="n">cistring</span><span class="o">.</span><span class="n">num_strings</span><span class="p">(</span><span class="n">norb_new</span><span class="p">,</span> <span class="n">neleca</span><span class="p">)</span>
+    <span class="n">nb_new</span> <span class="o">=</span> <span class="n">cistring</span><span class="o">.</span><span class="n">num_strings</span><span class="p">(</span><span class="n">norb_new</span><span class="p">,</span> <span class="n">nelecb</span><span class="p">)</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="n">ci</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">na_old</span><span class="p">,</span> <span class="n">nb_old</span><span class="p">)</span>
+
+    <span class="n">one_particle_strs_old</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">norb_old</span><span class="p">)])</span>
+    <span class="n">one_particle_strs_new</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">1</span><span class="o">&lt;&lt;</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">norb_new</span><span class="p">)])</span>
 
     <span class="k">if</span> <span class="n">neleca</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">trans_ci_a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">trans_ci_a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
+        <span class="n">trans_ci_a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">na_old</span><span class="p">,</span> <span class="n">na_new</span><span class="p">))</span>
+        <span class="n">strs_old</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb_old</span><span class="p">),</span> <span class="n">neleca</span><span class="p">))</span>
+
         <span class="c1"># Unitary transformation array trans_ci is the overlap between two sets of CI basis.</span>
-        <span class="n">occ_masks</span> <span class="o">=</span> <span class="p">(</span><span class="n">strsa</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">one_particle_strs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
-        <span class="n">trans_ci_a</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">na</span><span class="p">,</span><span class="n">na</span><span class="p">))</span>
-        <span class="c1">#for i in range(na): # for old basis</span>
-        <span class="c1">#    for j in range(na):</span>
-        <span class="c1">#        uij = u[occ_masks[i]][:,occ_masks[j]]</span>
+        <span class="n">occ_masks_old</span> <span class="o">=</span> <span class="p">(</span><span class="n">strs_old</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">one_particle_strs_old</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">norb_old</span> <span class="o">==</span> <span class="n">norb_new</span><span class="p">:</span>
+            <span class="n">occ_masks_new</span> <span class="o">=</span> <span class="n">occ_masks_old</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">strs_new</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb_new</span><span class="p">),</span> <span class="n">neleca</span><span class="p">))</span>
+            <span class="n">occ_masks_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">strs_new</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">one_particle_strs_new</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+
+        <span class="c1"># Perform</span>
+        <span class="c1">#for i in range(na_old): # old basis</span>
+        <span class="c1">#    for j in range(na_new): # new basis</span>
+        <span class="c1">#        uij = u[occ_masks_old[i]][:,occ_masks_new[j]]</span>
         <span class="c1">#        trans_ci_a[i,j] = numpy.linalg.det(uij)</span>
-        <span class="n">occ_idx_all_strs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">occ_masks</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">na</span><span class="p">,</span><span class="n">neleca</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">na</span><span class="p">):</span>
-            <span class="n">ui</span> <span class="o">=</span> <span class="n">ua</span><span class="p">[</span><span class="n">occ_masks</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">occ_idx_all_strs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">occ_masks_new</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">na_new</span><span class="p">,</span><span class="n">neleca</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">na_old</span><span class="p">):</span>
+            <span class="n">ui</span> <span class="o">=</span> <span class="n">ua</span><span class="p">[</span><span class="n">occ_masks_old</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
             <span class="n">minors</span> <span class="o">=</span> <span class="n">ui</span><span class="p">[</span><span class="n">occ_idx_all_strs</span><span class="p">]</span>
             <span class="n">trans_ci_a</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">minors</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">neleca</span> <span class="o">==</span> <span class="n">nelecb</span> <span class="ow">and</span> <span class="n">numpy</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">ua</span><span class="p">,</span> <span class="n">ub</span><span class="p">):</span>
         <span class="n">trans_ci_b</span> <span class="o">=</span> <span class="n">trans_ci_a</span>
+    <span class="k">elif</span> <span class="n">nelecb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">trans_ci_b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">nelecb</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">trans_ci_b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">trans_ci_b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nb_old</span><span class="p">,</span> <span class="n">nb_new</span><span class="p">))</span>
+        <span class="n">strs_old</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb_old</span><span class="p">),</span> <span class="n">nelecb</span><span class="p">))</span>
+
+        <span class="n">occ_masks_old</span> <span class="o">=</span> <span class="p">(</span><span class="n">strs_old</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">one_particle_strs_old</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">norb_old</span> <span class="o">==</span> <span class="n">norb_new</span><span class="p">:</span>
+            <span class="n">occ_masks_new</span> <span class="o">=</span> <span class="n">occ_masks_old</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">occ_masks</span> <span class="o">=</span> <span class="p">(</span><span class="n">strsb</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">one_particle_strs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
-            <span class="n">trans_ci_b</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nb</span><span class="p">,</span><span class="n">nb</span><span class="p">))</span>
-            <span class="c1">#for i in range(nb):</span>
-            <span class="c1">#    for j in range(nb):</span>
-            <span class="c1">#        uij = u[occ_masks[i]][:,occ_masks[j]]</span>
-            <span class="c1">#        trans_ci_b[i,j] = numpy.linalg.det(uij)</span>
-            <span class="n">occ_idx_all_strs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">occ_masks</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span><span class="n">nelecb</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb</span><span class="p">):</span>
-                <span class="n">ui</span> <span class="o">=</span> <span class="n">ub</span><span class="p">[</span><span class="n">occ_masks</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-                <span class="n">minors</span> <span class="o">=</span> <span class="n">ui</span><span class="p">[</span><span class="n">occ_idx_all_strs</span><span class="p">]</span>
-                <span class="n">trans_ci_b</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">minors</span><span class="p">)</span>
+            <span class="n">strs_new</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cistring</span><span class="o">.</span><span class="n">make_strings</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">norb_new</span><span class="p">),</span> <span class="n">nelecb</span><span class="p">))</span>
+            <span class="n">occ_masks_new</span> <span class="o">=</span> <span class="p">(</span><span class="n">strs_new</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">one_particle_strs_new</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+
+        <span class="n">occ_idx_all_strs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">occ_masks_new</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nb_new</span><span class="p">,</span><span class="n">nelecb</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_old</span><span class="p">):</span>
+            <span class="n">ui</span> <span class="o">=</span> <span class="n">ub</span><span class="p">[</span><span class="n">occ_masks_old</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">minors</span> <span class="o">=</span> <span class="n">ui</span><span class="p">[</span><span class="n">occ_idx_all_strs</span><span class="p">]</span>
+            <span class="n">trans_ci_b</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">minors</span><span class="p">)</span>
 
     <span class="c1"># Transform old basis to new basis for all alpha-electron excitations</span>
-    <span class="n">ci</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">trans_ci_a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">ci</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">na</span><span class="p">,</span><span class="n">nb</span><span class="p">))</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">trans_ci_a</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">ci</span><span class="p">)</span>
     <span class="c1"># Transform old basis to new basis for all beta-electron excitations</span>
-    <span class="n">ci</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ci</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">na</span><span class="p">,</span><span class="n">nb</span><span class="p">),</span> <span class="n">trans_ci_b</span><span class="p">)</span>
+    <span class="n">ci</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">ci</span><span class="p">,</span> <span class="n">trans_ci_b</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">ci</span></div>
 
 
@@ -928,9 +969,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -939,11 +978,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -956,37 +995,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

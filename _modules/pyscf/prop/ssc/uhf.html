@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
-
-  
-  <script src="../../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -184,14 +184,11 @@
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">lib</span>
-<span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">tools</span>
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
 <span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">ucphf</span>
-<span class="kn">from</span> <span class="nn">pyscf.ao2mo</span> <span class="k">import</span> <span class="n">_ao2mo</span>
+<span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">_response_functions</span>
 <span class="kn">from</span> <span class="nn">pyscf.dft</span> <span class="k">import</span> <span class="n">numint</span>
-<span class="kn">from</span> <span class="nn">pyscf.soscf.newton_ah</span> <span class="k">import</span> <span class="n">_gen_uhf_response</span>
-<span class="kn">from</span> <span class="nn">pyscf.prop.nmr</span> <span class="k">import</span> <span class="n">uhf</span> <span class="k">as</span> <span class="n">uhf_nmr</span>
 <span class="kn">from</span> <span class="nn">pyscf.prop.ssc</span> <span class="k">import</span> <span class="n">rhf</span> <span class="k">as</span> <span class="n">rhf_ssc</span>
 <span class="kn">from</span> <span class="nn">pyscf.prop.ssc.rhf</span> <span class="k">import</span> <span class="n">_uniq_atoms</span><span class="p">,</span> <span class="n">_dm1_mo2ao</span><span class="p">,</span> <span class="n">_write</span>
 <span class="kn">from</span> <span class="nn">pyscf.data</span> <span class="k">import</span> <span class="n">nist</span>
@@ -202,7 +199,7 @@
 <span class="c1"># consistent, only z-component is considered.</span>
 <span class="n">ZZ_ONLY</span> <span class="o">=</span> <span class="kc">True</span>
 
-<div class="viewcode-block" id="make_dso"><a class="viewcode-back" href="../../../../prop/ssc.html#pyscf.prop.ssc.uhf.make_dso">[docs]</a><span class="k">def</span> <span class="nf">make_dso</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">dm0</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="make_dso"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.uhf.make_dso">[docs]</a><span class="k">def</span> <span class="nf">make_dso</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">dm0</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;orbital diamagnetic term&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">dm0</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dm0</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
         <span class="n">dm0</span> <span class="o">=</span> <span class="n">dm0</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">dm0</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -245,7 +242,7 @@
         <span class="n">h1b</span> <span class="o">+=</span> <span class="p">[</span><span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">orbvb</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="o">-</span><span class="n">x</span><span class="p">,</span> <span class="n">orbob</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">h1ao</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">h1a</span><span class="p">,</span> <span class="n">h1b</span>
 
-<div class="viewcode-block" id="make_fc"><a class="viewcode-back" href="../../../../prop/ssc.html#pyscf.prop.ssc.uhf.make_fc">[docs]</a><span class="k">def</span> <span class="nf">make_fc</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="make_fc"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.uhf.make_fc">[docs]</a><span class="k">def</span> <span class="nf">make_fc</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Only Fermi-contact&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">nuc_pair</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">nuc_pair</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">nuc_pair</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">mol</span>
@@ -265,7 +262,7 @@
         <span class="c1"># explicitly considered as below. However, it is inconsistent to RHF</span>
         <span class="c1"># results for closed shell systems. To make UHF and RHF code</span>
         <span class="c1"># consistent, only z-component is considered.</span>
-        <span class="c1"># (See Eq. (19) of JCP, 113, 3530)</span>
+        <span class="c1"># [See Eq. (19) of JCP 113, 3530 (2000); DOI:10.1063/1.1286806]</span>
         <span class="k">if</span> <span class="n">ZZ_ONLY</span><span class="p">:</span>
             <span class="n">ez</span>  <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,ij&#39;</span><span class="p">,</span> <span class="n">h1aa</span><span class="p">[</span><span class="n">at1</span><span class="p">],</span> <span class="n">mo1aa</span><span class="p">[</span><span class="n">at2</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span>  <span class="c1"># *2 for +c.c.</span>
             <span class="n">ez</span> <span class="o">+=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ij,ij&#39;</span><span class="p">,</span> <span class="n">h1bb</span><span class="p">[</span><span class="n">at1</span><span class="p">],</span> <span class="n">mo1bb</span><span class="p">[</span><span class="n">at2</span><span class="p">])</span> <span class="o">*</span> <span class="mi">2</span>
@@ -311,8 +308,7 @@
     <span class="n">nvira</span> <span class="o">=</span> <span class="n">orbva</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">noccb</span> <span class="o">=</span> <span class="n">orbob</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">nvirb</span> <span class="o">=</span> <span class="n">orbvb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">nao</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">nao</span>
-    <span class="n">vresp</span> <span class="o">=</span> <span class="n">_gen_uhf_response</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">with_j</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">vresp</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">gen_response</span><span class="p">(</span><span class="n">with_j</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">ZZ_ONLY</span><span class="p">:</span>
         <span class="c1"># To make UHF/UKS and RHF/RKS code consistent, only z-component is</span>
@@ -404,7 +400,7 @@
     <span class="n">mo1_fc</span> <span class="o">=</span> <span class="n">_split_mo1</span><span class="p">(</span><span class="n">mo1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mo1_fc</span>
 
-<div class="viewcode-block" id="make_fcsd"><a class="viewcode-back" href="../../../../prop/ssc.html#pyscf.prop.ssc.uhf.make_fcsd">[docs]</a><span class="k">def</span> <span class="nf">make_fcsd</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="make_fcsd"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.uhf.make_fcsd">[docs]</a><span class="k">def</span> <span class="nf">make_fcsd</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;FC + SD contributions to 2nd order energy&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">nuc_pair</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">nuc_pair</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">nuc_pair</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">mol</span>
@@ -464,13 +460,12 @@
     <span class="n">h1bb</span> <span class="o">=-</span><span class="n">fac</span> <span class="o">*</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;zp,zi-&gt;zpi&#39;</span><span class="p">,</span> <span class="n">orbvb</span><span class="p">[</span><span class="n">atmlst</span><span class="p">],</span> <span class="n">orbob</span><span class="p">[</span><span class="n">atmlst</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">h1aa</span><span class="p">,</span> <span class="n">h1ab</span><span class="p">,</span> <span class="n">h1ba</span><span class="p">,</span> <span class="n">h1bb</span>
 
-<div class="viewcode-block" id="make_h1_fcsd"><a class="viewcode-back" href="../../../../prop/ssc.html#pyscf.prop.ssc.uhf.make_h1_fcsd">[docs]</a><span class="k">def</span> <span class="nf">make_h1_fcsd</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">):</span>
+<div class="viewcode-block" id="make_h1_fcsd"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.uhf.make_h1_fcsd">[docs]</a><span class="k">def</span> <span class="nf">make_h1_fcsd</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">atmlst</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;FC + SD&#39;&#39;&#39;</span>
     <span class="n">orboa</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">orbva</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">orbob</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">][:,</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">orbvb</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">][:,</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">nao</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">h1aa</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">h1ab</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">h1ba</span> <span class="o">=</span> <span class="p">[]</span>
@@ -520,9 +515,9 @@
     <span class="n">logger</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="s1">&#39;solving mo1 eqn&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">cput1</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">mo1</span><span class="p">,</span> <span class="n">mo_e1</span>
 
-<div class="viewcode-block" id="gen_vind"><a class="viewcode-back" href="../../../../prop/ssc.html#pyscf.prop.ssc.uhf.gen_vind">[docs]</a><span class="k">def</span> <span class="nf">gen_vind</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">):</span>
+<div class="viewcode-block" id="gen_vind"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.uhf.gen_vind">[docs]</a><span class="k">def</span> <span class="nf">gen_vind</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Induced potential associated with h1_PSO&#39;&#39;&#39;</span>
-    <span class="n">vresp</span> <span class="o">=</span> <span class="n">_gen_uhf_response</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">with_j</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vresp</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">gen_response</span><span class="p">(</span><span class="n">with_j</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">occidxa</span> <span class="o">=</span> <span class="n">mo_occ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="n">occidxb</span> <span class="o">=</span> <span class="n">mo_occ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span>
     <span class="n">orboa</span> <span class="o">=</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span> <span class="n">occidxa</span><span class="p">]</span>
@@ -553,9 +548,9 @@
     <span class="k">return</span> <span class="n">vind</span></div>
 
 
-<span class="k">class</span> <span class="nc">SpinSpinCoupling</span><span class="p">(</span><span class="n">rhf_ssc</span><span class="o">.</span><span class="n">SpinSpinCoupling</span><span class="p">):</span>
+<div class="viewcode-block" id="SpinSpinCoupling"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.uhf.SpinSpinCoupling">[docs]</a><span class="k">class</span> <span class="nc">SpinSpinCoupling</span><span class="p">(</span><span class="n">rhf_ssc</span><span class="o">.</span><span class="n">SpinSpinCoupling</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SpinSpinCoupling.kernel"><a class="viewcode-back" href="../../../../modules/prop/ssc.html#pyscf.prop.ssc.uhf.SpinSpinCoupling.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nuc_pair</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -592,7 +587,7 @@
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nuc_pair</span><span class="p">):</span>
                 <span class="n">ktensor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">ktensor</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">iso_ssc</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;=</span> <span class="n">logger</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
-                    <span class="n">_write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">ssc_dia</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">+</span><span class="n">ssc_para</span><span class="p">[</span><span class="n">k</span><span class="p">],</span>
+                    <span class="n">_write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">e11</span><span class="p">[</span><span class="n">k</span><span class="p">],</span>
                            <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SSC E11 between </span><span class="si">%d</span><span class="s1"> </span><span class="si">%s</span><span class="s1"> and </span><span class="si">%d</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&#39;</span> \
                            <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">atom_symbol</span><span class="p">(</span><span class="n">i</span><span class="p">),</span>
                               <span class="n">j</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mol</span><span class="o">.</span><span class="n">atom_symbol</span><span class="p">(</span><span class="n">j</span><span class="p">)))</span>
@@ -607,7 +602,7 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Nuclear g factor </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">gyro</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">note</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;Spin-spin coupling constant J (Hz)&#39;</span><span class="p">)</span>
             <span class="n">tools</span><span class="o">.</span><span class="n">dump_mat</span><span class="o">.</span><span class="n">dump_tri</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">jtensor</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">e11</span>
+        <span class="k">return</span> <span class="n">e11</span></div>
 
     <span class="n">dia</span> <span class="o">=</span> <span class="n">make_dso</span> <span class="o">=</span> <span class="n">make_dso</span>
     <span class="n">make_pso</span> <span class="o">=</span> <span class="n">make_pso</span>
@@ -616,14 +611,14 @@
 
     <span class="k">def</span> <span class="nf">para</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mol</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo10</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">nuc_pair</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">ssc_para</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_pso</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo1</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">)</span>
+        <span class="n">ssc_para</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_pso</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo10</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_fcsd</span><span class="p">:</span>
-            <span class="n">ssc_para</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_fcsd</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo1</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">)</span>
+            <span class="n">ssc_para</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_fcsd</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo10</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">with_fc</span><span class="p">:</span>
-            <span class="n">ssc_para</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_fc</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo1</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">)</span>
+            <span class="n">ssc_para</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_fc</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo10</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ssc_para</span>
 
-    <span class="n">solve_mo1</span> <span class="o">=</span> <span class="n">solve_mo1</span>
+    <span class="n">solve_mo1</span> <span class="o">=</span> <span class="n">solve_mo1</span></div>
 
 <span class="n">SSC</span> <span class="o">=</span> <span class="n">SpinSpinCoupling</span>
 
@@ -633,7 +628,6 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">()</span>
     <span class="n">mol</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">mol</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="kc">None</span>
@@ -676,9 +670,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -687,11 +679,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -704,37 +696,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

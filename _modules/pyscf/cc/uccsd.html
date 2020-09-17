@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -139,12 +141,12 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../cc.html">pyscf.cc</a> &raquo;</li>
+        
       <li>pyscf.cc.uccsd</li>
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -158,7 +160,7 @@
             
   <h1>Source code for pyscf.cc.uccsd</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># Copyright 2014-2019 The PySCF Developers. All Rights Reserved.</span>
+<span class="c1"># Copyright 2014-2020 The PySCF Developers. All Rights Reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -173,6 +175,7 @@
 <span class="c1"># limitations under the License.</span>
 <span class="c1">#</span>
 <span class="c1"># Author: Timothy Berkelbach &lt;tim.berkelbach@gmail.com&gt;</span>
+<span class="c1">#         Qiming Sun &lt;osirpt.sun@gmail.com&gt;</span>
 <span class="c1">#</span>
 
 <span class="sd">&#39;&#39;&#39;</span>
@@ -187,7 +190,6 @@
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">ao2mo</span>
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
 <span class="kn">from</span> <span class="nn">pyscf.cc</span> <span class="k">import</span> <span class="n">ccsd</span>
-<span class="kn">from</span> <span class="nn">pyscf.cc</span> <span class="k">import</span> <span class="n">rccsd</span>
 <span class="kn">from</span> <span class="nn">pyscf.ao2mo</span> <span class="k">import</span> <span class="n">_ao2mo</span>
 <span class="kn">from</span> <span class="nn">pyscf.mp</span> <span class="k">import</span> <span class="n">ump2</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
@@ -317,7 +319,7 @@
     <span class="n">woVvO</span> <span class="o">+=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nJfB,menf-&gt;mBeJ&#39;</span><span class="p">,</span> <span class="n">t2ab</span><span class="p">,</span> <span class="n">ovov</span><span class="p">)</span>
     <span class="n">tmpaa</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;jf,menf-&gt;mnej&#39;</span><span class="p">,</span> <span class="n">t1a</span><span class="p">,</span> <span class="n">ovov</span><span class="p">)</span>
     <span class="n">wovvo</span> <span class="o">-=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;nb,mnej-&gt;mbej&#39;</span><span class="p">,</span> <span class="n">t1a</span><span class="p">,</span> <span class="n">tmpaa</span><span class="p">)</span>
-    <span class="n">eirs_ovov</span> <span class="o">=</span> <span class="n">ovov</span> <span class="o">=</span> <span class="n">tmpaa</span> <span class="o">=</span> <span class="n">tilaa</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">eris_ovov</span> <span class="o">=</span> <span class="n">ovov</span> <span class="o">=</span> <span class="n">tmpaa</span> <span class="o">=</span> <span class="n">tilaa</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">eris_OVOV</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">eris</span><span class="o">.</span><span class="n">OVOV</span><span class="p">)</span>
     <span class="n">eris_OVOO</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">eris</span><span class="o">.</span><span class="n">OVOO</span><span class="p">)</span>
@@ -428,7 +430,7 @@
     <span class="n">tmp1ab</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ie,meBJ-&gt;mBiJ&#39;</span><span class="p">,</span> <span class="n">t1a</span><span class="p">,</span> <span class="n">eris_ovVO</span><span class="p">)</span>
     <span class="n">tmp1ab</span><span class="o">+=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;IE,mjBE-&gt;mBjI&#39;</span><span class="p">,</span> <span class="n">t1b</span><span class="p">,</span> <span class="n">eris_ooVV</span><span class="p">)</span>
     <span class="n">u2ab</span> <span class="o">-=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ma,mBiJ-&gt;iJaB&#39;</span><span class="p">,</span> <span class="n">t1a</span><span class="p">,</span> <span class="n">tmp1ab</span><span class="p">)</span>
-    <span class="n">eris_ooVV</span> <span class="o">=</span> <span class="n">eris_ovVo</span> <span class="o">=</span> <span class="n">tmp1ab</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">eris_ooVV</span> <span class="o">=</span> <span class="n">eris_ovVO</span> <span class="o">=</span> <span class="n">tmp1ab</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">eris_OOvv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">eris</span><span class="o">.</span><span class="n">OOvv</span><span class="p">)</span>
     <span class="n">eris_OVvo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">eris</span><span class="o">.</span><span class="n">OVvo</span><span class="p">)</span>
@@ -438,7 +440,7 @@
     <span class="n">tmp1ba</span> <span class="o">=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;IE,MEbj-&gt;MbIj&#39;</span><span class="p">,</span> <span class="n">t1b</span><span class="p">,</span> <span class="n">eris_OVvo</span><span class="p">)</span>
     <span class="n">tmp1ba</span><span class="o">+=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;ie,MJbe-&gt;MbJi&#39;</span><span class="p">,</span> <span class="n">t1a</span><span class="p">,</span> <span class="n">eris_OOvv</span><span class="p">)</span>
     <span class="n">u2ab</span> <span class="o">-=</span> <span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;MA,MbIj-&gt;jIbA&#39;</span><span class="p">,</span> <span class="n">t1b</span><span class="p">,</span> <span class="n">tmp1ba</span><span class="p">)</span>
-    <span class="n">eris_OOvv</span> <span class="o">=</span> <span class="n">eris_OVvO</span> <span class="o">=</span> <span class="n">tmp1ba</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">eris_OOvv</span> <span class="o">=</span> <span class="n">eris_OVvo</span> <span class="o">=</span> <span class="n">tmp1ba</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="n">u2aa</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;imae,mbej-&gt;ijab&#39;</span><span class="p">,</span> <span class="n">t2aa</span><span class="p">,</span> <span class="n">wovvo</span><span class="p">)</span>
     <span class="n">u2aa</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">lib</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;iMaE,MbEj-&gt;ijab&#39;</span><span class="p">,</span> <span class="n">t2ab</span><span class="p">,</span> <span class="n">wOvVo</span><span class="p">)</span>
@@ -499,7 +501,7 @@
     <span class="k">return</span> <span class="n">t1new</span><span class="p">,</span> <span class="n">t2new</span>
 
 
-<div class="viewcode-block" id="energy"><a class="viewcode-back" href="../../../cc.html#pyscf.cc.uccsd.energy">[docs]</a><span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="n">cc</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="energy"><a class="viewcode-back" href="../../../modules/cc.html#pyscf.cc.uccsd.energy">[docs]</a><span class="k">def</span> <span class="nf">energy</span><span class="p">(</span><span class="n">cc</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;UCCSD correlation energy&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">t1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">t1</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">t1</span>
     <span class="k">if</span> <span class="n">t2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">t2</span> <span class="o">=</span> <span class="n">cc</span><span class="o">.</span><span class="n">t2</span>
@@ -692,7 +694,7 @@
     <span class="k">return</span> <span class="n">u2aa</span><span class="p">,</span><span class="n">u2ab</span><span class="p">,</span><span class="n">u2bb</span>
 
 
-<div class="viewcode-block" id="UCCSD"><a class="viewcode-back" href="../../../cc.html#pyscf.cc.uccsd.UCCSD">[docs]</a><span class="k">class</span> <span class="nc">UCCSD</span><span class="p">(</span><span class="n">ccsd</span><span class="o">.</span><span class="n">CCSD</span><span class="p">):</span>
+<div class="viewcode-block" id="UCCSD"><a class="viewcode-back" href="../../../modules/cc.html#pyscf.cc.uccsd.UCCSD">[docs]</a><span class="k">class</span> <span class="nc">UCCSD</span><span class="p">(</span><span class="n">ccsd</span><span class="o">.</span><span class="n">CCSD</span><span class="p">):</span>
 
     <span class="n">conv_tol</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;cc_uccsd_UCCSD_conv_tol&#39;</span><span class="p">,</span> <span class="mf">1e-7</span><span class="p">)</span>
     <span class="n">conv_tol_normt</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;cc_uccsd_UCCSD_conv_tol_normt&#39;</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">)</span>
@@ -702,7 +704,7 @@
 <span class="c1"># * One list : Same alpha and beta orbital indices to be frozen</span>
 <span class="c1"># * A pair of list : First list is the orbital indices to be frozen for alpha</span>
 <span class="c1">#       orbitals, second list is for beta orbitals</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mo_occ</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">scf</span><span class="o">.</span><span class="n">uhf</span><span class="o">.</span><span class="n">UHF</span><span class="p">)</span>
         <span class="n">ccsd</span><span class="o">.</span><span class="n">CCSD</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mf</span><span class="p">,</span> <span class="n">frozen</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">)</span>
 
@@ -751,9 +753,9 @@
     <span class="n">_add_vvvv</span> <span class="o">=</span> <span class="n">_add_vvvv</span>
     <span class="n">_add_vvVV</span> <span class="o">=</span> <span class="n">_add_vvVV</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mbpt2</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ccsd</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">eris</span><span class="p">,</span> <span class="n">mbpt2</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">ccsd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mbpt2</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="UCCSD.kernel"><a class="viewcode-back" href="../../../modules/cc.html#pyscf.cc.uccsd.UCCSD.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mbpt2</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ccsd</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">eris</span><span class="p">,</span> <span class="n">mbpt2</span><span class="p">)</span></div>
+<div class="viewcode-block" id="UCCSD.ccsd"><a class="viewcode-back" href="../../../modules/cc.html#pyscf.cc.uccsd.UCCSD.ccsd">[docs]</a>    <span class="k">def</span> <span class="nf">ccsd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mbpt2</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Ground-state unrestricted (U)CCSD.</span>
 
 <span class="sd">        Kwargs:</span>
@@ -768,8 +770,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">t1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">nocca</span><span class="p">,</span><span class="n">nvira</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">noccb</span><span class="p">,</span><span class="n">nvirb</span><span class="p">)))</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">e_corr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">t2</span>
 
-        <span class="k">if</span> <span class="n">eris</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">eris</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ao2mo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mo_coeff</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ccsd</span><span class="o">.</span><span class="n">CCSD</span><span class="o">.</span><span class="n">ccsd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">eris</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ccsd</span><span class="o">.</span><span class="n">CCSD</span><span class="o">.</span><span class="n">ccsd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">eris</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">solve_lambda</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                      <span class="n">eris</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -792,7 +793,7 @@
         <span class="k">return</span> <span class="n">uccsd_t</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">eris</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
     <span class="n">uccsd_t</span> <span class="o">=</span> <span class="n">ccsd_t</span>
 
-    <span class="k">def</span> <span class="nf">make_rdm1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="UCCSD.make_rdm1"><a class="viewcode-back" href="../../../modules/cc.html#pyscf.cc.uccsd.UCCSD.make_rdm1">[docs]</a>    <span class="k">def</span> <span class="nf">make_rdm1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;Un-relaxed 1-particle density matrix in MO space</span>
 
 <span class="sd">        Returns:</span>
@@ -804,9 +805,9 @@
         <span class="k">if</span> <span class="n">l1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">l1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span>
         <span class="k">if</span> <span class="n">l2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">l2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span>
         <span class="k">if</span> <span class="n">l1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solve_lambda</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">uccsd_rdm</span><span class="o">.</span><span class="n">make_rdm1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="n">ao_repr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">uccsd_rdm</span><span class="o">.</span><span class="n">make_rdm1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="n">ao_repr</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">make_rdm2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="UCCSD.make_rdm2"><a class="viewcode-back" href="../../../modules/cc.html#pyscf.cc.uccsd.UCCSD.make_rdm2">[docs]</a>    <span class="k">def</span> <span class="nf">make_rdm2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">t2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">l2</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;2-particle density matrix in spin-oribital basis.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="kn">from</span> <span class="nn">pyscf.cc</span> <span class="k">import</span> <span class="n">uccsd_rdm</span>
@@ -815,7 +816,19 @@
         <span class="k">if</span> <span class="n">l1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">l1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l1</span>
         <span class="k">if</span> <span class="n">l2</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">l2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">l2</span>
         <span class="k">if</span> <span class="n">l1</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">solve_lambda</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">uccsd_rdm</span><span class="o">.</span><span class="n">make_rdm2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">uccsd_rdm</span><span class="o">.</span><span class="n">make_rdm2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">l1</span><span class="p">,</span> <span class="n">l2</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="n">ao_repr</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">spin_square</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">pyscf.fci.spin_op</span> <span class="k">import</span> <span class="n">spin_square_general</span>
+        <span class="k">if</span> <span class="n">mo_coeff</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mo_coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mo_coeff</span>
+        <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">get_ovlp</span><span class="p">()</span>
+
+        <span class="n">dma</span><span class="p">,</span><span class="n">dmb</span>        <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_rdm1</span><span class="p">()</span>
+        <span class="n">dmaa</span><span class="p">,</span><span class="n">dmab</span><span class="p">,</span><span class="n">dmbb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_rdm2</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">spin_square_general</span><span class="p">(</span><span class="n">dma</span><span class="p">,</span><span class="n">dmb</span><span class="p">,</span><span class="n">dmaa</span><span class="p">,</span><span class="n">dmab</span><span class="p">,</span><span class="n">dmbb</span><span class="p">,</span><span class="n">mo_coeff</span><span class="p">,</span><span class="n">s</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">ao2mo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">nmoa</span><span class="p">,</span> <span class="n">nmob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nmo</span><span class="p">()</span>
@@ -952,10 +965,12 @@
                 <span class="p">(</span><span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span><span class="n">mo_idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">][:,</span><span class="n">mo_idx</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
 <span class="c1"># Note: Recomputed fock matrix since SCF may not be fully converged.</span>
         <span class="n">dm</span> <span class="o">=</span> <span class="n">mycc</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">make_rdm1</span><span class="p">(</span><span class="n">mycc</span><span class="o">.</span><span class="n">mo_coeff</span><span class="p">,</span> <span class="n">mycc</span><span class="o">.</span><span class="n">mo_occ</span><span class="p">)</span>
-        <span class="n">fockao</span> <span class="o">=</span> <span class="n">mycc</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">get_fock</span><span class="p">(</span><span class="n">dm</span><span class="o">=</span><span class="n">dm</span><span class="p">)</span>
+        <span class="n">vhf</span> <span class="o">=</span> <span class="n">mycc</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">get_veff</span><span class="p">(</span><span class="n">mycc</span><span class="o">.</span><span class="n">mol</span><span class="p">,</span> <span class="n">dm</span><span class="p">)</span>
+        <span class="n">fockao</span> <span class="o">=</span> <span class="n">mycc</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">get_fock</span><span class="p">(</span><span class="n">vhf</span><span class="o">=</span><span class="n">vhf</span><span class="p">,</span> <span class="n">dm</span><span class="o">=</span><span class="n">dm</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">focka</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">fockao</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fockb</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">mo_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">conj</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">fockao</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fock</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">focka</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fockb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e_hf</span> <span class="o">=</span> <span class="n">mycc</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">energy_tot</span><span class="p">(</span><span class="n">dm</span><span class="o">=</span><span class="n">dm</span><span class="p">,</span> <span class="n">vhf</span><span class="o">=</span><span class="n">vhf</span><span class="p">)</span>
         <span class="n">nocca</span><span class="p">,</span> <span class="n">noccb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nocc</span> <span class="o">=</span> <span class="n">mycc</span><span class="o">.</span><span class="n">nocc</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mol</span> <span class="o">=</span> <span class="n">mycc</span><span class="o">.</span><span class="n">mol</span>
 
@@ -1021,7 +1036,6 @@
         <span class="k">return</span> <span class="n">ovvv</span>
 
 <span class="k">def</span> <span class="nf">_make_eris_incore</span><span class="p">(</span><span class="n">mycc</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ao2mofn</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">cput0</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
     <span class="n">eris</span> <span class="o">=</span> <span class="n">_ChemistsERIs</span><span class="p">()</span>
     <span class="n">eris</span><span class="o">.</span><span class="n">_common_init_</span><span class="p">(</span><span class="n">mycc</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">)</span>
 
@@ -1101,7 +1115,6 @@
     <span class="k">return</span> <span class="n">eris</span>
 
 <span class="k">def</span> <span class="nf">_make_eris_outcore</span><span class="p">(</span><span class="n">mycc</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">cput0</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
     <span class="n">eris</span> <span class="o">=</span> <span class="n">_ChemistsERIs</span><span class="p">()</span>
     <span class="n">eris</span><span class="o">.</span><span class="n">_common_init_</span><span class="p">(</span><span class="n">mycc</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">)</span>
 
@@ -1374,8 +1387,6 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">copy</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
 
     <span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">()</span>
@@ -1428,9 +1439,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1439,11 +1448,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1456,37 +1465,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

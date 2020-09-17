@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -144,8 +146,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -158,7 +158,7 @@
             
   <h1>Source code for pyscf.lo.ibo</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># Copyright 2014-2018 The PySCF Developers. All Rights Reserved.</span>
+<span class="c1"># Copyright 2014-2020 The PySCF Developers. All Rights Reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -188,15 +188,59 @@
 <span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
-<span class="kn">import</span> <span class="nn">scipy.linalg</span>
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
 <span class="kn">from</span> <span class="nn">pyscf.lo</span> <span class="k">import</span> <span class="n">iao</span>
 <span class="kn">from</span> <span class="nn">pyscf.lo</span> <span class="k">import</span> <span class="n">orth</span><span class="p">,</span> <span class="n">pipek</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">__config__</span>
 
+<div class="viewcode-block" id="ibo"><a class="viewcode-back" href="../../../modules/lo.html#pyscf.lo.ibo.ibo">[docs]</a><span class="k">def</span> <span class="nf">ibo</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">,</span> <span class="n">locmethod</span><span class="o">=</span><span class="s1">&#39;IBO&#39;</span><span class="p">,</span> <span class="n">iaos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">grad_tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">NOTE</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Intrinsic Bonding Orbitals</span>
 
-<div class="viewcode-block" id="ibo"><a class="viewcode-back" href="../../../lo.html#pyscf.lo.ibo.ibo">[docs]</a><span class="k">def</span> <span class="nf">ibo</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">,</span> <span class="n">iaos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">grad_tol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
-        <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">NOTE</span><span class="p">):</span>
+<span class="sd">    This function serves as a wrapper to the underlying localization functions</span>
+<span class="sd">    ibo_loc and PipekMezey to create IBOs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mol : the molecule or cell object</span>
+
+<span class="sd">        orbocc : occupied molecular orbital coefficients</span>
+
+<span class="sd">    Kwargs:</span>
+<span class="sd">        locmethod : string</span>
+<span class="sd">            the localization method &#39;PM&#39; for Pipek Mezey localization or &#39;IBO&#39; for the IBO localization</span>
+
+<span class="sd">        iaos : 2D array</span>
+<span class="sd">            the array of IAOs</span>
+
+<span class="sd">        s : 2D array</span>
+<span class="sd">            the overlap array in the ao basis</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        IBOs in the basis defined in mol object.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="s1">&#39;pbc_intor&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>  <span class="c1"># whether mol object is a cell</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">orbocc</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">orbocc</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">pbc_intor</span><span class="p">(</span><span class="s1">&#39;int1e_ovlp&#39;</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;k-points crystal orbitals&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">intor_symmetric</span><span class="p">(</span><span class="s1">&#39;int1e_ovlp&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">iaos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">iaos</span> <span class="o">=</span> <span class="n">iao</span><span class="o">.</span><span class="n">iao</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">)</span>
+
+    <span class="n">locmethod</span> <span class="o">=</span> <span class="n">locmethod</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">locmethod</span> <span class="o">==</span> <span class="s1">&#39;PM&#39;</span><span class="p">:</span>
+        <span class="n">EXPONENT</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;lo_ibo_PipekMezey_exponent&#39;</span><span class="p">,</span> <span class="n">exponent</span><span class="p">)</span>
+        <span class="n">ibos</span> <span class="o">=</span> <span class="n">PipekMezey</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">,</span> <span class="n">iaos</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="n">EXPONENT</span><span class="p">)</span>
+        <span class="k">del</span><span class="p">(</span><span class="n">EXPONENT</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ibos</span> <span class="o">=</span> <span class="n">ibo_loc</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">,</span> <span class="n">iaos</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="n">exponent</span><span class="p">,</span> <span class="n">grad_tol</span><span class="o">=</span><span class="n">grad_tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ibos</span></div>
+
+<div class="viewcode-block" id="ibo_loc"><a class="viewcode-back" href="../../../modules/lo.html#pyscf.lo.ibo.ibo_loc">[docs]</a><span class="k">def</span> <span class="nf">ibo_loc</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">,</span> <span class="n">iaos</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">exponent</span><span class="p">,</span> <span class="n">grad_tol</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">,</span>
+            <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">NOTE</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Intrinsic Bonding Orbitals. [Ref. JCTC, 9, 4834]</span>
 
 <span class="sd">    This implementation follows Knizia&#39;s implementation execept that the</span>
@@ -227,20 +271,9 @@
     <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">new_logger</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
     <span class="k">assert</span><span class="p">(</span><span class="n">exponent</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
 
-    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="s1">&#39;pbc_intor&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>  <span class="c1"># whether mol object is a cell</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">orbocc</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">orbocc</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">ovlpS</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">pbc_intor</span><span class="p">(</span><span class="s1">&#39;int1e_ovlp&#39;</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;k-points crystal orbitals&#39;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">ovlpS</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">intor_symmetric</span><span class="p">(</span><span class="s1">&#39;int1e_ovlp&#39;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">iaos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">iaos</span> <span class="o">=</span> <span class="n">iao</span><span class="o">.</span><span class="n">iao</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">)</span>
-
     <span class="c1"># Symmetrically orthogonalization of the IAO orbitals as Knizia&#39;s</span>
     <span class="c1"># implementation.  The IAO returned by iao.iao function is not orthogonal.</span>
-    <span class="n">iaos</span> <span class="o">=</span> <span class="n">orth</span><span class="o">.</span><span class="n">vec_lowdin</span><span class="p">(</span><span class="n">iaos</span><span class="p">,</span> <span class="n">ovlpS</span><span class="p">)</span>
+    <span class="n">iaos</span> <span class="o">=</span> <span class="n">orth</span><span class="o">.</span><span class="n">vec_lowdin</span><span class="p">(</span><span class="n">iaos</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
 
     <span class="c1">#static variables</span>
     <span class="n">StartTime</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
@@ -259,7 +292,7 @@
     <span class="n">AtomOffsets</span> <span class="o">=</span> <span class="n">MakeAtomIbOffsets</span><span class="p">(</span><span class="n">Atoms</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">iAtSl</span> <span class="o">=</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="n">AtomOffsets</span><span class="p">[</span><span class="n">A</span><span class="p">],</span><span class="n">AtomOffsets</span><span class="p">[</span><span class="n">A</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">A</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nAtoms</span><span class="p">)]</span>
     <span class="c1">#converts the occupied MOs to the IAO basis</span>
-    <span class="n">CIb</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">iaos</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">ovlpS</span> <span class="p">,</span> <span class="n">orbocc</span><span class="p">))</span>
+    <span class="n">CIb</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">,</span> <span class="p">(</span><span class="n">iaos</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">s</span> <span class="p">,</span> <span class="n">orbocc</span><span class="p">))</span>
     <span class="n">numOccOrbitals</span> <span class="o">=</span> <span class="n">CIb</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;   </span><span class="si">{0:^5s}</span><span class="s2"> </span><span class="si">{1:^14s}</span><span class="s2"> </span><span class="si">{2:^11s}</span><span class="s2"> </span><span class="si">{3:^8s}</span><span class="s2">&quot;</span>
@@ -334,9 +367,7 @@
     <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">iaos</span><span class="p">,</span> <span class="p">(</span><span class="n">orth</span><span class="o">.</span><span class="n">vec_lowdin</span><span class="p">(</span><span class="n">CIb</span><span class="p">)))</span></div>
 
 
-<span class="n">EXPONENT</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;lo_ibo_PipekMezey_exponent&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-
-<div class="viewcode-block" id="PipekMezey"><a class="viewcode-back" href="../../../lo.html#pyscf.lo.ibo.PipekMezey">[docs]</a><span class="k">def</span> <span class="nf">PipekMezey</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">,</span> <span class="n">iaos</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">exponent</span><span class="o">=</span><span class="n">EXPONENT</span><span class="p">):</span>
+<div class="viewcode-block" id="PipekMezey"><a class="viewcode-back" href="../../../modules/lo.html#pyscf.lo.ibo.PipekMezey">[docs]</a><span class="k">def</span> <span class="nf">PipekMezey</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">,</span> <span class="n">iaos</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Note this localization is slightly different to Knizia&#39;s implementation.</span>
 <span class="sd">    The localization here reserves orthogonormality during optimization.</span>
@@ -355,25 +386,16 @@
 <span class="sd">    &gt;&gt;&gt; pm = ibo.PM(mol, mf.mo_coeff[:,mf.mo_occ&gt;0])</span>
 <span class="sd">    &gt;&gt;&gt; loc_orb = pm.kernel()</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="s1">&#39;pbc_intor&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>  <span class="c1"># whether mol object is a cell</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">orbocc</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">orbocc</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">s</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">pbc_intor</span><span class="p">(</span><span class="s1">&#39;int1e_ovlp&#39;</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;k-points crystal orbitals&#39;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">intor_symmetric</span><span class="p">(</span><span class="s1">&#39;int1e_ovlp&#39;</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">iaos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">iaos</span> <span class="o">=</span> <span class="n">iao</span><span class="o">.</span><span class="n">iao</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">orbocc</span><span class="p">)</span>
+    <span class="c1"># Note: PM with Lowdin-orth IAOs is implemented in pipek.PM class</span>
+    <span class="c1"># TODO: Merge the implemenation here to pipek.PM</span>
 
-    <span class="c1"># Different to Knizia&#39;s code, the reference IAOs are not neccessary</span>
-    <span class="c1"># orthogonal.</span>
-    <span class="c1">#iaos = orth.vec_lowdin(iaos, s)</span>
-
+    <span class="n">MINAO</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">__config__</span><span class="p">,</span> <span class="s1">&#39;lo_iao_minao&#39;</span><span class="p">,</span> <span class="s1">&#39;minao&#39;</span><span class="p">)</span>
     <span class="n">cs</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">iaos</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="n">s</span><span class="p">)</span>
     <span class="n">s_iao</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cs</span><span class="p">,</span> <span class="n">iaos</span><span class="p">)</span>
     <span class="n">iao_inv</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">s_iao</span><span class="p">,</span> <span class="n">cs</span><span class="p">)</span>
-    <span class="n">iao_mol</span> <span class="o">=</span> <span class="n">iao</span><span class="o">.</span><span class="n">reference_mol</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+    <span class="n">iao_mol</span> <span class="o">=</span> <span class="n">iao</span><span class="o">.</span><span class="n">reference_mol</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">minao</span><span class="o">=</span><span class="n">MINAO</span><span class="p">)</span>
+
     <span class="c1"># Define the mulliken population of each atom based on IAO basis.</span>
     <span class="c1"># proj[i].trace is the mulliken population of atom i.</span>
     <span class="k">def</span> <span class="nf">atomic_pops</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -391,7 +413,22 @@
     <span class="k">return</span> <span class="n">pm</span></div>
 <span class="n">PM</span> <span class="o">=</span> <span class="n">Pipek</span> <span class="o">=</span> <span class="n">PipekMezey</span>
 
-<span class="k">del</span><span class="p">(</span><span class="n">EXPONENT</span><span class="p">)</span>
+
+<div class="viewcode-block" id="shell_str"><a class="viewcode-back" href="../../../modules/lo.html#pyscf.lo.ibo.shell_str">[docs]</a><span class="k">def</span> <span class="nf">shell_str</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">n_cor</span><span class="p">,</span> <span class="n">n_val</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Help function to define core and valence shells for shell with different l</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">cor_shell</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;[</span><span class="si">{n}</span><span class="s2">s]&quot;</span><span class="p">,</span> <span class="s2">&quot;[</span><span class="si">{n}</span><span class="s2">px] [</span><span class="si">{n}</span><span class="s2">py] [</span><span class="si">{n}</span><span class="s2">pz]&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;[</span><span class="si">{n}</span><span class="s2">d0] [</span><span class="si">{n}</span><span class="s2">d2-] [</span><span class="si">{n}</span><span class="s2">d1+] [</span><span class="si">{n}</span><span class="s2">d2+] [</span><span class="si">{n}</span><span class="s2">d1-]&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;[</span><span class="si">{n}</span><span class="s2">f1+] [</span><span class="si">{n}</span><span class="s2">f1-] [</span><span class="si">{n}</span><span class="s2">f0] [</span><span class="si">{n}</span><span class="s2">f3+] [</span><span class="si">{n}</span><span class="s2">f2-] [</span><span class="si">{n}</span><span class="s2">f3-] [</span><span class="si">{n}</span><span class="s2">f2+]&quot;</span><span class="p">]</span>
+    <span class="n">val_shell</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">l_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;[&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">l_str</span> <span class="ow">in</span> <span class="n">cor_shell</span><span class="p">]</span>
+    <span class="n">l_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">cor_shell</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">n_cor</span><span class="p">)]</span> <span class="o">+</span>
+        <span class="p">[</span><span class="n">val_shell</span><span class="p">[</span><span class="n">l</span><span class="p">]</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">n_cor</span><span class="p">,</span>
+                                                 <span class="n">l</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">n_cor</span> <span class="o">+</span> <span class="n">n_val</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">l_str</span></div>
 
 
 <span class="sd">&#39;&#39;&#39;</span>
@@ -417,6 +454,7 @@
     <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Ga Ge As Se Br Kr&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span> <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">18</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="o">+</span><span class="mi">5</span><span class="o">+</span><span class="mi">3</span>
 
     <span class="n">AoLabels</span> <span class="o">=</span> <span class="p">{}</span>
+
     <span class="k">def</span> <span class="nf">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="n">AoDecl</span><span class="p">):</span>
         <span class="n">Labels</span> <span class="o">=</span> <span class="n">AoDecl</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="n">AoLabels</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">Labels</span>
@@ -433,26 +471,98 @@
     <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;K Ca&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span> <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s2">&quot;[1s] [2s] [3s] 4s [2px] [2py] [2pz] [3px] [3py] [3pz]&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Sc Ti V Cr Mn Fe Co Ni Cu Zn&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span> <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s2">&quot;[1s] [2s] [3s] 4s [2px] [2py] [2pz] [3px] [3py] [3pz] 3d0 3d2- 3d1+ 3d2+ 3d1-&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Ga Ge As Se Br Kr&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span> <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s2">&quot;[1s] [2s] [3s] 4s [2px] [2py] [2pz] [3px] [3py] [3pz] 4px 4py 4pz [3d0] [3d2-] [3d1+] [3d2+] [3d1-]&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Rb Sr&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">36</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Y Zr Nb Mo Tc Ru Rh Pd Ag Cd&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">36</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">5</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;In Sn Sb Te I Xe&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">36</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">3</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Cs Ba&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">54</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">54</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">7</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;La Hf Ta W Re Os Ir Pt Au Hg&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">54</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">7</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">5</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Tl Pb Bi Po At Rn&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">54</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">5</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">3</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Fr Ra&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">86</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">86</span><span class="o">/</span><span class="mi">2</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">7</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Ac Lr Rf Db Sg Bh Hs Mt Ds Rg Cn&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">86</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">7</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">5</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
+    <span class="k">for</span> <span class="n">At</span> <span class="ow">in</span> <span class="s2">&quot;Nh Fl Mc Lv Ts Og&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">():</span>
+        <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="mi">86</span><span class="o">/</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">7</span> <span class="o">+</span> <span class="mi">5</span>
+        <span class="n">nAoX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">=</span> <span class="n">nCoreX</span><span class="p">[</span><span class="n">At</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">3</span>
+        <span class="n">SetAo</span><span class="p">(</span><span class="n">At</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span> <span class="p">([</span><span class="n">shell_str</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                             <span class="n">shell_str</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">)]))</span>
     <span class="c1"># note: f order is &#39;4f1+&#39;,&#39;4f1-&#39;,&#39;4f0&#39;,&#39;4f3+&#39;,&#39;4f2-&#39;,&#39;4f3-&#39;,&#39;4f2+&#39;,</span>
 
     <span class="k">return</span> <span class="n">nCoreX</span><span class="p">,</span> <span class="n">nAoX</span><span class="p">,</span> <span class="n">AoLabels</span>
 
 
-<div class="viewcode-block" id="MakeAtomIbOffsets"><a class="viewcode-back" href="../../../lo.html#pyscf.lo.ibo.MakeAtomIbOffsets">[docs]</a><span class="k">def</span> <span class="nf">MakeAtomIbOffsets</span><span class="p">(</span><span class="n">Atoms</span><span class="p">):</span>
+<div class="viewcode-block" id="MakeAtomIbOffsets"><a class="viewcode-back" href="../../../modules/lo.html#pyscf.lo.ibo.MakeAtomIbOffsets">[docs]</a><span class="k">def</span> <span class="nf">MakeAtomIbOffsets</span><span class="p">(</span><span class="n">Atoms</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;calcualte offset of first orbital of individual atoms</span>
 <span class="sd">    in the valence minimal basis (IB)&quot;&quot;&quot;</span>
     <span class="n">nCoreX</span><span class="p">,</span> <span class="n">nAoX</span><span class="p">,</span> <span class="n">AoLabels</span> <span class="o">=</span> <span class="n">MakeAtomInfos</span><span class="p">()</span>
     <span class="n">iBfAt</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">Atom</span> <span class="ow">in</span> <span class="n">Atoms</span><span class="p">:</span>
+        <span class="n">Atom</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">Atom</span> <span class="k">if</span> <span class="n">char</span><span class="o">.</span><span class="n">isalpha</span><span class="p">())</span>
         <span class="n">iBfAt</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iBfAt</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">nAoX</span><span class="p">[</span><span class="n">Atom</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">iBfAt</span><span class="p">,</span> <span class="n">nCoreX</span><span class="p">,</span> <span class="n">nAoX</span><span class="p">,</span> <span class="n">AoLabels</span></div>
 
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -461,11 +571,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -478,37 +588,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

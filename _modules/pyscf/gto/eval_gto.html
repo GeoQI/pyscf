@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -192,17 +192,23 @@
 <span class="sd">    Args:</span>
 <span class="sd">        eval_name : str</span>
 
-<span class="sd">            ==================  ======  =======================</span>
-<span class="sd">            Function            comp    Expression</span>
-<span class="sd">            ==================  ======  =======================</span>
-<span class="sd">            &quot;GTOval_sph&quot;        1       |AO&gt;</span>
-<span class="sd">            &quot;GTOval_ip_sph&quot;     3       nabla |AO&gt;</span>
-<span class="sd">            &quot;GTOval_ig_sph&quot;     3       (#C(0 1) g) |AO&gt;</span>
-<span class="sd">            &quot;GTOval_ipig_sph&quot;   3       (#C(0 1) nabla g) |AO&gt;</span>
-<span class="sd">            &quot;GTOval_cart&quot;       1       |AO&gt;</span>
-<span class="sd">            &quot;GTOval_ip_cart&quot;    3       nabla |AO&gt;</span>
-<span class="sd">            &quot;GTOval_ig_cart&quot;    3       (#C(0 1) g)|AO&gt;</span>
-<span class="sd">            ==================  ======  =======================</span>
+<span class="sd">            ====================  ======  =======================</span>
+<span class="sd">            Function              comp    Expression</span>
+<span class="sd">            ====================  ======  =======================</span>
+<span class="sd">            &quot;GTOval_sph&quot;          1       |AO&gt;</span>
+<span class="sd">            &quot;GTOval_ip_sph&quot;       3       nabla |AO&gt;</span>
+<span class="sd">            &quot;GTOval_ig_sph&quot;       3       (#C(0 1) g) |AO&gt;</span>
+<span class="sd">            &quot;GTOval_ipig_sph&quot;     9       (#C(0 1) nabla g) |AO&gt;</span>
+<span class="sd">            &quot;GTOval_cart&quot;         1       |AO&gt;</span>
+<span class="sd">            &quot;GTOval_ip_cart&quot;      3       nabla |AO&gt;</span>
+<span class="sd">            &quot;GTOval_ig_cart&quot;      3       (#C(0 1) g)|AO&gt;</span>
+<span class="sd">            &quot;GTOval_sph_deriv1&quot;   4       GTO value and 1st order GTO values</span>
+<span class="sd">            &quot;GTOval_sph_deriv2&quot;   10      All derivatives up to 2nd order</span>
+<span class="sd">            &quot;GTOval_sph_deriv3&quot;   20      All derivatives up to 3rd order</span>
+<span class="sd">            &quot;GTOval_sph_deriv4&quot;   35      All derivatives up to 4th order</span>
+<span class="sd">            &quot;GTOval_sp_spinor&quot;    1       sigma dot p |AO&gt; (spinor basis)</span>
+<span class="sd">            &quot;GTOval_ipsp_spinor&quot;  3       nabla sigma dot p |AO&gt; (spinor basis)</span>
+<span class="sd">            ====================  ======  =======================</span>
 
 <span class="sd">        atm : int32 ndarray</span>
 <span class="sd">            libcint integral function argument</span>
@@ -311,7 +317,7 @@
     <span class="s1">&#39;GTOval&#39;</span>                <span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span>
     <span class="s1">&#39;GTOval_ip&#39;</span>             <span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span> <span class="p">),</span>
     <span class="s1">&#39;GTOval_ig&#39;</span>             <span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span> <span class="p">),</span>
-    <span class="s1">&#39;GTOval_ipig&#39;</span>           <span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span> <span class="p">),</span>
+    <span class="s1">&#39;GTOval_ipig&#39;</span>           <span class="p">:</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span> <span class="p">),</span>
     <span class="s1">&#39;GTOval_deriv0&#39;</span>         <span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span> <span class="p">),</span>
     <span class="s1">&#39;GTOval_deriv1&#39;</span>         <span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span> <span class="p">),</span>
     <span class="s1">&#39;GTOval_deriv2&#39;</span>         <span class="p">:</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
@@ -331,9 +337,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -342,11 +346,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -359,37 +363,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

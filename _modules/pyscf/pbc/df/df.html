@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
-
-  
-  <script src="../../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -202,7 +202,6 @@
 <span class="kn">from</span> <span class="nn">pyscf.df</span> <span class="k">import</span> <span class="n">addons</span>
 <span class="kn">from</span> <span class="nn">pyscf.df.outcore</span> <span class="k">import</span> <span class="n">_guess_shell_ranges</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc.gto.cell</span> <span class="k">import</span> <span class="n">_estimate_rcut</span>
-<span class="kn">from</span> <span class="nn">pyscf.pbc</span> <span class="k">import</span> <span class="n">gto</span> <span class="k">as</span> <span class="n">pbcgto</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc</span> <span class="k">import</span> <span class="n">tools</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc.df</span> <span class="k">import</span> <span class="n">outcore</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc.df</span> <span class="k">import</span> <span class="n">ft_ao</span>
@@ -210,7 +209,7 @@
 <span class="kn">from</span> <span class="nn">pyscf.pbc.df</span> <span class="k">import</span> <span class="n">df_jk</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc.df</span> <span class="k">import</span> <span class="n">df_ao2mo</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc.df.aft</span> <span class="k">import</span> <span class="n">estimate_eta</span><span class="p">,</span> <span class="n">get_nuc</span>
-<span class="kn">from</span> <span class="nn">pyscf.pbc.df.df_jk</span> <span class="k">import</span> <span class="n">zdotCN</span><span class="p">,</span> <span class="n">zdotNN</span><span class="p">,</span> <span class="n">zdotNC</span>
+<span class="kn">from</span> <span class="nn">pyscf.pbc.df.df_jk</span> <span class="k">import</span> <span class="n">zdotCN</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc.lib.kpts_helper</span> <span class="k">import</span> <span class="p">(</span><span class="n">is_zero</span><span class="p">,</span> <span class="n">gamma_point</span><span class="p">,</span> <span class="n">member</span><span class="p">,</span> <span class="n">unique</span><span class="p">,</span>
                                        <span class="n">KPT_DIFF_TOL</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">pyscf.pbc.df.aft</span> <span class="k">import</span> <span class="n">_sub_df_jk_</span>
@@ -371,7 +370,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">j2c</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">j2c</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="n">j2ctag</span> <span class="o">=</span> <span class="s1">&#39;CD&#39;</span>
-        <span class="k">except</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">LinAlgError</span><span class="p">:</span>
             <span class="c1">#msg =(&#39;===================================\n&#39;</span>
             <span class="c1">#      &#39;J-metric not positive definite.\n&#39;</span>
             <span class="c1">#      &#39;It is likely that mesh is not enough.\n&#39;</span>
@@ -486,7 +485,7 @@
         <span class="k">with</span> <span class="n">lib</span><span class="o">.</span><span class="n">call_in_background</span><span class="p">(</span><span class="n">pw_contract</span><span class="p">)</span> <span class="k">as</span> <span class="n">compute</span><span class="p">:</span>
             <span class="n">col1</span> <span class="o">=</span> <span class="mi">0</span>
             <span class="k">for</span> <span class="n">istep</span><span class="p">,</span> <span class="n">sh_range</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">shranges</span><span class="p">):</span>
-                <span class="n">log</span><span class="o">.</span><span class="n">debug1</span><span class="p">(</span><span class="s1">&#39;int3c2e [</span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="s1">], AO [</span><span class="si">%d</span><span class="s1">:</span><span class="si">%d</span><span class="s1">], ncol = </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span> \
+                <span class="n">log</span><span class="o">.</span><span class="n">debug1</span><span class="p">(</span><span class="s1">&#39;int3c2e [</span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="s1">], AO [</span><span class="si">%d</span><span class="s1">:</span><span class="si">%d</span><span class="s1">], ncol = </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
                            <span class="n">istep</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">shranges</span><span class="p">),</span> <span class="o">*</span><span class="n">sh_range</span><span class="p">)</span>
                 <span class="n">bstart</span><span class="p">,</span> <span class="n">bend</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span> <span class="n">sh_range</span>
                 <span class="n">col0</span><span class="p">,</span> <span class="n">col1</span> <span class="o">=</span> <span class="n">col1</span><span class="p">,</span> <span class="n">col1</span><span class="o">+</span><span class="n">ncol</span>
@@ -565,7 +564,7 @@
     <span class="n">feri</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="GDF"><a class="viewcode-back" href="../../../../pbc/df.html#pyscf.pbc.df.df.GDF">[docs]</a><span class="k">class</span> <span class="nc">GDF</span><span class="p">(</span><span class="n">aft</span><span class="o">.</span><span class="n">AFTDF</span><span class="p">):</span>
+<div class="viewcode-block" id="GDF"><a class="viewcode-back" href="../../../../modules/pbc/df.html#pyscf.pbc.df.df.GDF">[docs]</a><span class="k">class</span> <span class="nc">GDF</span><span class="p">(</span><span class="n">aft</span><span class="o">.</span><span class="n">AFTDF</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Gaussian density fitting</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">kpts</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))):</span>
@@ -589,11 +588,6 @@
             <span class="n">eta_guess</span> <span class="o">=</span> <span class="n">estimate_eta</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">cell</span><span class="o">.</span><span class="n">precision</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">eta_cell</span> <span class="o">&lt;</span> <span class="n">eta_guess</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">=</span> <span class="n">eta_cell</span>
-                <span class="c1"># TODO? Round off mesh to the nearest odd numbers.</span>
-                <span class="c1"># Odd number of grids is preferred because even number of</span>
-                <span class="c1"># grids may break the conjugation symmetry between the</span>
-                <span class="c1"># k-points k and -k.</span>
-                <span class="c1">#?self.mesh = [(n//2)*2+1 for n in cell.mesh]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">mesh</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">eta</span> <span class="o">=</span> <span class="n">eta_guess</span>
@@ -601,6 +595,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">cutoff_to_mesh</span><span class="p">(</span><span class="n">cell</span><span class="o">.</span><span class="n">lattice_vectors</span><span class="p">(),</span> <span class="n">ke_cutoff</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">cell</span><span class="o">.</span><span class="n">dimension</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">cell</span><span class="o">.</span><span class="n">low_dim_ft_type</span> <span class="o">==</span> <span class="s1">&#39;inf_vacuum&#39;</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">dimension</span><span class="p">:]</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="n">mesh</span><span class="p">[</span><span class="n">cell</span><span class="o">.</span><span class="n">dimension</span><span class="p">:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mesh</span> <span class="o">=</span> <span class="n">_round_off_to_odd_mesh</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mesh</span><span class="p">)</span>
 
         <span class="c1"># exp_to_discard to remove diffused fitting functions. The diffused</span>
         <span class="c1"># fitting functions may cause linear dependency in DF metric. Removing</span>
@@ -696,11 +691,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">auxcell</span> <span class="o">=</span> <span class="n">make_modrho_basis</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cell</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auxbasis</span><span class="p">,</span>
                                          <span class="bp">self</span><span class="o">.</span><span class="n">exp_to_discard</span><span class="p">)</span>
 
+        <span class="n">uniq_idx</span> <span class="o">=</span> <span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kpts</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">kpts</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kpts</span><span class="p">)[</span><span class="n">uniq_idx</span><span class="p">]</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpts_band</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">kpts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpts</span>
             <span class="n">kband_uniq</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">kpts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpts</span>
             <span class="n">kband_uniq</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kpts_band</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">member</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">kpts</span><span class="p">))</span><span class="o">==</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">j_only</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">j_only</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_j_only</span>
@@ -889,7 +884,7 @@
     <span class="n">ao2mo_7d</span> <span class="o">=</span> <span class="n">df_ao2mo</span><span class="o">.</span><span class="n">ao2mo_7d</span>
 
     <span class="k">def</span> <span class="nf">update_mp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">mf</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">mf</span><span class="p">)</span>
+        <span class="n">mf</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">mf</span><span class="o">.</span><span class="n">with_df</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="k">return</span> <span class="n">mf</span>
 
@@ -1123,12 +1118,20 @@
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;Regular gaussian integral \int g(r) dr^3&#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">ft_ao</span><span class="o">.</span><span class="n">ft_ao</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
 
+<span class="k">def</span> <span class="nf">_round_off_to_odd_mesh</span><span class="p">(</span><span class="n">mesh</span><span class="p">):</span>
+    <span class="c1"># Round off mesh to the nearest odd numbers.</span>
+    <span class="c1"># Odd number of grids is preferred because even number of grids may break</span>
+    <span class="c1"># the conjugation symmetry between the k-points k and -k.</span>
+    <span class="c1"># When building the DF integral tensor in function _make_j3c, the symmetry</span>
+    <span class="c1"># between k and -k is used (function conj_j2c) to overcome the error</span>
+    <span class="c1"># caused by auxiliary basis linear dependency. More detalis of this</span>
+    <span class="c1"># problem can be found in function _make_j3c.</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">i</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">mesh</span><span class="p">]</span>
+
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1137,11 +1140,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1154,37 +1157,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -180,7 +180,7 @@
 <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,):</span>
     <span class="n">unicode</span> <span class="o">=</span> <span class="nb">str</span>
 
-<div class="viewcode-block" id="msize"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.msize">[docs]</a><span class="k">def</span> <span class="nf">msize</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+<div class="viewcode-block" id="msize"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.msize">[docs]</a><span class="k">def</span> <span class="nf">msize</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks whether the matrix is square and returns its size.</span>
 <span class="sd">    Args:</span>
@@ -195,7 +195,7 @@
     <span class="k">return</span> <span class="n">s</span></div>
 
 
-<div class="viewcode-block" id="full2ab"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.full2ab">[docs]</a><span class="k">def</span> <span class="nf">full2ab</span><span class="p">(</span><span class="n">full</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+<div class="viewcode-block" id="full2ab"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.full2ab">[docs]</a><span class="k">def</span> <span class="nf">full2ab</span><span class="p">(</span><span class="n">full</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transforms a full TD matrix into A and B parts.</span>
 <span class="sd">    Args:</span>
@@ -219,7 +219,7 @@
     <span class="k">return</span> <span class="n">full</span><span class="p">[:</span><span class="n">s2</span><span class="p">,</span> <span class="p">:</span><span class="n">s2</span><span class="p">],</span> <span class="n">full</span><span class="p">[:</span><span class="n">s2</span><span class="p">,</span> <span class="n">s2</span><span class="p">:]</span></div>
 
 
-<div class="viewcode-block" id="ab2full"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.ab2full">[docs]</a><span class="k">def</span> <span class="nf">ab2full</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<div class="viewcode-block" id="ab2full"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.ab2full">[docs]</a><span class="k">def</span> <span class="nf">ab2full</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transforms A and B TD matrices into a full matrix.</span>
 <span class="sd">    Args:</span>
@@ -236,7 +236,7 @@
     <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">block</span><span class="p">([[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="n">b</span><span class="o">.</span><span class="n">conj</span><span class="p">(),</span> <span class="o">-</span><span class="n">a</span><span class="o">.</span><span class="n">conj</span><span class="p">()]])</span></div>
 
 
-<div class="viewcode-block" id="ab2mkk"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.ab2mkk">[docs]</a><span class="k">def</span> <span class="nf">ab2mkk</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
+<div class="viewcode-block" id="ab2mkk"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.ab2mkk">[docs]</a><span class="k">def</span> <span class="nf">ab2mkk</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">tolerance</span><span class="o">=</span><span class="mf">1e-12</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transforms A and B TD matrices into MK and K matrices.</span>
 <span class="sd">    Args:</span>
@@ -255,7 +255,7 @@
     <span class="k">return</span> <span class="n">tdhf_mk</span><span class="p">,</span> <span class="n">tdhf_k</span></div>
 
 
-<div class="viewcode-block" id="mkk2ab"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.mkk2ab">[docs]</a><span class="k">def</span> <span class="nf">mkk2ab</span><span class="p">(</span><span class="n">mk</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="mkk2ab"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.mkk2ab">[docs]</a><span class="k">def</span> <span class="nf">mkk2ab</span><span class="p">(</span><span class="n">mk</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transforms MK and M TD matrices into A and B matrices.</span>
 <span class="sd">    Args:</span>
@@ -273,7 +273,7 @@
     <span class="k">return</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span></div>
 
 
-<div class="viewcode-block" id="full2mkk"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.full2mkk">[docs]</a><span class="k">def</span> <span class="nf">full2mkk</span><span class="p">(</span><span class="n">full</span><span class="p">):</span>
+<div class="viewcode-block" id="full2mkk"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.full2mkk">[docs]</a><span class="k">def</span> <span class="nf">full2mkk</span><span class="p">(</span><span class="n">full</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transforms a full TD matrix into MK and K parts.</span>
 <span class="sd">    Args:</span>
@@ -285,7 +285,7 @@
     <span class="k">return</span> <span class="n">ab2mkk</span><span class="p">(</span><span class="o">*</span><span class="n">full2ab</span><span class="p">(</span><span class="n">full</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="mkk2full"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.mkk2full">[docs]</a><span class="k">def</span> <span class="nf">mkk2full</span><span class="p">(</span><span class="n">mk</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="mkk2full"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.mkk2full">[docs]</a><span class="k">def</span> <span class="nf">mkk2full</span><span class="p">(</span><span class="n">mk</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transforms MK and M TD matrices into a full TD matrix.</span>
 <span class="sd">    Args:</span>
@@ -374,7 +374,7 @@
             <span class="k">return</span> <span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
 
-<div class="viewcode-block" id="mknj2i"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.mknj2i">[docs]</a><span class="k">def</span> <span class="nf">mknj2i</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+<div class="viewcode-block" id="mknj2i"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.mknj2i">[docs]</a><span class="k">def</span> <span class="nf">mknj2i</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Transforms &quot;mknj&quot; notation into tensor index order for the ERI.</span>
 <span class="sd">    Args:</span>
@@ -517,7 +517,7 @@
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
 
-<div class="viewcode-block" id="format_frozen_mol"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.format_frozen_mol">[docs]</a><span class="k">def</span> <span class="nf">format_frozen_mol</span><span class="p">(</span><span class="n">frozen</span><span class="p">,</span> <span class="n">nmo</span><span class="p">):</span>
+<div class="viewcode-block" id="format_frozen_mol"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.format_frozen_mol">[docs]</a><span class="k">def</span> <span class="nf">format_frozen_mol</span><span class="p">(</span><span class="n">frozen</span><span class="p">,</span> <span class="n">nmo</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Formats the argument into a mask array of bools where False values correspond to frozen molecular orbitals.</span>
 <span class="sd">    Args:</span>
@@ -603,7 +603,7 @@
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">space</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="format_frozen_k"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.format_frozen_k">[docs]</a><span class="k">def</span> <span class="nf">format_frozen_k</span><span class="p">(</span><span class="n">frozen</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nk</span><span class="p">):</span>
+<div class="viewcode-block" id="format_frozen_k"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.format_frozen_k">[docs]</a><span class="k">def</span> <span class="nf">format_frozen_k</span><span class="p">(</span><span class="n">frozen</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nk</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Formats the argument into a mask array of bools where False values correspond to frozen orbitals for each k-point.</span>
 <span class="sd">    Args:</span>
@@ -632,7 +632,7 @@
     <span class="k">return</span> <span class="n">space</span></div>
 
 
-<div class="viewcode-block" id="k_nocc"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.k_nocc">[docs]</a><span class="k">def</span> <span class="nf">k_nocc</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<div class="viewcode-block" id="k_nocc"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.k_nocc">[docs]</a><span class="k">def</span> <span class="nf">k_nocc</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieves occupation numbers.</span>
 <span class="sd">    Args:</span>
@@ -644,7 +644,7 @@
     <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">mo_occ</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="k_nmo"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.k_nmo">[docs]</a><span class="k">def</span> <span class="nf">k_nmo</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+<div class="viewcode-block" id="k_nmo"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.k_nmo">[docs]</a><span class="k">def</span> <span class="nf">k_nmo</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Retrieves number of AOs per k-point.</span>
 <span class="sd">    Args:</span>
@@ -787,7 +787,7 @@
             <span class="p">)</span>
 
 
-<div class="viewcode-block" id="eig"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.eig">[docs]</a><span class="k">def</span> <span class="nf">eig</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nroots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">half</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="eig"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.eig">[docs]</a><span class="k">def</span> <span class="nf">eig</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nroots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">half</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Eigenvalue problem solver.</span>
 <span class="sd">    Args:</span>
@@ -814,7 +814,7 @@
     <span class="k">return</span> <span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span></div>
 
 
-<div class="viewcode-block" id="kernel"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.kernel">[docs]</a><span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="n">eri</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fast</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nroots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="kernel"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.kernel">[docs]</a><span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="n">eri</span><span class="p">,</span> <span class="n">driver</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fast</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nroots</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Calculates eigenstates and eigenvalues of the TDHF problem.</span>
 <span class="sd">    Args:</span>
@@ -921,7 +921,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">v2a</span><span class="p">(</span><span class="n">vectors</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">nocc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eri</span><span class="o">.</span><span class="n">nmo</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="format_mask"><a class="viewcode-back" href="../../../tddft.html#pyscf.tdscf.common_slow.format_mask">[docs]</a><span class="k">def</span> <span class="nf">format_mask</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<div class="viewcode-block" id="format_mask"><a class="viewcode-back" href="../../../modules/tdscf.html#pyscf.tdscf.common_slow.format_mask">[docs]</a><span class="k">def</span> <span class="nf">format_mask</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Formats a mask into a readable string.</span>
 <span class="sd">    Args:</span>
@@ -940,9 +940,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -951,11 +949,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -968,37 +966,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

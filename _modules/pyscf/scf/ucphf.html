@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -139,12 +141,12 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../scf.html">pyscf.scf</a> &raquo;</li>
+        
       <li>pyscf.scf.ucphf</li>
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -158,7 +160,7 @@
             
   <h1>Source code for pyscf.scf.ucphf</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># Copyright 2014-2018 The PySCF Developers. All Rights Reserved.</span>
+<span class="c1"># Copyright 2014-2020 The PySCF Developers. All Rights Reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -185,7 +187,7 @@
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
 
 
-<div class="viewcode-block" id="solve"><a class="viewcode-back" href="../../../scf.html#pyscf.scf.ucphf.solve">[docs]</a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">fvind</span><span class="p">,</span> <span class="n">mo_energy</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">s1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="solve"><a class="viewcode-back" href="../../../modules/scf.html#pyscf.scf.ucphf.solve">[docs]</a><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">fvind</span><span class="p">,</span> <span class="n">mo_energy</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">s1</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
           <span class="n">max_cycle</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">WARN</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Args:</span>
@@ -201,7 +203,7 @@
 <span class="n">kernel</span> <span class="o">=</span> <span class="n">solve</span>
 
 <span class="c1"># h1 shape is (:,nvir,nocc)</span>
-<div class="viewcode-block" id="solve_nos1"><a class="viewcode-back" href="../../../scf.html#pyscf.scf.ucphf.solve_nos1">[docs]</a><span class="k">def</span> <span class="nf">solve_nos1</span><span class="p">(</span><span class="n">fvind</span><span class="p">,</span> <span class="n">mo_energy</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span>
+<div class="viewcode-block" id="solve_nos1"><a class="viewcode-back" href="../../../modules/scf.html#pyscf.scf.ucphf.solve_nos1">[docs]</a><span class="k">def</span> <span class="nf">solve_nos1</span><span class="p">(</span><span class="n">fvind</span><span class="p">,</span> <span class="n">mo_energy</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span>
                <span class="n">max_cycle</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">WARN</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For field independent basis. First order overlap matrix is zero&#39;&#39;&#39;</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">new_logger</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
@@ -241,7 +243,7 @@
     <span class="k">return</span> <span class="n">mo1</span><span class="p">,</span> <span class="kc">None</span></div>
 
 <span class="c1"># h1 shape is (:,nvir+nocc,nocc)</span>
-<div class="viewcode-block" id="solve_withs1"><a class="viewcode-back" href="../../../scf.html#pyscf.scf.ucphf.solve_withs1">[docs]</a><span class="k">def</span> <span class="nf">solve_withs1</span><span class="p">(</span><span class="n">fvind</span><span class="p">,</span> <span class="n">mo_energy</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span>
+<div class="viewcode-block" id="solve_withs1"><a class="viewcode-back" href="../../../modules/scf.html#pyscf.scf.ucphf.solve_withs1">[docs]</a><span class="k">def</span> <span class="nf">solve_withs1</span><span class="p">(</span><span class="n">fvind</span><span class="p">,</span> <span class="n">mo_energy</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">s1</span><span class="p">,</span>
                  <span class="n">max_cycle</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">logger</span><span class="o">.</span><span class="n">WARN</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;For field dependent basis. First order overlap matrix is non-zero.</span>
 <span class="sd">    The first order orbitals are set to</span>
@@ -258,8 +260,6 @@
     <span class="n">nocca</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">occidxa</span><span class="p">)</span>
     <span class="n">noccb</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">occidxb</span><span class="p">)</span>
     <span class="n">nmoa</span><span class="p">,</span> <span class="n">nmob</span> <span class="o">=</span> <span class="n">mo_occ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">mo_occ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
-    <span class="n">nvira</span> <span class="o">=</span> <span class="n">nmoa</span> <span class="o">-</span> <span class="n">nocca</span>
-    <span class="n">nvirb</span> <span class="o">=</span> <span class="n">nmob</span> <span class="o">-</span> <span class="n">noccb</span>
     <span class="n">eai_a</span> <span class="o">=</span> <span class="n">mo_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">viridxa</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">mo_energy</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">occidxa</span><span class="p">]</span>
     <span class="n">eai_b</span> <span class="o">=</span> <span class="n">mo_energy</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">viridxb</span><span class="p">,</span><span class="kc">None</span><span class="p">]</span> <span class="o">-</span> <span class="n">mo_energy</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">occidxb</span><span class="p">]</span>
     <span class="n">s1_a</span> <span class="o">=</span> <span class="n">s1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">nmoa</span><span class="p">,</span><span class="n">nocca</span><span class="p">)</span>
@@ -314,9 +314,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -325,11 +323,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -342,37 +340,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -144,8 +146,6 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
-        
       </li>
     
   </ul>
@@ -158,7 +158,7 @@
             
   <h1>Source code for pyscf.tools.molden</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># Copyright 2014-2018 The PySCF Developers. All Rights Reserved.</span>
+<span class="c1"># Copyright 2014-2020 The PySCF Developers. All Rights Reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -231,7 +231,7 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">aoidx</span><span class="p">):</span>
             <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39; </span><span class="si">%3d</span><span class="s1">    </span><span class="si">%18.14g</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">imo</span><span class="p">]))</span>
 
-<div class="viewcode-block" id="from_mo"><a class="viewcode-back" href="../../../tools.html#pyscf.tools.molden.from_mo">[docs]</a><span class="k">def</span> <span class="nf">from_mo</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="s1">&#39;Alpha&#39;</span><span class="p">,</span> <span class="n">symm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ene</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="from_mo"><a class="viewcode-back" href="../../../modules/tools.html#pyscf.tools.molden.from_mo">[docs]</a><span class="k">def</span> <span class="nf">from_mo</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">spin</span><span class="o">=</span><span class="s1">&#39;Alpha&#39;</span><span class="p">,</span> <span class="n">symm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ene</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="n">occ</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_h</span><span class="o">=</span><span class="n">IGNORE_H</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Dump the given MOs in Molden format&#39;&#39;&#39;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -239,7 +239,7 @@
         <span class="n">orbital_coeff</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="p">,</span> <span class="n">spin</span><span class="p">,</span> <span class="n">symm</span><span class="p">,</span> <span class="n">ene</span><span class="p">,</span> <span class="n">occ</span><span class="p">,</span> <span class="n">ignore_h</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="from_scf"><a class="viewcode-back" href="../../../tools.html#pyscf.tools.molden.from_scf">[docs]</a><span class="k">def</span> <span class="nf">from_scf</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ignore_h</span><span class="o">=</span><span class="n">IGNORE_H</span><span class="p">):</span>
+<div class="viewcode-block" id="from_scf"><a class="viewcode-back" href="../../../modules/tools.html#pyscf.tools.molden.from_scf">[docs]</a><span class="k">def</span> <span class="nf">from_scf</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ignore_h</span><span class="o">=</span><span class="n">IGNORE_H</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Dump the given SCF object in Molden format&#39;&#39;&#39;</span>
     <span class="n">dump_scf</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ignore_h</span><span class="p">)</span></div>
 <span class="k">def</span> <span class="nf">dump_scf</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ignore_h</span><span class="o">=</span><span class="n">IGNORE_H</span><span class="p">):</span>
@@ -310,6 +310,7 @@
 
 <span class="k">def</span> <span class="nf">_read_one_section</span><span class="p">(</span><span class="n">molden_fp</span><span class="p">):</span>
     <span class="n">sec</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+    <span class="n">last_pos</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">molden_fp</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
@@ -394,7 +395,6 @@
 
 <span class="k">def</span> <span class="nf">_parse_mo</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">envs</span><span class="p">):</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">envs</span><span class="p">[</span><span class="s1">&#39;mol&#39;</span><span class="p">]</span>
-    <span class="n">atoms</span> <span class="o">=</span> <span class="n">envs</span><span class="p">[</span><span class="s1">&#39;atoms&#39;</span><span class="p">]</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">mol</span><span class="o">.</span><span class="n">_built</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">mol</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -406,7 +406,6 @@
     <span class="n">spins</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">mo_occ</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">mo_coeff</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">norb_alpha</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
         <span class="k">if</span> <span class="s1">&#39;SYM&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
@@ -438,8 +437,6 @@
 <span class="k">def</span> <span class="nf">_parse_core</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">envs</span><span class="p">):</span>
     <span class="n">mol</span> <span class="o">=</span> <span class="n">envs</span><span class="p">[</span><span class="s1">&#39;mol&#39;</span><span class="p">]</span>
     <span class="n">atoms</span> <span class="o">=</span> <span class="n">envs</span><span class="p">[</span><span class="s1">&#39;atoms&#39;</span><span class="p">]</span>
-    <span class="n">line_id</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">max_lines</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
         <span class="n">dat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">dat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
@@ -462,7 +459,7 @@
                <span class="s1">&#39;MOLDEN FORMAT&#39;</span> <span class="p">:</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
               <span class="p">}</span>
 
-<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../tools.html#pyscf.tools.molden.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">moldenfile</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../modules/tools.html#pyscf.tools.molden.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">moldenfile</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Extract mol and orbitals from molden file</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">moldenfile</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -616,7 +613,7 @@
                 <span class="n">off</span> <span class="o">+=</span> <span class="n">l</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="n">idx</span>
 
-<div class="viewcode-block" id="remove_high_l"><a class="viewcode-back" href="../../../tools.html#pyscf.tools.molden.remove_high_l">[docs]</a><span class="k">def</span> <span class="nf">remove_high_l</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="remove_high_l"><a class="viewcode-back" href="../../../modules/tools.html#pyscf.tools.molden.remove_high_l">[docs]</a><span class="k">def</span> <span class="nf">remove_high_l</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">mo_coeff</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Remove high angular momentum (l &gt;= 5) functions before dumping molden file.</span>
 <span class="sd">    If molden function raised error message ``RuntimeError l=5 is not supported``,</span>
 <span class="sd">    you can use this function to format orbitals.</span>
@@ -683,9 +680,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -694,11 +689,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -711,37 +706,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -186,6 +186,7 @@
 
 <span class="sd">Ref:</span>
 <span class="sd">    psi4/psi4/driver/qcdb/vib.py</span>
+<span class="sd">    http://gaussian.com/vib/</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
@@ -196,7 +197,7 @@
 <span class="n">LINDEP_THRESHOLD</span> <span class="o">=</span> <span class="mf">1e-7</span>
 
 
-<div class="viewcode-block" id="harmonic_analysis"><a class="viewcode-back" href="../../../hessian.html#pyscf.hessian.thermo.harmonic_analysis">[docs]</a><span class="k">def</span> <span class="nf">harmonic_analysis</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">hess</span><span class="p">,</span> <span class="n">exclude_trans</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclude_rot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<div class="viewcode-block" id="harmonic_analysis"><a class="viewcode-back" href="../../../modules/hessian.html#pyscf.hessian.thermo.harmonic_analysis">[docs]</a><span class="k">def</span> <span class="nf">harmonic_analysis</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">hess</span><span class="p">,</span> <span class="n">exclude_trans</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exclude_rot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                       <span class="n">imaginary_freq</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Each column is one mode</span>
 <span class="sd">    </span>
@@ -217,8 +218,16 @@
     <span class="n">TRspace</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">if</span> <span class="n">exclude_trans</span><span class="p">:</span>
         <span class="n">TRspace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TR</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+
     <span class="k">if</span> <span class="n">exclude_rot</span><span class="p">:</span>
-        <span class="n">TRspace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TR</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+        <span class="n">rot_const</span> <span class="o">=</span> <span class="n">rotation_const</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">atom_coords</span><span class="p">)</span>
+        <span class="n">rotor_type</span> <span class="o">=</span> <span class="n">_get_rotor_type</span><span class="p">(</span><span class="n">rot_const</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rotor_type</span> <span class="o">==</span> <span class="s1">&#39;ATOM&#39;</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="n">rotor_type</span> <span class="o">==</span> <span class="s1">&#39;LINEAR&#39;</span><span class="p">:</span>  <span class="c1"># linear molecule</span>
+            <span class="n">TRspace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TR</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">TRspace</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">TR</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
 
     <span class="k">if</span> <span class="n">TRspace</span><span class="p">:</span>
         <span class="n">TRspace</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">TRspace</span><span class="p">)</span>
@@ -258,7 +267,7 @@
     <span class="c1">#TODO: IR intensity</span>
     <span class="k">return</span> <span class="n">results</span></div>
 
-<div class="viewcode-block" id="rotation_const"><a class="viewcode-back" href="../../../hessian.html#pyscf.hessian.thermo.rotation_const">[docs]</a><span class="k">def</span> <span class="nf">rotation_const</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">atom_coords</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;GHz&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="rotation_const"><a class="viewcode-back" href="../../../modules/hessian.html#pyscf.hessian.thermo.rotation_const">[docs]</a><span class="k">def</span> <span class="nf">rotation_const</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">atom_coords</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;GHz&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Rotational constants to characterize rotational spectra</span>
 
 <span class="sd">    Kwargs:</span>
@@ -288,7 +297,6 @@
     <span class="n">mass</span> <span class="o">=</span> <span class="n">mol</span><span class="o">.</span><span class="n">atom_mass_list</span><span class="p">(</span><span class="n">isotope_avg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">mass_center</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;z,zx-&gt;x&#39;</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">atom_coords</span><span class="p">)</span> <span class="o">/</span> <span class="n">mass</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="n">atom_coords</span> <span class="o">=</span> <span class="n">atom_coords</span> <span class="o">-</span> <span class="n">mass_center</span>
-    <span class="n">natm</span> <span class="o">=</span> <span class="n">atom_coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="n">kB</span> <span class="o">=</span> <span class="n">nist</span><span class="o">.</span><span class="n">BOLTZMANN</span>
     <span class="n">h</span> <span class="o">=</span> <span class="n">nist</span><span class="o">.</span><span class="n">PLANCK</span>
@@ -322,12 +330,7 @@
     <span class="c1"># Rotational part</span>
     <span class="n">rot_const</span> <span class="o">=</span> <span class="n">rotation_const</span><span class="p">(</span><span class="n">mass</span><span class="p">,</span> <span class="n">atom_coords</span><span class="p">,</span> <span class="s1">&#39;GHz&#39;</span><span class="p">)</span>
     <span class="n">results</span><span class="p">[</span><span class="s1">&#39;rot_const&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">rot_const</span><span class="p">,</span> <span class="s1">&#39;GHz&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">rot_const</span> <span class="o">&gt;</span> <span class="mf">1e8</span><span class="p">):</span>
-        <span class="n">rotor_type</span> <span class="o">=</span> <span class="s1">&#39;ATOM&#39;</span>
-    <span class="k">elif</span> <span class="n">rot_const</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e8</span> <span class="ow">and</span> <span class="p">(</span><span class="n">rot_const</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">rot_const</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">):</span>
-        <span class="n">rotor_type</span> <span class="o">=</span> <span class="s1">&#39;LINEAR&#39;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">rotor_type</span> <span class="o">=</span> <span class="s1">&#39;REGULAR&#39;</span>
+    <span class="n">rotor_type</span> <span class="o">=</span> <span class="n">_get_rotor_type</span><span class="p">(</span><span class="n">rot_const</span><span class="p">)</span>
 
     <span class="n">sym_number</span> <span class="o">=</span> <span class="n">rotational_symmetry_number</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
     <span class="n">results</span><span class="p">[</span><span class="s1">&#39;sym_number&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">sym_number</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
@@ -390,26 +393,43 @@
     <span class="n">mass_center</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;z,zx-&gt;x&#39;</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span> <span class="o">/</span> <span class="n">mass</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
     <span class="n">coords</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">-</span> <span class="n">mass_center</span>
     <span class="n">natm</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-    <span class="n">massp</span> <span class="o">=</span> <span class="n">mass</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">natm</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="o">.</span><span class="mi">5</span>
-    <span class="n">ex</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">natm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">ey</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]],</span> <span class="n">natm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">ez</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">repeat</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">natm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">massp</span> <span class="o">=</span> <span class="n">mass</span> <span class="o">**</span> <span class="o">.</span><span class="mi">5</span>
 
     <span class="c1"># translational mode</span>
-    <span class="n">Tx</span> <span class="o">=</span> <span class="n">ex</span> <span class="o">*</span> <span class="n">massp</span>
-    <span class="n">Ty</span> <span class="o">=</span> <span class="n">ey</span> <span class="o">*</span> <span class="n">massp</span>
-    <span class="n">Tz</span> <span class="o">=</span> <span class="n">ez</span> <span class="o">*</span> <span class="n">massp</span>
+    <span class="n">Tx</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;m,x-&gt;mx&#39;</span><span class="p">,</span> <span class="n">massp</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">Ty</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;m,x-&gt;mx&#39;</span><span class="p">,</span> <span class="n">massp</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">Tz</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;m,x-&gt;mx&#39;</span><span class="p">,</span> <span class="n">massp</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">im</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s1">&#39;m,mx,my-&gt;xy&#39;</span><span class="p">,</span> <span class="n">mass</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">coords</span><span class="p">)</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">im</span><span class="o">.</span><span class="n">trace</span><span class="p">()</span> <span class="o">-</span> <span class="n">im</span>
+    <span class="n">w</span><span class="p">,</span> <span class="n">paxes</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">im</span><span class="p">)</span>
+    <span class="c1"># make the z-axis be the rotation vector with the smallest moment of inertia</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">w</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">paxes</span> <span class="o">=</span> <span class="n">paxes</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ex</span><span class="p">,</span> <span class="n">ey</span><span class="p">,</span> <span class="n">ez</span> <span class="o">=</span> <span class="n">paxes</span><span class="o">.</span><span class="n">T</span>
 
     <span class="c1"># rotational mode</span>
-    <span class="n">Rx</span> <span class="o">=</span> <span class="n">massp</span> <span class="o">*</span> <span class="p">(</span><span class="n">ey</span> <span class="o">*</span> <span class="n">coords</span><span class="p">[:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">ez</span> <span class="o">*</span> <span class="n">coords</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
-    <span class="n">Ry</span> <span class="o">=</span> <span class="n">massp</span> <span class="o">*</span> <span class="p">(</span><span class="n">ez</span> <span class="o">*</span> <span class="n">coords</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">ex</span> <span class="o">*</span> <span class="n">coords</span><span class="p">[:,</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
-    <span class="n">Rz</span> <span class="o">=</span> <span class="n">massp</span> <span class="o">*</span> <span class="p">(</span><span class="n">ex</span> <span class="o">*</span> <span class="n">coords</span><span class="p">[:,</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">ey</span> <span class="o">*</span> <span class="n">coords</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">coords_in_rot_frame</span> <span class="o">=</span> <span class="n">coords</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">paxes</span><span class="p">)</span>
+    <span class="n">cx</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">cz</span> <span class="o">=</span> <span class="n">coords_in_rot_frame</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">Rx</span> <span class="o">=</span> <span class="n">massp</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">cy</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">ez</span> <span class="o">-</span> <span class="n">cz</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">ey</span><span class="p">)</span>
+    <span class="n">Ry</span> <span class="o">=</span> <span class="n">massp</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">cz</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">ex</span> <span class="o">-</span> <span class="n">cx</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">ez</span><span class="p">)</span>
+    <span class="n">Rz</span> <span class="o">=</span> <span class="n">massp</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">cx</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">ey</span> <span class="o">-</span> <span class="n">cy</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">ex</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">Tx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Ty</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Tz</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
             <span class="n">Rx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Ry</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Rz</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
 
-<div class="viewcode-block" id="rotational_symmetry_number"><a class="viewcode-back" href="../../../hessian.html#pyscf.hessian.thermo.rotational_symmetry_number">[docs]</a><span class="k">def</span> <span class="nf">rotational_symmetry_number</span><span class="p">(</span><span class="n">mol</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">_get_rotor_type</span><span class="p">(</span><span class="n">rot_const</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">numpy</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">rot_const</span> <span class="o">&gt;</span> <span class="mf">1e8</span><span class="p">):</span>
+        <span class="n">rotor_type</span> <span class="o">=</span> <span class="s1">&#39;ATOM&#39;</span>
+    <span class="k">elif</span> <span class="n">rot_const</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">1e8</span> <span class="ow">and</span> <span class="p">(</span><span class="n">rot_const</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">rot_const</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">1e-3</span><span class="p">):</span>
+        <span class="n">rotor_type</span> <span class="o">=</span> <span class="s1">&#39;LINEAR&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">rotor_type</span> <span class="o">=</span> <span class="s1">&#39;REGULAR&#39;</span>
+    <span class="k">return</span> <span class="n">rotor_type</span>
+
+
+<div class="viewcode-block" id="rotational_symmetry_number"><a class="viewcode-back" href="../../../modules/hessian.html#pyscf.hessian.thermo.rotational_symmetry_number">[docs]</a><span class="k">def</span> <span class="nf">rotational_symmetry_number</span><span class="p">(</span><span class="n">mol</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Number of unique orientations of the rigid molecule that only</span>
 <span class="sd">    interchange identical atoms.</span>
 
@@ -475,7 +495,7 @@
     <span class="n">dump</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%-28s</span><span class="s1">               </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span>
          <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Enthalpy [J/mol]&#39;</span><span class="p">,</span> <span class="n">convert</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="s1">&#39;Eh&#39;</span><span class="p">)))</span>
     <span class="n">dump</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%-22s</span><span class="s1"> </span><span class="si">%.5f</span><span class="se">\n</span><span class="s1">&#39;</span>
-         <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Entropy [Eh]&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;H_tot&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+         <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Enthalpy [Eh]&#39;</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;H_tot&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
     <span class="n">dump</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%-28s</span><span class="s1">               </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span>
          <span class="o">%</span> <span class="p">(</span><span class="s1">&#39;Gibbs free energy [J/mol]&#39;</span><span class="p">,</span> <span class="n">convert</span><span class="p">(</span><span class="s1">&#39;G&#39;</span><span class="p">,</span> <span class="n">keys</span><span class="p">[</span><span class="mi">2</span><span class="p">:],</span> <span class="s1">&#39;Eh&#39;</span><span class="p">)))</span>
     <span class="n">dump</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%-22s</span><span class="s1"> </span><span class="si">%.5f</span><span class="se">\n</span><span class="s1">&#39;</span>
@@ -532,13 +552,10 @@
 
     <span class="n">results</span> <span class="o">=</span> <span class="n">thermo</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;freq_au&#39;</span><span class="p">],</span> <span class="mf">298.15</span><span class="p">,</span> <span class="mi">101325</span><span class="p">)</span>
     <span class="n">dump_thermo</span><span class="p">(</span><span class="n">mol</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
-
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -547,11 +564,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -564,37 +581,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

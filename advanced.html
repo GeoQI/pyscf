@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>41. Miscellaneous &mdash; PySCF 1.7.0 documentation</title>
+  <title>8. Miscellaneous &mdash; PySCF 1.7.0 documentation</title>
   
 
   
@@ -17,39 +17,37 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="index.html"/>
-        <link rel="next" title="42. ccn — Auto-Generated Coupled-Cluster Equations of Arbitrary Order" href="ccn.html"/>
-        <link rel="prev" title="40. tools" href="tools.html"/> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="9. Interfaces" href="interface.html" />
+    <link rel="prev" title="7.12.3. Pseudopotentials" href="theory/pbc/pp.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -94,56 +92,19 @@
 <li class="toctree-l1"><a class="reference internal" href="code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">6. Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gto.html">7. gto &#8212; Molecular structure and GTO basis</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ao2mo.html">8. ao2mo &#8212; Integral transformations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="df.html">9. df &#8212; Density fitting</a></li>
-<li class="toctree-l1"><a class="reference internal" href="symm.html">10. symm &#8211; Point group symmetry and spin symmetry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="scf.html">11. scf &#8212; Mean-field methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dft.html">12. dft &#8212; Density functional theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dftd3.html">13. dftd3 &#8212; DFT plus Dispersion Correction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="grad.html">14. grad &#8212; Analytical nuclear gradients</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hessian.html">15. hessian &#8212; Analytical nuclear Hessian</a></li>
-<li class="toctree-l1"><a class="reference internal" href="soscf.html">16. soscf &#8212; Second order Hartree-Fock solver</a></li>
-<li class="toctree-l1"><a class="reference internal" href="sgx.html">17. sgx &#8212; Pseudo-spectral methods (COSX, PS, SN-K)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tddft.html">18. tddft &#8212; Time dependent density functional theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tdscf.html">19. tdscf &#8212; Time dependent SCF</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mp.html">20. mp &#8212; MP2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ci.html">21. ci &#8212; Configuration interaction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="doci.html">22. doci &#8212; Doubly occupied configuration interaction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cc.html">23. cc &#8212; Coupled cluster</a></li>
-<li class="toctree-l1"><a class="reference internal" href="gw.html">24. gw &#8212; Molecular G0W0</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fci.html">25. fci &#8212; Full configuration interaction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hci.html">26. hci &#8212; Interface to Heat-Bath selective CI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="cornell_shci.html">27. cornell_shci &#8212; Interface to Fast Semistochastic Heat Bath Configuration Interaction (SHCI)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mcscf.html">28. mcscf &#8212; Multi-configurational self-consistent field</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dmrgscf.html">29. dmrgscf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="fciqmcscf.html">30. fciqmcscf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mrpt.html">31. mrpt &#8212; Multi-reference perturbation theory</a></li>
-<li class="toctree-l1"><a class="reference internal" href="icmpspt.html">32. icmpspt &#8212; Internal-contracted MPS perturbation method</a></li>
-<li class="toctree-l1"><a class="reference internal" href="x2c.html">33. x2c &#8212; exact-two-component approach</a></li>
-<li class="toctree-l1"><a class="reference internal" href="pbc.html">34. pbc &#8212; Periodic boundary conditions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="qmmm.html">35. qmmm &#8212; QM/MM interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="solvent.html">36. solvent &#8212; Solvent methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="semiempirical.html">37. semiempirical &#8212; Semiempirical methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="geomopt.html">38. geomopt &#8212; Geometry optimization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lo.html">39. lo &#8212; Orbital localization and analysis tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tools.html">40. tools</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">41. Miscellaneous</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#decoration-pipe">41.1. Decoration pipe</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#scf">41.1.1. SCF</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#fci">41.1.2. FCI</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#casscf">41.1.3. CASSCF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">8. Miscellaneous</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#decoration-pipe">8.1. Decoration pipe</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scf">8.1.1. SCF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fci">8.1.2. FCI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#casscf">8.1.3. CASSCF</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#customizing-hamiltonian">41.2. Customizing Hamiltonian</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#customizing-hamiltonian">8.2. Customizing Hamiltonian</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ccn.html">42. ccn &#8212; Auto-Generated Coupled-Cluster Equations of Arbitrary Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nao.html">43. nao &#8212; Numerical Atomic Orbitals</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lib.html">44. <code class="docutils literal"><span class="pre">lib</span></code> &#8212; Helper functions, parameters, and C extensions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="prop.html">45. prop &#8212; Molecular properties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="data.html">46. data &#8212; Data for constants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="shciscf.html">47. shciscf &#8212; Semistochastic Heat Bath Configuration Interaction for SCF</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -155,7 +116,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">PySCF</a>
@@ -163,9 +124,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -188,13 +150,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>41. Miscellaneous</li>
+      <li><span class="section-number">8. </span>Miscellaneous</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/advanced.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/advanced.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -208,57 +170,326 @@
            <div itemprop="articleBody">
             
   <div class="section" id="miscellaneous">
-<h1>41. Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h1>
+<span id="advanced"></span><h1><span class="section-number">8. </span>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="decoration-pipe">
-<h2>41.1. Decoration pipe<a class="headerlink" href="#decoration-pipe" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">8.1. </span>Decoration pipe<a class="headerlink" href="#decoration-pipe" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="scf">
-<h3>41.1.1. SCF<a class="headerlink" href="#scf" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">8.1.1. </span>SCF<a class="headerlink" href="#scf" title="Permalink to this headline">¶</a></h3>
 <p>There are three decoration function for Hartree-Fock class
-<code class="xref py py-func docutils literal"><span class="pre">density_fit()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">sfx2c()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">newton()</span></code> to apply density
+<code class="xref py py-func docutils literal notranslate"><span class="pre">density_fit()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">sfx2c()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">newton()</span></code> to apply density
 fitting, scalar relativistic correction and second order SCF.
 The different ordering of the three decoration operations have different
 effects.  For example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># Author: Qiming Sun &lt;osirpt.sun@gmail.com&gt;</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
+<span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Mixing decoration, for density fitting, scalar relativistic effects, and</span>
+<span class="sd">second order (Newton-Raphson) SCF.</span>
+
+<span class="sd">Density fitting and scalar relativistic effects can be applied together,</span>
+<span class="sd">regardless to the order you apply the decoration.</span>
+
+<span class="sd">NOTE the second order SCF (New in version 1.1) decorating operation are not</span>
+<span class="sd">commutable with scf.density_fit operation</span>
+<span class="sd">        [scf.density_fit, scf.sfx2c1e    ] == 0</span>
+<span class="sd">        [scf.newton     , scf.sfx2c1e    ] != 0</span>
+<span class="sd">        [scf.newton     , scf.density_fit] != 0</span>
+<span class="sd">* scf.density_fit(scf.newton(scf.RHF(mol))) is the SOSCF for regular 2e</span>
+<span class="sd">  integrals, but with density fitting integrals for the Hessian.  It&#39;s an</span>
+<span class="sd">  approximate SOSCF optimization method;</span>
+<span class="sd">* scf.newton(scf.density_fit(scf.RHF(mol))) is the exact second order</span>
+<span class="sd">  optimization for the given scf object which is a density-fitted-scf method.</span>
+<span class="sd">  The SOSCF is not an approximate scheme.</span>
+<span class="sd">* scf.density_fit(scf.newton(scf.density_fit(scf.RHF(mol))), auxbasis=&#39;ahlrichs&#39;)</span>
+<span class="sd">  is an approximate SOSCF scheme for the given density-fitted-scf method.</span>
+<span class="sd">  Here we use small density fitting basis (ahlrichs cfit basis) to approximate</span>
+<span class="sd">  the Hessian for the large-basis-density-fitted-scf scheme.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">()</span>
+<span class="n">mol</span><span class="o">.</span><span class="n">build</span><span class="p">(</span>
+    <span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;8  0  0.     0</span>
+<span class="s1">              1  0  -0.757 0.587</span>
+<span class="s1">              1  0  0.757  0.587&#39;&#39;&#39;</span><span class="p">,</span>
+    <span class="n">basis</span> <span class="o">=</span> <span class="s1">&#39;ccpvdz&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># 1. spin-free X2C-HF with density fitting approximation on 2E integrals</span>
+<span class="c1">#</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">density_fit</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">sfx2c1e</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)))</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">x2c</span><span class="p">()</span><span class="o">.</span><span class="n">density_fit</span><span class="p">()</span>  <span class="c1"># Stream style</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E = </span><span class="si">%.12f</span><span class="s1">, ref = -76.075408156180&#39;</span> <span class="o">%</span> <span class="n">energy</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># 2. spin-free X2C correction for density-fitting HF.  Since X2C correction is</span>
+<span class="c1"># commutable with density fitting operation, it is fully equivalent to case 1.</span>
+<span class="c1">#</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">sfx2c1e</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">density_fit</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)))</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">density_fit</span><span class="p">()</span><span class="o">.</span><span class="n">x2c</span><span class="p">()</span>  <span class="c1"># Stream style</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E = </span><span class="si">%.12f</span><span class="s1">, ref = -76.075408156180&#39;</span> <span class="o">%</span> <span class="n">energy</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># 3. The order to apply X2C or newton method matters.  If relativistic effects</span>
+<span class="c1"># need to be included in the calculation, you should first call x2c then</span>
+<span class="c1"># newton method.</span>
+<span class="c1">#</span>
+<span class="n">e1</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="n">e2</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">x2c</span><span class="p">()</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E(NR)         = </span><span class="si">%.12f</span><span class="s1">  E(X2C)        = </span><span class="si">%.12f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">))</span>
+<span class="n">e1</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">newton</span><span class="p">()</span><span class="o">.</span><span class="n">x2c</span><span class="p">()</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="n">e2</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">x2c</span><span class="p">()</span><span class="o">.</span><span class="n">newton</span><span class="p">()</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E(Newton,X2C) = </span><span class="si">%.12f</span><span class="s1">  E(X2C,Newton) = </span><span class="si">%.12f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">))</span>
+
+<span class="c1">#</span>
+<span class="c1"># 4. Newton method for non-relativistic HF</span>
+<span class="c1">#</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">newton</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">))</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">newton</span><span class="p">()</span>  <span class="c1"># Stream style</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E = </span><span class="si">%.12f</span><span class="s1">, ref = -76.026765673120&#39;</span> <span class="o">%</span> <span class="n">energy</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># 5. Newton method for non-relativistic HF with density fitting for orbital</span>
+<span class="c1"># hessian of newton solver.  Note the answer is equal to case 3, but the</span>
+<span class="c1"># solver &quot;mf&quot; is different.</span>
+<span class="c1">#</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">density_fit</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">newton</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)))</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">newton</span><span class="p">()</span><span class="o">.</span><span class="n">density_fit</span><span class="p">()</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E = </span><span class="si">%.12f</span><span class="s1">, ref = -76.026765673120&#39;</span> <span class="o">%</span> <span class="n">energy</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># 6. Newton method to solve the density-fitting approximated HF object.  There</span>
+<span class="c1"># is no approximation for newton method (orbital hessian).  Note the density</span>
+<span class="c1"># fitting is applied on HF object only.  It does not affect the Newton solver.</span>
+<span class="c1">#</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">newton</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">density_fit</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)))</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">density_fit</span><span class="p">()</span><span class="o">.</span><span class="n">newton</span><span class="p">()</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E = </span><span class="si">%.12f</span><span class="s1">, ref = -76.026744737357&#39;</span> <span class="o">%</span> <span class="n">energy</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># 7. Newton method for density-fitting HF, and the hessian of Newton solver is</span>
+<span class="c1"># also approximated with density fitting.  Note the anwser is equivalent to</span>
+<span class="c1"># case 6, but the solver &quot;mf&quot; is different.  Here the fitting basis for HF and</span>
+<span class="c1"># Newton solver are different.  HF is approximated with the default density</span>
+<span class="c1"># fitting basis (Weigend cfit basis).  Newton solver is approximated with</span>
+<span class="c1"># Ahlrichs cfit basis.</span>
+<span class="c1">#</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">density_fit</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">newton</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">density_fit</span><span class="p">(</span><span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">))),</span> <span class="s1">&#39;ahlrichs&#39;</span><span class="p">)</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span><span class="o">.</span><span class="n">density_fit</span><span class="p">()</span><span class="o">.</span><span class="n">newton</span><span class="p">()</span><span class="o">.</span><span class="n">density_fit</span><span class="p">(</span><span class="n">auxbasis</span><span class="o">=</span><span class="s1">&#39;ahlrichs&#39;</span><span class="p">)</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E = </span><span class="si">%.12f</span><span class="s1">, ref = -76.026744737357&#39;</span> <span class="o">%</span> <span class="n">energy</span><span class="p">)</span>
+
+</pre></div>
+</div>
 </div>
 <div class="section" id="fci">
-<h3>41.1.2. FCI<a class="headerlink" href="#fci" title="Permalink to this headline">¶</a></h3>
+<h3><span class="section-number">8.1.2. </span>FCI<a class="headerlink" href="#fci" title="Permalink to this headline">¶</a></h3>
 <p>Direct FCI solver cannot guarantee the CI wave function to be the spin
-eigenfunction.  Decoration function <code class="xref py py-func docutils literal"><span class="pre">fci.addons.fix_spin_()</span></code> can
+eigenfunction.  Decoration function <code class="xref py py-func docutils literal notranslate"><span class="pre">fci.addons.fix_spin_()</span></code> can
 fix this issue.</p>
 </div>
 <div class="section" id="casscf">
-<h3>41.1.3. CASSCF<a class="headerlink" href="#casscf" title="Permalink to this headline">¶</a></h3>
-<p><code class="xref py py-func docutils literal"><span class="pre">mcscf.density_fit()</span></code>, and <code class="xref py py-func docutils literal"><span class="pre">scf.sfx2c()</span></code> can be used to decorate
+<h3><span class="section-number">8.1.3. </span>CASSCF<a class="headerlink" href="#casscf" title="Permalink to this headline">¶</a></h3>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">mcscf.density_fit()</span></code>, and <code class="xref py py-func docutils literal notranslate"><span class="pre">scf.sfx2c()</span></code> can be used to decorate
 CASSCF/CASCI class.  Like the ordering problem in SCF decoration
 operation, the density fitting for CASSCF solver only affect the CASSCF
 optimization procedure.  It does not change the 2e integrals for CASSCF
 Hamiltonian.  For example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># Author: Qiming Sun &lt;osirpt.sun@gmail.com&gt;</span>
+<span class="c1">#</span>
+
+<span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">scf</span><span class="p">,</span> <span class="n">mcscf</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Density fitting for orbital optimzation.</span>
+
+<span class="sd">Note mcscf.density_fit function follows the same convention of decoration</span>
+<span class="sd">ordering which is applied in the SCF decoration.  See pyscf/mcscf/df.py for</span>
+<span class="sd">more details and pyscf/example/scf/23-decorate_scf.py as an exmple.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">()</span>
+<span class="n">mol</span><span class="o">.</span><span class="n">build</span><span class="p">(</span>
+    <span class="n">atom</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.65830719</span><span class="p">,</span>  <span class="mf">0.61123287</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00800148</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="mf">0.73685281</span><span class="p">,</span>  <span class="mf">0.61123287</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00800148</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="mf">1.43439081</span><span class="p">,</span>  <span class="mf">1.81898387</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00800148</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="mf">0.73673681</span><span class="p">,</span>  <span class="mf">3.02749287</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00920048</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.65808819</span><span class="p">,</span>  <span class="mf">3.02741487</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00967948</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.35568919</span><span class="p">,</span>  <span class="mf">1.81920887</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00868348</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.20806619</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.34108413</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00755148</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="mf">1.28636081</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.34128013</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00668648</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="mf">2.53407081</span><span class="p">,</span>  <span class="mf">1.81906387</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00736748</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">(</span> <span class="mf">1.28693681</span><span class="p">,</span>  <span class="mf">3.97963587</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00925948</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">1.20821019</span><span class="p">,</span>  <span class="mf">3.97969587</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.01063248</span><span class="p">)],</span>
+    <span class="p">[</span><span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mf">2.45529319</span><span class="p">,</span>  <span class="mf">1.81939187</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.00886348</span><span class="p">)],],</span>
+    <span class="n">basis</span> <span class="o">=</span> <span class="s1">&#39;ccpvtz&#39;</span>
+<span class="p">)</span>
+
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">conv_tol</span> <span class="o">=</span> <span class="mf">1e-8</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+
+<span class="c1">#</span>
+<span class="c1"># DFCASSCF uses density-fitting 2e integrals overall, regardless the</span>
+<span class="c1"># underlying mean-filed object</span>
+<span class="c1">#</span>
+<span class="n">mc</span> <span class="o">=</span> <span class="n">mcscf</span><span class="o">.</span><span class="n">DFCASSCF</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">mo</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">sort_mo</span><span class="p">([</span><span class="mi">17</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">mo</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E(CAS) = </span><span class="si">%.12f</span><span class="s1">, ref = -230.845892901370&#39;</span> <span class="o">%</span> <span class="n">mc</span><span class="o">.</span><span class="n">e_tot</span><span class="p">)</span>
+
+<span class="c1">#</span>
+<span class="c1"># Assign DF basis</span>
+<span class="c1">#</span>
+<span class="n">mc</span> <span class="o">=</span> <span class="n">mcscf</span><span class="o">.</span><span class="n">DFCASSCF</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="n">auxbasis</span><span class="o">=</span><span class="s1">&#39;ccpvtzfit&#39;</span><span class="p">)</span>
+<span class="n">mo</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">sort_mo</span><span class="p">([</span><span class="mi">17</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">22</span><span class="p">,</span><span class="mi">23</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">mo</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;E(CAS) = </span><span class="si">%.12f</span><span class="s1">, ref = -230.845892901370&#39;</span> <span class="o">%</span> <span class="n">mc</span><span class="o">.</span><span class="n">e_tot</span><span class="p">)</span>
+
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="customizing-hamiltonian">
-<h2>41.2. Customizing Hamiltonian<a class="headerlink" href="#customizing-hamiltonian" title="Permalink to this headline">¶</a></h2>
+<h2><span class="section-number">8.2. </span>Customizing Hamiltonian<a class="headerlink" href="#customizing-hamiltonian" title="Permalink to this headline">¶</a></h2>
 <p>PySCF supports user-defined Hamiltonian for many modules.  To customize
 Hamiltonian for Hartree-Fock, CASSCF, MP2, CCSD, etc, one need to replace the
-methods <code class="xref py py-func docutils literal"><span class="pre">get_hcore()</span></code>, <code class="xref py py-func docutils literal"><span class="pre">get_ovlp()</span></code> and attribute <code class="xref py py-attr docutils literal"><span class="pre">_eri</span></code> of SCF class for
+methods <code class="xref py py-func docutils literal notranslate"><span class="pre">get_hcore()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">get_ovlp()</span></code> and attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">_eri</span></code> of SCF class for
 new Hamiltonian.  E.g. the user-defined
 Hamiltonian for Hartree-Fock</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># Author: Qiming Sun &lt;osirpt.sun@gmail.com&gt;</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">scf</span><span class="p">,</span> <span class="n">ao2mo</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Customizing Hamiltonian for SCF module.</span>
+
+<span class="sd">Three steps to define Hamiltonian for SCF:</span>
+<span class="sd">1. Specify the number of electrons. (Note mole object must be &quot;built&quot; before doing this step)</span>
+<span class="sd">2. Overwrite three attributes of scf object</span>
+<span class="sd">    .get_hcore</span>
+<span class="sd">    .get_ovlp</span>
+<span class="sd">    ._eri</span>
+<span class="sd">3. Specify initial guess (to overwrite the default atomic density initial guess)</span>
+
+<span class="sd">Note you will see warning message on the screen:</span>
+
+<span class="sd">        Overwritten attributes  get_ovlp get_hcore  of &lt;class &#39;pyscf.scf.hf.RHF&#39;&gt;</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">M</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">mol</span><span class="o">.</span><span class="n">nelectron</span> <span class="o">=</span> <span class="n">n</span>
+
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+<span class="n">h1</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">h1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">h1</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="n">h1</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">h1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>  <span class="c1"># PBC</span>
+<span class="n">eri</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">eri</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">4.0</span>
+
+<span class="n">mf</span><span class="o">.</span><span class="n">get_hcore</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">h1</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">get_ovlp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="c1"># ao2mo.restore(8, eri, n) to get 8-fold permutation symmetry of the integrals</span>
+<span class="c1"># ._eri only supports the two-electron integrals in 4-fold or 8-fold symmetry.</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">_eri</span> <span class="o">=</span> <span class="n">ao2mo</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">eri</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+
+<span class="c1"># If you need to run post-HF calculations based on the customized Hamiltonian,</span>
+<span class="c1"># setting incore_anyway=True to ensure the customized Hamiltonian (the _eri</span>
+<span class="c1"># attribute) to be used.  Without this parameter, some post-HF method</span>
+<span class="c1"># (particularly in the MO integral transformation) may ignore the customized</span>
+<span class="c1"># Hamiltonian if memory is not enough.</span>
+<span class="n">mol</span><span class="o">.</span><span class="n">incore_anyway</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
 <p>and the user-defined Hamiltonian for CASSCF</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#</span>
+<span class="c1"># Author: Qiming Sun &lt;osirpt.sun@gmail.com&gt;</span>
+<span class="c1">#</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span>
+<span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span><span class="p">,</span> <span class="n">scf</span><span class="p">,</span> <span class="n">ao2mo</span><span class="p">,</span> <span class="n">mcscf</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">User-defined Hamiltonian for CASSCF module.</span>
+
+<span class="sd">Defining Hamiltonian once for SCF object, the derivate post-HF method get the</span>
+<span class="sd">Hamiltonian automatically.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">M</span><span class="p">()</span>
+<span class="n">mol</span><span class="o">.</span><span class="n">nelectron</span> <span class="o">=</span> <span class="mi">6</span>
+
+<span class="c1"># incore_anyway=True ensures the customized Hamiltonian (the _eri attribute)</span>
+<span class="c1"># to be used.  Without this parameter, the MO integral transformation may</span>
+<span class="c1"># ignore the customized Hamiltonian if memory is not enough.</span>
+<span class="n">mol</span><span class="o">.</span><span class="n">incore_anyway</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1">#</span>
+<span class="c1"># 1D anti-PBC Hubbard model at half filling</span>
+<span class="c1">#</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">h1</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">h1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">h1</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="n">h1</span><span class="p">[</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">h1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+<span class="n">eri</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">eri</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+<span class="n">mf</span> <span class="o">=</span> <span class="n">scf</span><span class="o">.</span><span class="n">RHF</span><span class="p">(</span><span class="n">mol</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">get_hcore</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">h1</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">get_ovlp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">numpy</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">_eri</span> <span class="o">=</span> <span class="n">ao2mo</span><span class="o">.</span><span class="n">restore</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">eri</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">init_guess</span> <span class="o">=</span> <span class="s1">&#39;1e&#39;</span>
+<span class="n">mf</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+
+<span class="n">mycas</span> <span class="o">=</span> <span class="n">mcscf</span><span class="o">.</span><span class="n">CASSCF</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">mycas</span><span class="o">.</span><span class="n">kernel</span><span class="p">()</span>
+</pre></div>
+</div>
 </div>
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ccn.html" class="btn btn-neutral float-right" title="42. ccn — Auto-Generated Coupled-Cluster Equations of Arbitrary Order" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="interface.html" class="btn btn-neutral float-right" title="9. Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tools.html" class="btn btn-neutral" title="40. tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="theory/pbc/pp.html" class="btn btn-neutral float-left" title="7.12.3. Pseudopotentials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -267,11 +498,11 @@ Hamiltonian for Hartree-Fock</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -284,37 +515,15 @@ Hamiltonian for Hartree-Fock</p>
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
-
-  
-  <script src="../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -139,12 +141,12 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
+          <li><a href="../ci.html">pyscf.ci</a> &raquo;</li>
+        
       <li>pyscf.ci.ucisd</li>
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -158,7 +160,7 @@
             
   <h1>Source code for pyscf.ci.ucisd</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python</span>
-<span class="c1"># Copyright 2014-2019 The PySCF Developers. All Rights Reserved.</span>
+<span class="c1"># Copyright 2014-2020 The PySCF Developers. All Rights Reserved.</span>
 <span class="c1">#</span>
 <span class="c1"># Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
 <span class="c1"># you may not use this file except in compliance with the License.</span>
@@ -179,8 +181,6 @@
 <span class="sd">Unrestricted CISD</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">lib</span>
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
@@ -512,7 +512,7 @@
     <span class="n">c2bb</span> <span class="o">=</span> <span class="n">_unpack_4fold</span><span class="p">(</span><span class="n">civec</span><span class="p">[</span><span class="n">loc</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span><span class="n">loc</span><span class="p">[</span><span class="mi">5</span><span class="p">]],</span> <span class="n">noccb</span><span class="p">,</span> <span class="n">nvirb</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">c0</span><span class="p">,</span> <span class="p">(</span><span class="n">c1a</span><span class="p">,</span><span class="n">c1b</span><span class="p">),</span> <span class="p">(</span><span class="n">c2aa</span><span class="p">,</span><span class="n">c2ab</span><span class="p">,</span><span class="n">c2bb</span><span class="p">)</span>
 
-<div class="viewcode-block" id="to_fcivec"><a class="viewcode-back" href="../../../ci.html#pyscf.ci.ucisd.to_fcivec">[docs]</a><span class="k">def</span> <span class="nf">to_fcivec</span><span class="p">(</span><span class="n">cisdvec</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="to_fcivec"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.to_fcivec">[docs]</a><span class="k">def</span> <span class="nf">to_fcivec</span><span class="p">(</span><span class="n">cisdvec</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Convert CISD coefficients to FCI coefficients&#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nelec</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">number</span><span class="p">)):</span>
         <span class="n">nelecb</span> <span class="o">=</span> <span class="n">nelec</span><span class="o">//</span><span class="mi">2</span>
@@ -522,7 +522,9 @@
 
     <span class="n">frozena_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
     <span class="n">frozenb_mask</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">norb</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frozen</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">frozen</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">nfroza</span> <span class="o">=</span> <span class="n">nfrozb</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frozen</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
         <span class="n">nfroza</span> <span class="o">=</span> <span class="n">nfrozb</span> <span class="o">=</span> <span class="n">frozen</span>
         <span class="n">frozena_mask</span><span class="p">[:</span><span class="n">frozen</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="n">frozenb_mask</span><span class="p">[:</span><span class="n">frozen</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -614,10 +616,11 @@
     <span class="n">fcivec1</span><span class="p">[:,</span><span class="n">parity_b</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
     <span class="k">return</span> <span class="n">fcivec1</span></div>
 
-<div class="viewcode-block" id="from_fcivec"><a class="viewcode-back" href="../../../ci.html#pyscf.ci.ucisd.from_fcivec">[docs]</a><span class="k">def</span> <span class="nf">from_fcivec</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="from_fcivec"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.from_fcivec">[docs]</a><span class="k">def</span> <span class="nf">from_fcivec</span><span class="p">(</span><span class="n">ci0</span><span class="p">,</span> <span class="n">norb</span><span class="p">,</span> <span class="n">nelec</span><span class="p">,</span> <span class="n">frozen</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Extract CISD coefficients from FCI coefficients&#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">frozen</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">frozen</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">frozen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nelec</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">number</span><span class="p">)):</span>
         <span class="n">nelecb</span> <span class="o">=</span> <span class="n">nelec</span><span class="o">//</span><span class="mi">2</span>
         <span class="n">neleca</span> <span class="o">=</span> <span class="n">nelec</span> <span class="o">-</span> <span class="n">nelecb</span>
@@ -625,7 +628,7 @@
         <span class="n">neleca</span><span class="p">,</span> <span class="n">nelecb</span> <span class="o">=</span> <span class="n">nelec</span>
 
     <span class="n">norba</span> <span class="o">=</span> <span class="n">norbb</span> <span class="o">=</span> <span class="n">norb</span>
-    <span class="n">nocc</span> <span class="o">=</span> <span class="n">nocca</span><span class="p">,</span> <span class="n">noccb</span> <span class="o">=</span> <span class="n">neleca</span><span class="p">,</span> <span class="n">nelecb</span>
+    <span class="n">nocca</span><span class="p">,</span> <span class="n">noccb</span> <span class="o">=</span> <span class="n">neleca</span><span class="p">,</span> <span class="n">nelecb</span>
     <span class="n">nvira</span> <span class="o">=</span> <span class="n">norba</span> <span class="o">-</span> <span class="n">nocca</span>
     <span class="n">nvirb</span> <span class="o">=</span> <span class="n">norbb</span> <span class="o">-</span> <span class="n">noccb</span>
     <span class="n">t1addra</span><span class="p">,</span> <span class="n">t1signa</span> <span class="o">=</span> <span class="n">cisd</span><span class="o">.</span><span class="n">tn_addrs_signs</span><span class="p">(</span><span class="n">norba</span><span class="p">,</span> <span class="n">nocca</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
@@ -649,7 +652,7 @@
 
     <span class="k">return</span> <span class="n">amplitudes_to_cisdvec</span><span class="p">(</span><span class="n">c0</span><span class="p">,</span> <span class="p">(</span><span class="n">c1a</span><span class="p">,</span><span class="n">c1b</span><span class="p">),</span> <span class="p">(</span><span class="n">c2aa</span><span class="p">,</span><span class="n">c2ab</span><span class="p">,</span><span class="n">c2bb</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="overlap"><a class="viewcode-back" href="../../../ci.html#pyscf.ci.ucisd.overlap">[docs]</a><span class="k">def</span> <span class="nf">overlap</span><span class="p">(</span><span class="n">cibra</span><span class="p">,</span> <span class="n">ciket</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="overlap"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.overlap">[docs]</a><span class="k">def</span> <span class="nf">overlap</span><span class="p">(</span><span class="n">cibra</span><span class="p">,</span> <span class="n">ciket</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Overlap between two CISD wavefunctions.</span>
 
 <span class="sd">    Args:</span>
@@ -657,7 +660,7 @@
 <span class="sd">            The overlap matrix of non-orthogonal one-particle basis</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="n">s</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">dot</span><span class="p">(</span><span class="n">cibra</span><span class="p">,</span> <span class="n">ciket</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cibra</span><span class="p">,</span> <span class="n">ciket</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nmo</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">integer</span><span class="p">)):</span>
         <span class="n">nmoa</span> <span class="o">=</span> <span class="n">nmob</span> <span class="o">=</span> <span class="n">nmo</span>
@@ -759,7 +762,7 @@
     <span class="k">return</span> <span class="n">ovlp</span></div>
 
 
-<div class="viewcode-block" id="make_rdm1"><a class="viewcode-back" href="../../../ci.html#pyscf.ci.ucisd.make_rdm1">[docs]</a><span class="k">def</span> <span class="nf">make_rdm1</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nmo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nocc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="make_rdm1"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.make_rdm1">[docs]</a><span class="k">def</span> <span class="nf">make_rdm1</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nmo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nocc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    One-particle spin density matrices dm1a, dm1b in MO basis (the</span>
 <span class="sd">    occupied-virtual blocks due to the orbital response contribution are not</span>
@@ -776,7 +779,7 @@
     <span class="n">d1</span> <span class="o">=</span> <span class="n">_gamma1_intermediates</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">uccsd_rdm</span><span class="o">.</span><span class="n">_make_rdm1</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">with_frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="n">ao_repr</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="make_rdm2"><a class="viewcode-back" href="../../../ci.html#pyscf.ci.ucisd.make_rdm2">[docs]</a><span class="k">def</span> <span class="nf">make_rdm2</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nmo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nocc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="make_rdm2"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.make_rdm2">[docs]</a><span class="k">def</span> <span class="nf">make_rdm2</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nmo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nocc</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ao_repr</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Two-particle spin density matrices dm2aa, dm2ab, dm2bb in MO basis</span>
 
@@ -803,7 +806,8 @@
     <span class="k">if</span> <span class="n">nocc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">nocc</span> <span class="o">=</span> <span class="n">myci</span><span class="o">.</span><span class="n">nocc</span>
     <span class="n">d1</span> <span class="o">=</span> <span class="n">_gamma1_intermediates</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">)</span>
     <span class="n">d2</span> <span class="o">=</span> <span class="n">_gamma2_intermediates</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">uccsd_rdm</span><span class="o">.</span><span class="n">_make_rdm2</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">with_dm1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">uccsd_rdm</span><span class="o">.</span><span class="n">_make_rdm2</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">d1</span><span class="p">,</span> <span class="n">d2</span><span class="p">,</span> <span class="n">with_dm1</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">with_frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                               <span class="n">ao_repr</span><span class="o">=</span><span class="n">ao_repr</span><span class="p">)</span></div>
 
 <span class="k">def</span> <span class="nf">_gamma1_intermediates</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">civec</span><span class="p">,</span> <span class="n">nmo</span><span class="p">,</span> <span class="n">nocc</span><span class="p">):</span>
     <span class="n">nmoa</span><span class="p">,</span> <span class="n">nmob</span> <span class="o">=</span> <span class="n">nmo</span>
@@ -924,7 +928,7 @@
             <span class="p">(</span><span class="n">dovvv</span><span class="p">,</span> <span class="n">dovVV</span><span class="p">,</span> <span class="n">dOVvv</span><span class="p">,</span> <span class="n">dOVVV</span><span class="p">),</span>
             <span class="p">(</span><span class="n">dooov</span><span class="p">,</span> <span class="n">dooOV</span><span class="p">,</span> <span class="n">dOOov</span><span class="p">,</span> <span class="n">dOOOV</span><span class="p">))</span>
 
-<div class="viewcode-block" id="trans_rdm1"><a class="viewcode-back" href="../../../ci.html#pyscf.ci.ucisd.trans_rdm1">[docs]</a><span class="k">def</span> <span class="nf">trans_rdm1</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">cibra</span><span class="p">,</span> <span class="n">ciket</span><span class="p">,</span> <span class="n">nmo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nocc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="trans_rdm1"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.trans_rdm1">[docs]</a><span class="k">def</span> <span class="nf">trans_rdm1</span><span class="p">(</span><span class="n">myci</span><span class="p">,</span> <span class="n">cibra</span><span class="p">,</span> <span class="n">ciket</span><span class="p">,</span> <span class="n">nmo</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nocc</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    One-particle spin density matrices dm1a, dm1b in MO basis (the</span>
 <span class="sd">    occupied-virtual blocks due to the orbital response contribution are not</span>
@@ -990,7 +994,7 @@
     <span class="n">dm1b</span><span class="p">[</span><span class="n">noccb</span><span class="p">:,</span><span class="n">noccb</span><span class="p">:]</span> <span class="o">=</span> <span class="n">dvvb</span>
     <span class="n">dm1b</span><span class="p">[</span><span class="n">numpy</span><span class="o">.</span><span class="n">diag_indices</span><span class="p">(</span><span class="n">noccb</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">norm</span>
 
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">myci</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">myci</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">myci</span><span class="o">.</span><span class="n">frozen</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">nmoa</span> <span class="o">=</span> <span class="n">myci</span><span class="o">.</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
         <span class="n">nmob</span> <span class="o">=</span> <span class="n">myci</span><span class="o">.</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">size</span>
         <span class="n">nocca</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">myci</span><span class="o">.</span><span class="n">mo_occ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
@@ -1009,9 +1013,9 @@
     <span class="k">return</span> <span class="n">dm1a</span><span class="p">,</span> <span class="n">dm1b</span></div>
 
 
-<span class="k">class</span> <span class="nc">UCISD</span><span class="p">(</span><span class="n">cisd</span><span class="o">.</span><span class="n">CISD</span><span class="p">):</span>
+<div class="viewcode-block" id="UCISD"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.UCISD">[docs]</a><span class="k">class</span> <span class="nc">UCISD</span><span class="p">(</span><span class="n">cisd</span><span class="o">.</span><span class="n">CISD</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">vector_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="UCISD.vector_size"><a class="viewcode-back" href="../../../modules/ci.html#pyscf.ci.ucisd.UCISD.vector_size">[docs]</a>    <span class="k">def</span> <span class="nf">vector_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">norba</span><span class="p">,</span> <span class="n">norbb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nmo</span>
         <span class="n">nocca</span><span class="p">,</span> <span class="n">noccb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nocc</span>
         <span class="n">nvira</span> <span class="o">=</span> <span class="n">norba</span> <span class="o">-</span> <span class="n">nocca</span>
@@ -1022,7 +1026,7 @@
         <span class="n">nvvb</span> <span class="o">=</span> <span class="n">nvirb</span> <span class="o">*</span> <span class="p">(</span><span class="n">nvirb</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
         <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">nocca</span><span class="o">*</span><span class="n">nvira</span> <span class="o">+</span> <span class="n">noccb</span><span class="o">*</span><span class="n">nvirb</span> <span class="o">+</span>
                 <span class="n">nocca</span><span class="o">*</span><span class="n">noccb</span><span class="o">*</span><span class="n">nvira</span><span class="o">*</span><span class="n">nvirb</span> <span class="o">+</span> <span class="n">nooa</span><span class="o">*</span><span class="n">nvva</span> <span class="o">+</span> <span class="n">noob</span><span class="o">*</span><span class="n">nvvb</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">size</span>
+        <span class="k">return</span> <span class="n">size</span></div>
 
     <span class="n">get_nocc</span> <span class="o">=</span> <span class="n">uccsd</span><span class="o">.</span><span class="n">get_nocc</span>
     <span class="n">get_nmo</span> <span class="o">=</span> <span class="n">uccsd</span><span class="o">.</span><span class="n">get_nmo</span>
@@ -1125,7 +1129,7 @@
 
     <span class="k">def</span> <span class="nf">nuc_grad_method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="kn">from</span> <span class="nn">pyscf.grad</span> <span class="k">import</span> <span class="n">ucisd</span>
-        <span class="k">return</span> <span class="n">ucisd</span><span class="o">.</span><span class="n">Gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ucisd</span><span class="o">.</span><span class="n">Gradients</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
 <span class="n">CISD</span> <span class="o">=</span> <span class="n">UCISD</span>
 
@@ -1138,8 +1142,6 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">gto</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">scf</span>
-    <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">ao2mo</span>
 
     <span class="n">mol</span> <span class="o">=</span> <span class="n">gto</span><span class="o">.</span><span class="n">Mole</span><span class="p">()</span>
     <span class="n">mol</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="mi">0</span>
@@ -1209,9 +1211,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1220,11 +1220,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1237,37 +1237,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>

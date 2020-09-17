@@ -17,38 +17,35 @@
   
 
   
+  <script type="text/javascript" src="../../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
-  
-  
-    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-    <link rel="top" title="PySCF 1.7.0 documentation" href="../../../../index.html"/>
-        <link rel="up" title="Module code" href="../../../index.html"/> 
-
-  
-  <script src="../../../../_static/js/modernizr.min.js"></script>
-
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -93,6 +90,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../code-rule.html">4. Code standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../benchmark.html">5. Benchmark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">6. Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../theory.html">7. Theoretical methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../advanced.html">8. Miscellaneous</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../interface.html">9. Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../modules.html">10. Main modules</a></li>
 </ul>
 
             
@@ -104,7 +105,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">PySCF</a>
@@ -112,9 +113,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -143,8 +145,6 @@
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
         
       </li>
     
@@ -180,9 +180,9 @@
 <span class="sd">(In testing)</span>
 
 <span class="sd">Refs:</span>
-<span class="sd">    JCP, 134, 194113</span>
-<span class="sd">    PRB, 60, 9566</span>
-<span class="sd">    JCP, 127, 164112</span>
+<span class="sd">    JCP 134, 194113 (2011); DOI:10.1063/1.3590362</span>
+<span class="sd">    PRB 60, 9566 (1999); DOI:10.1103/PhysRevB.60.9566</span>
+<span class="sd">    JCP 127, 164112 (2007); 10.1063/1.2772857</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="kn">import</span> <span class="nn">time</span>
@@ -190,15 +190,13 @@
 <span class="kn">import</span> <span class="nn">numpy</span>
 <span class="kn">from</span> <span class="nn">pyscf</span> <span class="k">import</span> <span class="n">lib</span>
 <span class="kn">from</span> <span class="nn">pyscf.lib</span> <span class="k">import</span> <span class="n">logger</span>
-<span class="kn">from</span> <span class="nn">pyscf.gto</span> <span class="k">import</span> <span class="n">mole</span>
 <span class="kn">from</span> <span class="nn">pyscf.ao2mo</span> <span class="k">import</span> <span class="n">_ao2mo</span>
-<span class="kn">from</span> <span class="nn">pyscf.soscf.newton_ah</span> <span class="k">import</span> <span class="n">_gen_uhf_response</span>
-<span class="kn">from</span> <span class="nn">pyscf.prop.nmr</span> <span class="k">import</span> <span class="n">uhf</span> <span class="k">as</span> <span class="n">uhf_nmr</span>
+<span class="kn">from</span> <span class="nn">pyscf.scf</span> <span class="k">import</span> <span class="n">_response_functions</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">pyscf.prop.ssc.rhf</span> <span class="k">import</span> <span class="n">_dm1_mo2ao</span>
 <span class="kn">from</span> <span class="nn">pyscf.data</span> <span class="k">import</span> <span class="n">nist</span>
 
 
-<div class="viewcode-block" id="koseki_charge"><a class="viewcode-back" href="../../../../prop/zfs.html#pyscf.prop.zfs.uhf.koseki_charge">[docs]</a><span class="k">def</span> <span class="nf">koseki_charge</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+<div class="viewcode-block" id="koseki_charge"><a class="viewcode-back" href="../../../../modules/prop/zfs.html#pyscf.prop.zfs.uhf.koseki_charge">[docs]</a><span class="k">def</span> <span class="nf">koseki_charge</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Koseki effective charge in SO correction</span>
 
 <span class="sd">    Ref:</span>
@@ -213,12 +211,15 @@
         <span class="k">return</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="o">.</span><span class="mi">3</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="o">.</span><span class="mi">05</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">18</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.05</span> <span class="o">-</span> <span class="n">z</span> <span class="o">*</span> <span class="o">.</span><span class="mi">0125</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">z</span> <span class="o">&lt;=</span> <span class="mi">30</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">0.385</span> <span class="o">+</span> <span class="mf">0.025</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mi">18</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="p">)</span> <span class="c1"># Jia: J. Phys. Chem. A 1998, 102, 10430</span>
+    <span class="k">elif</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="mi">48</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">z</span> <span class="o">*</span> <span class="p">(</span> <span class="mf">4.680</span> <span class="o">+</span> <span class="mf">0.060</span> <span class="o">*</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="mi">36</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)</span> <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">z</span></div>
 
 
 <span class="k">def</span> <span class="nf">direct_spin_spin</span><span class="p">(</span><span class="n">zfsobj</span><span class="p">,</span> <span class="n">mol</span><span class="p">,</span> <span class="n">dm0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">new_logger</span><span class="p">(</span><span class="n">zfsobj</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dm0</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dm0</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span> <span class="c1"># RHF DM</span>
         <span class="k">return</span> <span class="n">numpy</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
 
@@ -349,7 +350,7 @@
 <span class="k">def</span> <span class="nf">solve_mo1</span><span class="p">(</span><span class="n">sscobj</span><span class="p">,</span> <span class="n">h1</span><span class="p">):</span>
     <span class="n">cput1</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
     <span class="n">log</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">Logger</span><span class="p">(</span><span class="n">sscobj</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">verbose</span><span class="p">)</span>
-    <span class="n">mol</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">mol</span>
+
     <span class="n">mo_energy</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">mo_energy</span>
     <span class="n">mo_coeff</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">mo_coeff</span>
     <span class="n">mo_occ</span> <span class="o">=</span> <span class="n">sscobj</span><span class="o">.</span><span class="n">_scf</span><span class="o">.</span><span class="n">mo_occ</span>
@@ -392,7 +393,7 @@
                         <span class="n">mo1</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nset</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
                         <span class="n">mo1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nset</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
 
-    <span class="n">vresp</span> <span class="o">=</span> <span class="n">_gen_uhf_response</span><span class="p">(</span><span class="n">mf</span><span class="p">,</span> <span class="n">with_j</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">vresp</span> <span class="o">=</span> <span class="n">mf</span><span class="o">.</span><span class="n">gen_response</span><span class="p">(</span><span class="n">with_j</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">hermi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
     <span class="n">mo_va_oa</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">orbva</span><span class="p">,</span><span class="n">orboa</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
     <span class="n">mo_va_ob</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">orbva</span><span class="p">,</span><span class="n">orbob</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
     <span class="n">mo_vb_oa</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">orbvb</span><span class="p">,</span><span class="n">orboa</span><span class="p">)),</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">)</span>
@@ -431,7 +432,7 @@
     <span class="k">return</span> <span class="n">mo1</span>
 
 
-<div class="viewcode-block" id="ZeroFieldSplitting"><a class="viewcode-back" href="../../../../prop/zfs.html#pyscf.prop.zfs.uhf.ZeroFieldSplitting">[docs]</a><span class="k">class</span> <span class="nc">ZeroFieldSplitting</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">StreamObject</span><span class="p">):</span>
+<div class="viewcode-block" id="ZeroFieldSplitting"><a class="viewcode-back" href="../../../../modules/prop/zfs.html#pyscf.prop.zfs.uhf.ZeroFieldSplitting">[docs]</a><span class="k">class</span> <span class="nc">ZeroFieldSplitting</span><span class="p">(</span><span class="n">lib</span><span class="o">.</span><span class="n">StreamObject</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;dE = I dot gtensor dot s&#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scf_method</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mol</span> <span class="o">=</span> <span class="n">scf_method</span><span class="o">.</span><span class="n">mol</span>
@@ -468,7 +469,7 @@
                  <span class="bp">self</span><span class="o">.</span><span class="n">so_eff_charge</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
-    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ZeroFieldSplitting.kernel"><a class="viewcode-back" href="../../../../modules/prop/zfs.html#pyscf.prop.zfs.uhf.ZeroFieldSplitting.kernel">[docs]</a>    <span class="k">def</span> <span class="nf">kernel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mo1</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">cput0</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">clock</span><span class="p">(),</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_sanity</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dump_flags</span><span class="p">()</span>
@@ -499,7 +500,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;S_z </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">zfs_tensor</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s1">&#39;ZFS tensor&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">cput0</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">zfs_tensor</span></div>
+        <span class="k">return</span> <span class="n">zfs_tensor</span></div></div>
 
 <span class="n">ZFS</span> <span class="o">=</span> <span class="n">ZeroFieldSplitting</span>
 
@@ -519,9 +520,7 @@
 </pre></div>
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -530,11 +529,11 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-, Qiming Sun &lt;osirpt.sun@gmail.com&gt;.
+        &copy; Copyright 2015-2019, The PySCF Developers
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -547,37 +546,15 @@
   
 
 
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../../',
-            VERSION:'1.7.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: ''
-        };
-    </script>
-      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
-  
-
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
+
+  
+  
+    
    
 
 </body>
